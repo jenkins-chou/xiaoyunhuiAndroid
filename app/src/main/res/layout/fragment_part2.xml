@@ -92,19 +92,24 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
 
+                <!--android:background="@drawable/fragment_part2_score_item_bg1"-->
                 <RelativeLayout
                     android:id="@+id/score_student"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:background="@drawable/fragment_part2_score_item_bg1">
+                    >
+                    <com.jenking.xiaoyunhui.customui.part2.ScoreStudentButtonBg
+                        android:layout_width="match_parent"
+                        android:layout_height="60dp"/>
 
                     <ImageView
                         android:id="@+id/icon1"
                         android:layout_width="30dp"
                         android:layout_height="30dp"
                         android:layout_alignParentLeft="true"
-                        android:layout_margin="15dp"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="15dp"
                         android:src="@mipmap/fragment_part2_score_icon1" />
 
                     <TextView
@@ -114,7 +119,7 @@
                         android:layout_marginLeft="10dp"
                         android:layout_toRightOf="@+id/icon1"
                         android:text="我是领队/队员"
-                        android:textColor="@color/white"
+                        android:textColor="@color/main_color_light"
                         android:textSize="17sp" />
 
                     <TextView
@@ -133,15 +138,18 @@
                     android:id="@+id/score_referee"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:background="@drawable/fragment_part2_score_item_bg2">
+                    android:layout_marginTop="10dp">
 
+                    <com.jenking.xiaoyunhui.customui.part2.ScoreRefereeButtonBg
+                        android:layout_width="match_parent"
+                        android:layout_height="60dp"/>
                     <ImageView
                         android:id="@+id/icon2"
                         android:layout_width="30dp"
                         android:layout_height="30dp"
                         android:layout_alignParentLeft="true"
-                        android:layout_margin="15dp"
+                        android:layout_marginLeft="15dp"
+                        android:layout_centerVertical="true"
                         android:src="@mipmap/fragment_part2_score_icon2" />
 
                     <TextView
@@ -151,7 +159,7 @@
                         android:layout_marginLeft="10dp"
                         android:layout_toRightOf="@+id/icon2"
                         android:text="我是裁判"
-                        android:textColor="@color/white"
+                        android:textColor="@color/main_color_light"
                         android:textSize="17sp" />
 
                     <TextView

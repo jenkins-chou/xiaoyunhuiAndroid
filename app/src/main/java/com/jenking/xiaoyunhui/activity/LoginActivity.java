@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.VideoView;
 
 import com.google.gson.Gson;
@@ -44,6 +45,9 @@ public class LoginActivity extends BaseActivity implements LoginContract {
     EditText username;
     @BindView(R.id.password)
     EditText password;
+
+    @BindView(R.id.button_login)
+    LinearLayout button_login;
 
     @OnClick(R.id.back)
     void back(){
@@ -85,6 +89,7 @@ public class LoginActivity extends BaseActivity implements LoginContract {
     public void initData() {
         super.initData();
         loginPresenter = new LoginPresenter(context,this);
+        button_login.getBackground().mutate().setAlpha(100);
     }
 
     //初始化视频桌面

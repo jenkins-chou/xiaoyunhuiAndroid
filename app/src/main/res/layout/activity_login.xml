@@ -64,7 +64,7 @@
                 android:padding="2dp"
                 android:textColor="#ffffff"
                 android:textColorHint="#ffffff"
-                android:textSize="15sp" />
+                android:textSize="18sp" />
         </LinearLayout>
         <View
             android:background="#ffffff"
@@ -107,7 +107,7 @@
                 android:padding="2dp"
                 android:textColor="#ffffff"
                 android:textColorHint="#ffffff"
-                android:textSize="15sp" />
+                android:textSize="18sp" />
         </LinearLayout>
 
         <LinearLayout

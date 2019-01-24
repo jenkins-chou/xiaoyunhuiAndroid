@@ -1,5 +1,6 @@
 package com.jenking.xiaoyunhui.activity;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -21,6 +22,13 @@ public class MatchDetailActivity extends BaseActivity {
     @OnClick(R.id.back)
     void back(){
         finish();
+    }
+
+    //立即报名
+    @OnClick(R.id.footer)
+    void footer(){
+        Intent intent = new Intent(context,MatchEnrollActivity.class);
+        startActivity(intent);
     }
 
     @BindView(R.id.header)
@@ -54,6 +62,7 @@ public class MatchDetailActivity extends BaseActivity {
     }
 
     public void initData(){
+        context = this;
         unbinder = ButterKnife.bind(this);
     }
 }
