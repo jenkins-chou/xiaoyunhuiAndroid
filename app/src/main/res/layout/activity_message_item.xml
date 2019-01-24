@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <LinearLayout
+        android:layout_marginTop="10dp"
+        android:padding="3dp"
+        android:background="@drawable/activity_message_system_item_bg1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/item_top_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="2018-05-26 18:00"
+            android:textSize="15sp"
+            android:textColor="#ffffff" />
+    </LinearLayout>
+    <RelativeLayout
+        android:background="@drawable/activity_message_system_item_bg2"
+        android:layout_margin="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_margin="15dp"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:textStyle="bold"
+                android:id="@+id/item_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="亲爱的用户"
+                android:textColor="#666666"
+                android:textSize="15sp" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/item_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:text="2018-05-27 10:23:19"
+                    android:textColor="#666666"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/item_author"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:text="团队"
+                    android:textColor="#666666"
+                    android:textSize="15sp" />
+            </RelativeLayout>
+
+            <TextView
+                android:textSize="15sp"
+                android:id="@+id/item_content"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:text="若您在使用过程中有任何疑问，可以添加客服微信告诉我们"
+                android:textColor="#666666" />
+            <View
+                android:visibility="gone"
+                android:background="#cccccc"
+                android:layout_width="match_parent"
+                android:layout_height="1px"/>
+            <RelativeLayout
+                android:visibility="gone"
+                android:layout_marginTop="15dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:textColor="#666666"
+                    android:textSize="18sp"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentLeft="true"
+                    android:text="查看详情"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <ImageView
+                    android:layout_centerVertical="true"
+                    android:src="@mipmap/common_arrows_right_gray"
+                    android:layout_alignParentRight="true"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp" />
+            </RelativeLayout>
+        </LinearLayout>
+    </RelativeLayout>
+</LinearLayout>

@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#000000">
+    <VideoView
+        android:id="@+id/videoView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_gravity="center" />
+    <LinearLayout
+        android:layout_centerInParent="true"
+        android:layout_marginBottom="20dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:text="请输入账户信息"
+            android:textColor="@color/main_color_light"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:alpha="0.5"
+            android:layout_marginBottom="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <LinearLayout
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:src="@mipmap/login_icon3"
+                android:layout_width="20dp"
+                android:layout_height="20dp" />
+            <TextView
+                android:text="账号"
+                android:textColor="#ffffff"
+                android:textSize="15sp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <View
+                android:background="#ffffff"
+                android:layout_width="1px"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_height="match_parent"/>
+
+            <EditText
+                android:id="@+id/username"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:background="@drawable/login_edittext_bg"
+                android:hint="请输入账号"
+                android:padding="2dp"
+                android:textColor="#ffffff"
+                android:textColorHint="#ffffff"
+                android:textSize="15sp" />
+        </LinearLayout>
+        <View
+            android:background="#ffffff"
+            android:layout_marginTop="15dp"
+            android:layout_width="match_parent"
+            android:layout_height="1px"/>
+        <LinearLayout
+            android:layout_marginTop="15dp"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:src="@mipmap/login_icon2"
+                android:layout_width="20dp"
+                android:layout_height="20dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:text="密码"
+                android:textColor="#ffffff"
+                android:textSize="15sp" />
+            <View
+                android:background="#ffffff"
+                android:layout_width="1px"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_height="match_parent"/>
+
+            <EditText
+                android:id="@+id/password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:background="@drawable/login_edittext_bg"
+                android:hint="请输入密码"
+                android:inputType="textPassword"
+                android:padding="2dp"
+                android:textColor="#ffffff"
+                android:textColorHint="#ffffff"
+                android:textSize="15sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/button_login"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/activity_login_button"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:paddingTop="15dp"
+            android:paddingBottom="15dp">
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@mipmap/login_icon" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:text="立即登录"
+                android:textColor="@color/main_color_light" />
+        </LinearLayout>
+    </LinearLayout>
+    <TextView
+        android:id="@+id/user_contract"
+        android:textColor="#cccccc"
+        android:text="注册或登录即同意《用户协议》"
+        android:layout_marginBottom="20dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <com.jenking.xiaoyunhui.customui.CommonLoading
+        android:id="@+id/loading"
+        android:visibility="gone"
+        android:layout_centerInParent="true"
+        android:layout_width="100dp"
+        android:layout_height="120dp" />
+    <ImageView
+        android:id="@+id/back"
+        android:layout_margin="15dp"
+        android:src="@mipmap/back_white"
+        android:layout_width="30dp"
+        android:layout_height="30dp" />
+</RelativeLayout>

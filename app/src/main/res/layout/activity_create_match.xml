@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.CreateMatchActivity">
+    <RelativeLayout
+        android:id="@+id/header"
+        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/back"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_centerVertical="true"
+            android:layout_margin="15dp"
+            android:src="@mipmap/back_black" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="发布新比赛"
+            android:textColor="@color/baseFontColor"
+            android:textSize="16sp" />
+    </RelativeLayout>
+    <ScrollView
+        android:layout_below="@+id/header"
+        android:layout_above="@+id/footer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:padding="15dp"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:text="标题"
+                    android:textStyle="bold"
+                    android:textColor="@color/baseFontColor"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <EditText
+                    android:textSize="14sp"
+                    android:padding="10dp"
+                    android:hint="请输入"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/activity_create_match_eidttext_bg"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_marginTop="10dp"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="简要说明"
+                    android:textColor="@color/baseFontColor"
+                    android:textStyle="bold" />
+                <EditText
+                    android:textSize="14sp"
+                    android:padding="10dp"
+                    android:hint="请输入"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/activity_create_match_eidttext_bg"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <LinearLayout
+                    android:layout_marginRight="5dp"
+                    android:layout_weight="1"
+                    android:layout_marginTop="10dp"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="类型"
+                        android:textColor="@color/baseFontColor"
+                        android:textStyle="bold" />
+                    <EditText
+                        android:textSize="14sp"
+                        android:padding="10dp"
+                        android:hint="请输入"
+                        android:layout_marginTop="10dp"
+                        android:background="@drawable/activity_create_match_eidttext_bg"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_marginLeft="5dp"
+                    android:layout_weight="1"
+                    android:layout_marginTop="10dp"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="人数"
+                        android:textColor="@color/baseFontColor"
+                        android:textStyle="bold" />
+                    <EditText
+                        android:textSize="14sp"
+                        android:padding="10dp"
+                        android:hint="请输入"
+                        android:layout_marginTop="10dp"
+                        android:background="@drawable/activity_create_match_eidttext_bg"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_marginTop="10dp"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="比赛要求"
+                    android:textColor="@color/baseFontColor"
+                    android:textStyle="bold" />
+                <EditText
+                    android:textSize="14sp"
+                    android:padding="10dp"
+                    android:hint="请输入"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/activity_create_match_eidttext_bg"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_marginTop="10dp"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="比赛时间"
+                    android:textColor="@color/baseFontColor"
+                    android:textStyle="bold" />
+                <EditText
+                    android:textSize="14sp"
+                    android:padding="10dp"
+                    android:hint="请输入"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/activity_create_match_eidttext_bg"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_marginTop="10dp"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="比赛地点"
+                    android:textColor="@color/baseFontColor"
+                    android:textStyle="bold" />
+                <EditText
+                    android:textSize="14sp"
+                    android:padding="10dp"
+                    android:hint="请输入"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/activity_create_match_eidttext_bg"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_marginTop="10dp"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="主题图片"
+                    android:textColor="@color/baseFontColor"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/activity_create_match_eidttext_bg"
+                    android:hint="请选择图片"
+                    android:padding="10dp"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+    <TextView
+        android:id="@+id/footer"
+        android:textColor="@color/white"
+        android:alpha="0.7"
+        android:layout_alignParentBottom="true"
+        android:text="发布新项目"
+        android:gravity="center"
+        android:padding="15dp"
+        android:background="@color/main_color"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+</RelativeLayout>

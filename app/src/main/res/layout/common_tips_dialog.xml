@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/common_tips_dialog_bg"
+    android:orientation="vertical" >
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_margin="10dp"
+            android:text="提示"
+            android:textSize="16sp"
+            android:textColor="#006cb7"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:id="@+id/close"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_margin="10dp"
+            android:src="@mipmap/ic_launcher" />
+    </RelativeLayout>
+
+    <View
+        android:id="@+id/top_line"
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_marginBottom="15dp"
+        android:background="#999999" />
+    <TextView
+        android:id="@+id/message"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="15dp"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:gravity="center"
+        android:text="提示语"
+        android:textColor="#666666" />
+    <View
+        android:visibility="gone"
+        android:id="@+id/bottom_line"
+        android:background="#999999"
+        android:layout_width="match_parent"
+        android:layout_height="1px"/>
+    <LinearLayout
+        android:visibility="gone"
+        android:id="@+id/button_bar"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/cancel"
+            android:background="@drawable/common_tips_dialog_cancel"
+            android:text="取消"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:padding="15dp"
+            android:textStyle="bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <View
+            android:background="#999999"
+            android:layout_width="1px"
+            android:layout_height="match_parent"/>
+        <TextView
+            android:id="@+id/confirm"
+            android:text="确定"
+            android:background="@drawable/common_tips_dialog_confirm"
+            android:textColor="#006cb7"
+            android:textStyle="bold"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:padding="15dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+</LinearLayout>

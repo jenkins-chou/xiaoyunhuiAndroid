@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">xiaoyunhui</string>
+
+    <!--主页第三部分列表item按钮-->
+    <string name="fragment_part3_item_complete">complete</string>
+    <string name="fragment_part3_item_loading">loading</string>
+    <string name="fragment_part3_item_error">error</string>
+</resources>
