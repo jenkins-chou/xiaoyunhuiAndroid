@@ -5,11 +5,15 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.EventLog;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.widget.FrameLayout;
 
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
+import com.jenking.xiaoyunhui.activity.BaseActivity;
+import com.jenking.xiaoyunhui.dialog.CommonTipsDialog;
 import com.jenking.xiaoyunhui.fragment.main.MainFragment1;
 import com.jenking.xiaoyunhui.fragment.main.MainFragment2;
 import com.jenking.xiaoyunhui.fragment.main.MainFragment3;
@@ -18,7 +22,7 @@ import com.jenking.xiaoyunhui.fragment.main.MainFragment4;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity {
     @BindView(R.id.bottom_navigation_bar)
     BottomNavigationBar bottom_navigation_bar;
     @BindView(R.id.ly_content)
@@ -33,14 +37,12 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 //        ImmersionBar.with(this).init();
-        initData();
-        initView();
     }
 
-    void initData(){
+    public void initData(){
         fManager = getSupportFragmentManager();
     }
-    void initView(){
+    public void initView(){
         ButterKnife.bind(this);
         bottom_navigation_bar
                 .setActiveColor(R.color.colorAccent)
@@ -119,5 +121,27 @@ public class MainActivity extends AppCompatActivity {
         if(fg2 != null)fragmentTransaction.hide(fg2);
         if(fg3 != null)fragmentTransaction.hide(fg3);
         if(fg4 != null)fragmentTransaction.hide(fg4);
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            if (context==null)
+                context = this;
+            CommonTipsDialog.create(context,"温馨提示","确定要退出吗",false)
+                    .setOnClickListener(new CommonTipsDialog.OnClickListener() {
+                        @Override
+                        public void cancel() {
+
+                        }
+
+                        @Override
+                        public void confirm() {
+                            finish();
+                        }
+                    }).show();
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
     }
 }

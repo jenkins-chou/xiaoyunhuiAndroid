@@ -137,6 +137,28 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:text="裁判员"
+                    android:textColor="@color/baseFontColor"
+                    android:textStyle="bold" />
+                <EditText
+                    android:textSize="14sp"
+                    android:padding="10dp"
+                    android:hint="请输入"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/activity_create_match_eidttext_bg"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginTop="10dp"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:text="比赛要求"
                     android:textColor="@color/baseFontColor"
                     android:textStyle="bold" />
@@ -154,7 +176,6 @@
                 android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

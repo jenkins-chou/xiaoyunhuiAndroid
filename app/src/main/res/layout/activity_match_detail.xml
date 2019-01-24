@@ -1,15 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/baseLayoutColor"
     tools:context=".activity.MatchDetailActivity">
-    <ScrollView
+    <com.jenking.xiaoyunhui.customui.CommonScrollView
+        android:id="@+id/scrollView"
+        android:layout_above="@+id/footer"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
         <LinearLayout
+        android:id="@+id/content"
+        android:layout_above="@+id/footer"
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -21,21 +29,6 @@
                     android:layout_height="match_parent"
                     android:scaleType="centerCrop"
                     android:src="@mipmap/activity_match_detail_bg" />
-
-                <ImageView
-                    android:id="@+id/back"
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:layout_margin="10dp"
-                    android:src="@mipmap/back_white" />
-                <TextView
-                    android:text="比赛详情"
-                    android:textSize="16sp"
-                    android:textColor="@color/white"
-                    android:layout_marginTop="10dp"
-                    android:layout_centerHorizontal="true"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
                 <LinearLayout
                     android:layout_margin="10dp"
                     android:layout_alignParentLeft="true"
@@ -119,163 +112,226 @@
                         android:layout_height="wrap_content" />
                 </LinearLayout>
             </LinearLayout>
-            <LinearLayout
-                android:orientation="vertical"
-                android:background="@color/white"
-                android:layout_marginTop="10dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-                    <TextView
-                        android:text="已报名人数"
-                        android:textSize="16sp"
-                        android:textColor="@color/baseFontColor"
-                        android:layout_margin="15dp"
-                        android:layout_alignParentLeft="true"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-                    <TextView
-                        android:text="未满员"
-                        android:textSize="16sp"
-                        android:textColor="@color/main_color"
-                        android:layout_margin="15dp"
-                        android:layout_alignParentRight="true"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-                </RelativeLayout>
-                <View
-                    android:background="@color/baseLayoutColor"
-                    android:layout_width="match_parent"
-                    android:layout_height="1px"/>
-                <LinearLayout
-                    android:padding="15dp"
-                    android:gravity="center"
-                    android:orientation="horizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-                    <TextView
-                        android:text="8"
-                        android:textSize="25sp"
-                        android:textStyle="bold"
-                        android:textColor="@color/baseFontColor"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-                    <TextView
-                        android:text="人"
-                        android:textSize="15sp"
-                        android:textColor="@color/baseFontColor"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-                </LinearLayout>
-            </LinearLayout>
-            <LinearLayout
-                android:orientation="vertical"
-                android:background="@color/white"
-                android:layout_marginTop="10dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentLeft="true"
-                        android:layout_margin="15dp"
-                        android:text="比赛地点"
-                        android:textColor="@color/baseFontColor"
-                        android:textSize="16sp" />
-                </RelativeLayout>
-                <View
-                    android:background="@color/baseLayoutColor"
-                    android:layout_width="match_parent"
-                    android:layout_height="1px"/>
-                <LinearLayout
-                    android:padding="15dp"
-                    android:orientation="horizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:background="@color/white"
+                        android:layout_marginTop="10dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+                            <TextView
+                                android:text="已报名人数"
+                                android:textSize="16sp"
+                                android:textColor="@color/baseFontColor"
+                                android:layout_margin="15dp"
+                                android:layout_alignParentLeft="true"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" />
+                            <TextView
+                                android:text="未满员"
+                                android:textSize="16sp"
+                                android:textColor="@color/main_color"
+                                android:layout_margin="15dp"
+                                android:layout_alignParentRight="true"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" />
+                        </RelativeLayout>
+                        <View
+                            android:background="@color/baseLayoutColor"
+                            android:layout_width="match_parent"
+                            android:layout_height="1px"/>
+                        <LinearLayout
+                            android:padding="15dp"
+                            android:gravity="center"
+                            android:orientation="horizontal"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+                            <TextView
+                                android:text="8"
+                                android:textSize="25sp"
+                                android:textStyle="bold"
+                                android:textColor="@color/baseFontColor"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" />
+                            <TextView
+                                android:text="人"
+                                android:textSize="15sp"
+                                android:textColor="@color/baseFontColor"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" />
+                        </LinearLayout>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:background="@color/white"
+                        android:layout_marginTop="10dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="主校区体育场"
-                        android:textColor="@color/baseFontColor"
-                        android:textSize="15sp" />
-                </LinearLayout>
-            </LinearLayout>
-            <RelativeLayout
-                android:layout_marginTop="10dp"
-                android:background="@color/white"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <ImageView
-                    android:id="@+id/source_icon"
-                    android:layout_margin="15dp"
-                    android:src="@mipmap/avatar1"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp" />
-                <LinearLayout
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="15dp"
-                    android:layout_toRightOf="@+id/source_icon"
-                    android:orientation="vertical"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-                    <TextView
-                        android:text="举办方"
-                        android:textSize="18sp"
-                        android:textColor="@color/baseFontColor"
-                        android:textStyle="bold"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-                    <TextView
-                        android:text="还说明说明说明"
-                        android:textSize="15sp"
-                        android:textColor="@color/baseFontColor2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-                </LinearLayout>
-                <ImageView
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_margin="15dp"
-                    android:src="@mipmap/right_black"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp" />
-            </RelativeLayout>
-            <LinearLayout
-                android:background="@color/white"
-                android:layout_marginTop="10dp"
-                android:orientation="vertical"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <TextView
-                    android:text="比赛要求"
-                    android:layout_margin="15dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-                <TextView
-                    android:text="比赛要求"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginRight="15dp"
-                    android:layout_marginBottom="15dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-            </LinearLayout>
-            <TextView
-                android:layout_marginTop="10dp"
-                android:alpha="0.5"
-                android:background="@color/main_color"
-                android:textColor="@color/white"
-                android:text="立即报名"
-                android:gravity="center"
-                android:padding="15dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentLeft="true"
+                                android:layout_margin="15dp"
+                                android:text="比赛地点"
+                                android:textColor="@color/baseFontColor"
+                                android:textSize="16sp" />
+                        </RelativeLayout>
+                        <View
+                            android:background="@color/baseLayoutColor"
+                            android:layout_width="match_parent"
+                            android:layout_height="1px"/>
+                        <LinearLayout
+                            android:padding="15dp"
+                            android:orientation="horizontal"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="主校区体育场"
+                                android:textColor="@color/baseFontColor"
+                                android:textSize="15sp" />
+                        </LinearLayout>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:background="@color/white"
+                        android:layout_marginTop="10dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentLeft="true"
+                                android:layout_margin="15dp"
+                                android:text="裁判员"
+                                android:textColor="@color/baseFontColor"
+                                android:textSize="16sp" />
+                        </RelativeLayout>
+                        <View
+                            android:background="@color/baseLayoutColor"
+                            android:layout_width="match_parent"
+                            android:layout_height="1px"/>
+                        <LinearLayout
+                            android:padding="15dp"
+                            android:orientation="horizontal"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="A5630"
+                                android:textColor="@color/baseFontColor"
+                                android:textSize="15sp" />
+                        </LinearLayout>
+                    </LinearLayout>
+                    <RelativeLayout
+                        android:layout_marginTop="10dp"
+                        android:background="@color/white"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <ImageView
+                            android:id="@+id/source_icon"
+                            android:layout_margin="15dp"
+                            android:src="@mipmap/avatar1"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp" />
+                        <LinearLayout
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="15dp"
+                            android:layout_toRightOf="@+id/source_icon"
+                            android:orientation="vertical"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="某某大学"
+                                android:textColor="@color/baseFontColor"
+                                android:textSize="18sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="广学明德"
+                                android:textColor="@color/baseFontColor2"
+                                android:textSize="15sp" />
+                        </LinearLayout>
+                        <ImageView
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:layout_margin="15dp"
+                            android:src="@mipmap/right_black"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp" />
+                    </RelativeLayout>
+                    <LinearLayout
+                        android:background="@color/white"
+                        android:layout_marginTop="10dp"
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:text="比赛要求"
+                            android:layout_margin="15dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                        <TextView
+                            android:text="比赛要求"
+                            android:layout_marginLeft="15dp"
+                            android:layout_marginRight="15dp"
+                            android:layout_marginBottom="15dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                    </LinearLayout>
         </LinearLayout>
-    </ScrollView>
-</LinearLayout>
+    </LinearLayout>
+    </com.jenking.xiaoyunhui.customui.CommonScrollView>
+    <RelativeLayout
+        android:id="@+id/header"
+        android:background="@color/main_color"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/back"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_margin="10dp"
+            android:src="@mipmap/back_white" />
+        <TextView
+            android:text="比赛详情"
+            android:textSize="16sp"
+            android:textColor="@color/white"
+            android:layout_marginTop="10dp"
+            android:layout_centerHorizontal="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+    <TextView
+        android:id="@+id/footer"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="10dp"
+        android:alpha="0.7"
+        android:background="@color/main_color"
+        android:textColor="@color/white"
+        android:text="立即报名"
+        android:gravity="center"
+        android:padding="15dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+</RelativeLayout>

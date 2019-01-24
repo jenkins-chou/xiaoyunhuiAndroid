@@ -29,19 +29,20 @@
             android:layout_height="wrap_content" />
     </RelativeLayout><!--header-->
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_marginTop="10dp"
         android:background="@color/white"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <TextView
+            android:layout_alignParentBottom="true"
             android:id="@+id/logout"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:layout_height="45dp"
             android:background="@color/main_color"
             android:gravity="center"
             android:text="退出登录"
             android:textColor="@color/white" />
-    </LinearLayout>
+    </RelativeLayout>
 </LinearLayout>

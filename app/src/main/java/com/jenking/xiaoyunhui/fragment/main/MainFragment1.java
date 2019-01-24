@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 
 import com.flyco.tablayout.SlidingTabLayout;
 import com.jenking.xiaoyunhui.R;
+import com.jenking.xiaoyunhui.activity.MatchManagerActivity;
 import com.jenking.xiaoyunhui.activity.MatchSearchActivity;
 import com.jenking.xiaoyunhui.fragment.part1.IndexFragment;
 import com.jenking.xiaoyunhui.fragment.part1.TamplateFragment;
@@ -35,6 +36,12 @@ public class MainFragment1 extends Fragment {
     @OnClick(R.id.search_button)
     void search_button(){
         Intent intent = new Intent(getContext(),MatchSearchActivity.class);
+        startActivity(intent);
+    }
+
+    @OnClick(R.id.manager_in)
+    void manager_in(){
+        Intent intent = new Intent(getContext(),MatchManagerActivity.class);
         startActivity(intent);
     }
     

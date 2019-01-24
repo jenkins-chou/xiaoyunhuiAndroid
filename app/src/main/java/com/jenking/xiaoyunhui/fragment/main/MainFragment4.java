@@ -8,11 +8,21 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.jenking.xiaoyunhui.R;
+import com.jenking.xiaoyunhui.activity.LoginActivity;
 import com.jenking.xiaoyunhui.activity.MessageActivity;
 import com.jenking.xiaoyunhui.activity.SettingActivity;
+import com.jenking.xiaoyunhui.models.base.UserModel;
+import com.jenking.xiaoyunhui.tools.AccountTool;
+import com.jenking.xiaoyunhui.tools.StringUtil;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
@@ -20,6 +30,23 @@ import butterknife.Unbinder;
 public class MainFragment4 extends Fragment {
 
     private Unbinder unbinder;
+    @BindView(R.id.user_bar)
+    RelativeLayout user_bar;
+    @BindView(R.id.avatar)
+    ImageView avatar;
+    @BindView(R.id.user_name)
+    TextView user_name;
+    @BindView(R.id.user_slogan)
+    TextView user_slogan;
+
+    @OnClick(R.id.user_bar)
+    void user_bar(){
+        if (!AccountTool.isLogin(getContext())){
+            Intent intent = new Intent(getContext(), LoginActivity.class);
+            startActivity(intent);
+            getActivity().finish();
+        }
+    }
 
     @OnClick(R.id.message)
     void message(){
@@ -38,5 +65,33 @@ public class MainFragment4 extends Fragment {
         View view = inflater.inflate(R.layout.fragment_part4,container,false);
         unbinder = ButterKnife.bind(this,view);
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        loadUserInfo();
+    }
+
+    //加载用户信息
+    void loadUserInfo(){
+        if (AccountTool.isLogin(getContext())){
+            RequestOptions requestOptions = new RequestOptions();
+            requestOptions.circleCrop();
+            requestOptions.error(R.mipmap.avatar1);
+            UserModel userModel = AccountTool.getLoginUser(getContext());
+            if (userModel!=null){
+                Glide.with(getContext()).load(userModel.getUser_avatar()).apply(requestOptions).into(avatar);
+                user_name.setText(userModel.getUser_name());
+                if (StringUtil.isNotEmpty(userModel.getUser_slogan())){
+                    user_slogan.setText(userModel.getUser_slogan());
+                }
+            }
+
+        }else{
+            Glide.with(getContext()).load(R.mipmap.avatar1).into(avatar);
+            user_name.setText("请登录");
+            user_slogan.setText("登录后查看更多");
+        }
     }
 }

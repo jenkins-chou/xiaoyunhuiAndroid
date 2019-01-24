@@ -35,6 +35,7 @@ public class SignInActivity extends BaseActivity {
         if (AccountTool.isLogin(context)){
             Intent intent = new Intent(context,MainActivity.class);
             startActivity(intent);
+            finish();
         }else {
             root_view.setVisibility(View.VISIBLE);
             initVideoBg();

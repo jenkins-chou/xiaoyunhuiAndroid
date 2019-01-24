@@ -126,6 +126,7 @@ public class LoginActivity extends BaseActivity implements LoginContract {
                 AccountTool.saveUser(context,resultModel.getData().get(0));
                 Intent intent = new Intent(this,MainActivity.class);
                 startActivity(intent);
+                finish();
             }else{
                 CommonTipsDialog.create(context,"温馨提示","用户不存在请前往注册",false)
                         .setOnClickListener(new CommonTipsDialog.OnClickListener() {

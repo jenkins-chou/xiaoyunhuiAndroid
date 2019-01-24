@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tl="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:background="@color/baseLayoutColor"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
     <LinearLayout
+        android:id="@+id/header"
         android:background="@color/white"
         android:orientation="vertical"
         android:layout_width="match_parent"
@@ -49,6 +50,30 @@
     </LinearLayout>
     <android.support.v4.view.ViewPager
         android:id="@+id/viewPager"
+        android:layout_below="@+id/header"
         android:layout_width="match_parent"
         android:layout_height="match_parent"></android.support.v4.view.ViewPager>
-</LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/manager_in"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/fragment_part1_index_manager_in"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:orientation="horizontal"
+        android:paddingBottom="8dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingTop="8dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="管理员入口"
+            android:textColor="@color/main_color" />
+    </LinearLayout>
+</RelativeLayout>

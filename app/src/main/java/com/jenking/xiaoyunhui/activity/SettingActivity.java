@@ -15,7 +15,8 @@ public class SettingActivity extends BaseActivity {
     @OnClick(R.id.logout)
     void logout(){
         AccountTool.logout(context);
-        CommonTipsDialog.showTip(context,"温馨提示","提出登录成功",false);
+        CommonTipsDialog.showTip(context,"温馨提示","退出登录成功",false);
+        finish();
     }
 
     @OnClick(R.id.back)

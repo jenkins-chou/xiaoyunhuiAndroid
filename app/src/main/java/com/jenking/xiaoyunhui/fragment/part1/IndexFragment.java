@@ -39,7 +39,6 @@ public class IndexFragment extends Fragment {
     private Context context;
 
     private LinearLayout mineMatch;//我的比赛项目
-    private TextView tv1;//教练入口
 
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
@@ -77,15 +76,6 @@ public class IndexFragment extends Fragment {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 Intent intent = new Intent(context,MatchDetailActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        tv1 = headerView.findViewById(R.id.referee_in);
-        tv1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(context,MatchManagerActivity.class);
                 startActivity(intent);
             }
         });

@@ -42,44 +42,53 @@
                 android:layout_width="25dp"
                 android:layout_height="25dp" />
         </RelativeLayout>
+
         <RelativeLayout
-            android:layout_centerVertical="true"
+            android:id="@+id/user_bar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true">
+
             <ImageView
-                android:layout_marginLeft="25dp"
                 android:id="@+id/avatar"
-                android:src="@mipmap/avatar1"
                 android:layout_width="80dp"
-                android:layout_height="80dp" />
+                android:layout_height="80dp"
+                android:layout_marginLeft="25dp"
+                android:src="@mipmap/avatar1" />
+
             <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
                 android:layout_marginLeft="15dp"
                 android:layout_toRightOf="@+id/avatar"
-                android:layout_centerVertical="true"
-                android:orientation="vertical"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:orientation="vertical">
+
                 <TextView
+                    android:id="@+id/user_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:text="用户A1980"
-                    android:textStyle="bold"
+                    android:textColor="@color/white"
                     android:textSize="18sp"
-                    android:textColor="@color/white"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:textStyle="bold" />
+
                 <TextView
-                    android:text="这个用户很懒什么都没说"
-                    android:textSize="16sp"
-                    android:textColor="@color/white"
+                    android:id="@+id/user_slogan"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:text="这个用户很懒什么都没说"
+                    android:textColor="@color/white"
+                    android:textSize="16sp" />
             </LinearLayout>
+
             <ImageView
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="15dp"
-                android:layout_alignParentRight="true"
-                android:src="@mipmap/right_white"
-                android:layout_width="25dp"
-                android:layout_height="25dp" />
+                android:src="@mipmap/right_white" />
         </RelativeLayout>
     </RelativeLayout>
     <RelativeLayout
@@ -196,7 +205,7 @@
         </RelativeLayout>
         <RelativeLayout
             android:background="@color/white"
-            android:layout_marginTop="1dp"
+            android:layout_marginTop="1px"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <TextView
@@ -218,17 +227,18 @@
         </RelativeLayout>
         <RelativeLayout
             android:background="@color/white"
-            android:layout_marginTop="1dp"
+            android:layout_marginTop="1px"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
             <TextView
-                android:layout_margin="15dp"
-                android:text="裁判认证"
-                android:textColor="@color/baseFontColor"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_margin="15dp"
+                android:text="裁判员认证"
+                android:textColor="@color/baseFontColor" />
 
             <ImageView
                 android:layout_marginRight="15dp"

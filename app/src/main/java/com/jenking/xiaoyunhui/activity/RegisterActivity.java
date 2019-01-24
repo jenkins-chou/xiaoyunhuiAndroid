@@ -131,6 +131,7 @@ public class RegisterActivity extends BaseActivity implements LoginContract {
                     AccountTool.saveUser(context,resultModel.getData().get(0));
                     Intent intent = new Intent(this,MainActivity.class);
                     startActivity(intent);
+                    finish();
                 }else {
                     CommonTipsDialog.showTip(context,"温馨提示",resultModel.getMessage()+"",false);
                 }
