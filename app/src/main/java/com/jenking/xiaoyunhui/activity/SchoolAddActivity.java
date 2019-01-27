@@ -1,0 +1,310 @@
+package com.jenking.xiaoyunhui.activity;
+
+import android.content.Intent;
+import android.support.annotation.Nullable;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
+import com.jenking.xiaoyunhui.R;
+import com.jenking.xiaoyunhui.api.RequestService;
+import com.jenking.xiaoyunhui.contacts.SchoolContract;
+import com.jenking.xiaoyunhui.customui.CommonLoading;
+import com.jenking.xiaoyunhui.presenters.SchoolPresenter;
+import com.jenking.xiaoyunhui.tools.AccountTool;
+import com.jenking.xiaoyunhui.tools.StringUtil;
+import com.luck.picture.lib.PictureSelector;
+import com.luck.picture.lib.config.PictureConfig;
+import com.luck.picture.lib.config.PictureMimeType;
+import com.luck.picture.lib.entity.LocalMedia;
+
+import org.xutils.common.Callback;
+import org.xutils.ex.HttpException;
+import org.xutils.http.RequestParams;
+import org.xutils.x;
+
+import java.io.File;
+import java.util.List;
+import java.util.Map;
+
+import butterknife.BindView;
+import butterknife.OnClick;
+
+public class SchoolAddActivity extends BaseActivity implements SchoolContract {
+
+    private SchoolPresenter schoolPresenter;
+    private String selectSchoolImagePath;
+    private String schoolImageUrl;//服务器地址
+
+    private String school_name;
+    private String school_address;
+    private String school_abstract;
+    private String school_detail;
+    @BindView(R.id.school_logo)
+    ImageView school_logo;
+    @BindView(R.id.input_school_name)
+    TextView input_school_name;
+    @BindView(R.id.input_school_address)
+    TextView input_school_address;
+    @BindView(R.id.input_school_abstract)
+    TextView input_school_abstract;
+    @BindView(R.id.input_school_detail)
+    TextView input_school_detail;
+
+    @BindView(R.id.loading)
+    CommonLoading loading;
+
+    @OnClick({R.id.school_logo, R.id.select_logo_text})
+    void select_logo() {
+        // 进入相册 以下是例子：用不到的api可以不写
+        PictureSelector.create(SchoolAddActivity.this)
+                .openGallery(PictureMimeType.ofImage())//全部.PictureMimeType.ofAll()、图片.ofImage()、视频.ofVideo()、音频.ofAudio()
+//                .theme()//主题样式(不设置为默认样式) 也可参考demo values/styles下 例如：R.style.picture.white.style
+                .maxSelectNum(1)// 最大图片选择数量 int
+                .minSelectNum(1)// 最小选择数量 int
+                .imageSpanCount(3)// 每行显示个数 int
+                .selectionMode(PictureConfig.SINGLE)// 多选 or 单选 PictureConfig.MULTIPLE or PictureConfig.SINGLE
+                .previewImage(true)// 是否可预览图片 true or false
+                .previewVideo(false)// 是否可预览视频 true or false
+                .enablePreviewAudio(false) // 是否可播放音频 true or false
+                .isCamera(true)// 是否显示拍照按钮 true or false
+                .imageFormat(PictureMimeType.PNG)// 拍照保存图片格式后缀,默认jpeg
+                .isZoomAnim(true)// 图片列表点击 缩放效果 默认true
+                .sizeMultiplier(0.5f)// glide 加载图片大小 0~1之间 如设置 .glideOverride()无效
+                .setOutputCameraPath("/CustomPath")// 自定义拍照保存路径,可不填
+                .enableCrop(true)// 是否裁剪 true or false
+                .compress(true)// 是否压缩 true or false
+//                .glideOverride()// int glide 加载宽高，越小图片列表越流畅，但会影响列表图片浏览的清晰度
+                .withAspectRatio(1, 1)// int 裁剪比例 如16:9 3:2 3:4 1:1 可自定义
+                .hideBottomControls(false)// 是否显示uCrop工具栏，默认不显示 true or false
+                .isGif(false)// 是否显示gif图片 true or false
+//                .compressSavePath(getPath())//压缩图片保存地址
+                .freeStyleCropEnabled(true)// 裁剪框是否可拖拽 true or false
+                .circleDimmedLayer(false)// 是否圆形裁剪 true or false
+                .showCropFrame(true)// 是否显示裁剪矩形边框 圆形裁剪时建议设为false   true or false
+                .showCropGrid(true)// 是否显示裁剪矩形网格 圆形裁剪时建议设为false    true or false
+                .openClickSound(false)// 是否开启点击声音 true or false
+//                .selectionMedia(false)// 是否传入已选图片 List<LocalMedia> list
+                .previewEggs(false)// 预览图片时 是否增强左右滑动图片体验(图片滑动一半即可看到上一张是否选中) true or false
+                .cropCompressQuality(90)// 裁剪压缩质量 默认90 int
+                .minimumCompressSize(50)// 小于100kb的图片不压缩
+                .synOrAsy(true)//同步true或异步false 压缩 默认同步
+//                .cropWH()// 裁剪宽高比，设置如果大于图片本身宽高则无效 int
+                .rotateEnabled(true) // 裁剪是否可旋转图片 true or false
+                .scaleEnabled(true)// 裁剪是否可放大缩小图片 true or false
+//                .videoQuality()// 视频录制质量 0 or 1 int
+                .videoMaxSecond(15)// 显示多少秒以内的视频or音频也可适用 int
+                .videoMinSecond(10)// 显示多少秒以内的视频or音频也可适用 int
+//                .recordVideoSecond()//视频秒数录制 默认60s int
+                .isDragFrame(false)// 是否可拖动裁剪框(固定)
+                .forResult(PictureConfig.CHOOSE_REQUEST);//结果回调onActivityResult code
+    }
+
+    @OnClick(R.id.footer)
+    void submit(){
+        school_name = input_school_name.getText().toString();
+        school_address = input_school_address.getText().toString();
+        school_abstract = input_school_abstract.getText().toString();
+        school_detail = input_school_detail.getText().toString();
+
+        if (!StringUtil.isNotEmpty(selectSchoolImagePath)){
+            Toast.makeText(context, "请选择校徽图片", Toast.LENGTH_SHORT).show();
+        }else if (!StringUtil.isNotEmpty(school_name)){
+            Toast.makeText(context, "请输入学校名称", Toast.LENGTH_SHORT).show();
+        }else if (!StringUtil.isNotEmpty(school_address)){
+            Toast.makeText(context, "请输入学校地址", Toast.LENGTH_SHORT).show();
+        }else if (!StringUtil.isNotEmpty(school_abstract)){
+            Toast.makeText(context, "请输入校训", Toast.LENGTH_SHORT).show();
+        }else if (!StringUtil.isNotEmpty(school_detail)){
+            Toast.makeText(context, "请输入学校详细介绍", Toast.LENGTH_SHORT).show();
+        }else{
+            setLoadingEnable(true);
+            uploadFile(selectSchoolImagePath);
+        }
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_school_add);
+    }
+
+    @Override
+    public void initData() {
+        super.initData();
+        schoolPresenter = new SchoolPresenter(context,this);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        switch (requestCode) {
+            case PictureConfig.CHOOSE_REQUEST:
+                // 图片、视频、音频选择结果回调
+                List<LocalMedia> selectList = PictureSelector.obtainMultipleResult(data);
+                if (selectList.size() > 0) {
+                    selectSchoolImagePath = selectList.get(0).getCutPath();
+                    RequestOptions requestOptions = new RequestOptions();
+                    requestOptions.circleCrop();
+                    Glide.with(context).load(selectSchoolImagePath).apply(requestOptions).into(school_logo);
+                } else {
+                    selectSchoolImagePath = "";
+                    Glide.with(context).load(R.mipmap.img_add).into(school_logo);
+                }
+                break;
+        }
+    }
+
+    void uploadFile(String path){
+
+        /**
+         * 自定义实体参数类请参考:
+         * 请求注解 {@link org.xutils.http.annotation.HttpRequest}
+         * 请求注解处理模板接口 {@link org.xutils.http.app.ParamsBuilder}
+         *
+         * 需要自定义类型作为callback的泛型时, 参考:
+         * 响应注解 {@link org.xutils.http.annotation.HttpResponse}
+         * 响应注解处理模板接口 {@link org.xutils.http.app.ResponseParser}
+         *
+         * 示例: 查看 org.xutils.sample.http 包里的代码
+         */
+        RequestParams params = new RequestParams("http://104.194.85.83:8888/upload/uploadImg");
+        //        params.setSslSocketFactory(...); // 设置ssl
+        //        params.addQueryStringParameter("wd", "xUtils");
+        params.setMultipart(true);
+        params.addBodyParameter("uploadFile", new File(path));
+        //        BaiduParams params = new BaiduParams();
+        //        params.wd = "xUtils";
+        // 有上传文件时使用multipart表单, 否则上传原始文件流.
+        // params.setMultipart(true);
+        // 上传文件方式 1
+        // params.uploadFile = new File("/sdcard/test.txt");
+        // 上传文件方式 2
+        // params.addBodyParameter("uploadFile", new File("/sdcard/test.txt"));
+        Callback.Cancelable cancelable
+                = x.http().post(params,
+                /**
+                 * 1. callback的泛型:
+                 * callback参数默认支持的泛型类型参见{@link org.xutils.http.loader.LoaderFactory},
+                 * 例如: 指定泛型为File则可实现文件下载, 使用params.setSaveFilePath(path)指定文件保存的全路径.
+                 * 默认支持断点续传(采用了文件锁和尾端校验续传文件的一致性).
+                 * 其他常用类型可以自己在LoaderFactory中注册,
+                 * 也可以使用{@link org.xutils.http.annotation.HttpResponse}
+                 * 将注解HttpResponse加到自定义返回值类型上, 实现自定义ResponseParser接口来统一转换.
+                 * 如果返回值是json形式, 那么利用第三方的json工具将十分容易定义自己的ResponseParser.
+                 * 如示例代码{@link org.xutils.sample.http.BaiduResponse}, 可直接使用BaiduResponse作为
+                 * callback的泛型.
+                 *
+                 * 2. callback的组合:
+                 * 可以用基类或接口组合个种类的Callback, 见{@link org.xutils.common.Callback}.
+                 * 例如:
+                 * a. 组合使用CacheCallback将使请求检测缓存或将结果存入缓存(仅GET请求生效).
+                 * b. 组合使用PrepareCallback的prepare方法将为callback提供一次后台执行耗时任务的机会,
+                 * 然后将结果给onCache或onSuccess.
+                 * c. 组合使用ProgressCallback将提供进度回调.
+                 * ...(可参考{@link org.xutils.image.ImageLoader}
+                 * 或 示例代码中的 {@link org.xutils.sample.download.DownloadCallback})
+                 *
+                 * 3. 请求过程拦截或记录日志: 参考 {@link org.xutils.http.app.RequestTracker}
+                 *
+                 * 4. 请求Header获取: 参考 {@link org.xutils.http.app.RequestInterceptListener}
+                 *
+                 * 5. 其他(线程池, 超时, 重定向, 重试, 代理等): 参考 {@link org.xutils.http.RequestParams}
+                 *
+                 **/
+                new Callback.CommonCallback<String>() {
+                    @Override
+                    public void onSuccess(String result) {
+                        Log.e("onSuccess",""+result);
+                        schoolImageUrl = result;
+                        submitData();
+                    }
+
+                    @Override
+                    public void onError(Throwable ex, boolean isOnCallback) {
+                        setLoadingEnable(false);
+                        Toast.makeText(x.app(), ex.getMessage(), Toast.LENGTH_LONG).show();
+                        if (ex instanceof HttpException) { // 网络错误
+                            HttpException httpEx = (HttpException) ex;
+                            int responseCode = httpEx.getCode();
+                            String responseMsg = httpEx.getMessage();
+                            String errorResult = httpEx.getResult();
+                            // ...
+                        } else { // 其他错误
+                            // ...
+                        }
+                        Toast.makeText(x.app(), ex.getMessage(), Toast.LENGTH_LONG).show();
+                    }
+
+                    @Override
+                    public void onCancelled(Callback.CancelledException cex) {
+                        setLoadingEnable(false);
+                        Toast.makeText(x.app(), "cancelled", Toast.LENGTH_LONG).show();
+                    }
+
+                    @Override
+                    public void onFinished() {
+                        setLoadingEnable(false);
+                    }
+                });
+        // cancelable.cancel(); // 取消请求
+    }
+
+    void submitData(){
+        Map<String,String> params = RequestService.getBaseParams(context);
+        params.put("school_logo",schoolImageUrl);
+        params.put("school_name",school_name);
+        params.put("school_create_time",StringUtil.getTime());
+        params.put("school_address",school_address);
+        params.put("school_manager",AccountTool.getLoginUser(context).getUser_id());
+        params.put("school_abstract",school_abstract);
+        params.put("school_detail",school_detail);
+        params.put("school_remark","");
+
+        Log.e("submitData",params.toString());
+
+        if (schoolPresenter!=null){
+            schoolPresenter.addSchool(params);
+        }
+    }
+
+    void setLoadingEnable(boolean enable){
+        if (loading!=null){
+            loading.setVisibility(enable?View.VISIBLE:View.GONE);
+        }
+    }
+
+    @Override
+    public void getAllSchoolResult(boolean isSuccess, Object object) {
+
+    }
+
+    @Override
+    public void getSchoolByIdResult(boolean isSuccess, Object object) {
+
+    }
+
+    @Override
+    public void addSchoolResult(boolean isSuccess, Object object) {
+        setLoadingEnable(false);
+        if (checkResultModel(isSuccess,object)){
+            Toast.makeText(context, "添加成功", Toast.LENGTH_SHORT).show();
+            finish();
+        }
+    }
+
+    @Override
+    public void success(Object object) {
+
+    }
+
+    @Override
+    public void failed(Object object) {
+
+    }
+}

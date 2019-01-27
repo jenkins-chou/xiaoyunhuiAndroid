@@ -1,18 +1,21 @@
 package com.jenking.xiaoyunhui.models.base;
 
 public class MatchModel {
-    private String match_id;
-    private String match_title;
-    private String match_time;
-    private String match_create_time;
-    private String match_referee_id;
-    private String match_manager;
-    private String match_abstract;
-    private String match_detail;
-    private String match_athletes_num;
-    private String match_status;
-    private String match_organizers;
-    private String match_del;
+    public String match_id;
+    public String match_title;
+    public String match_time;
+    public String match_create_time;
+    public String match_referee_id;
+    public String match_manager;
+    public String match_abstract;
+    public String match_detail;
+    public String match_athletes_num;
+    public String match_status;
+    public String match_organizers;
+    public String match_del;
+    public String match_type;
+    public String match_img;
+    public String match_address;
 
     public String getMatch_id() {
         return match_id;
@@ -110,6 +113,30 @@ public class MatchModel {
         this.match_del = match_del;
     }
 
+    public String getMatch_type() {
+        return match_type;
+    }
+
+    public void setMatch_type(String match_type) {
+        this.match_type = match_type;
+    }
+
+    public String getMatch_img() {
+        return match_img;
+    }
+
+    public void setMatch_img(String match_img) {
+        this.match_img = match_img;
+    }
+
+    public String getMatch_address() {
+        return match_address;
+    }
+
+    public void setMatch_address(String match_address) {
+        this.match_address = match_address;
+    }
+
     @Override
     public String toString() {
         return "MatchModel{" +
@@ -125,6 +152,9 @@ public class MatchModel {
                 ", match_status='" + match_status + '\'' +
                 ", match_organizers='" + match_organizers + '\'' +
                 ", match_del='" + match_del + '\'' +
+                ", match_type='" + match_type + '\'' +
+                ", match_img='" + match_img + '\'' +
+                ", match_address='" + match_address + '\'' +
                 '}';
     }
 }

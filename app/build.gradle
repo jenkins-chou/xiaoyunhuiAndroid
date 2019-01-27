@@ -61,4 +61,9 @@ dependencies {
     implementation 'com.github.LuckSiege.PictureSelector:picture_library:v2.2.3'
 
     implementation 'com.github.baserecycleradapter:library:1.1.0'
+
+    implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-alpha-19'
+    implementation 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0-alpha-19'//没有使用特殊Header，可以不加这行
+
+    implementation 'org.xutils:xutils:3.5.0'
 }

@@ -23,6 +23,7 @@ public class SettingActivity extends BaseActivity {
     void back(){
         finish();
     }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -25,7 +25,7 @@
             android:layout_centerInParent="true"
             android:text="发布新比赛"
             android:textColor="@color/baseFontColor"
-            android:textSize="16sp" />
+            android:textSize="18sp" />
     </RelativeLayout>
     <ScrollView
         android:layout_below="@+id/header"
@@ -47,14 +47,17 @@
                     android:textColor="@color/baseFontColor"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
+
                 <EditText
-                    android:textSize="14sp"
-                    android:padding="10dp"
-                    android:hint="请输入"
-                    android:layout_marginTop="10dp"
-                    android:background="@drawable/activity_create_match_eidttext_bg"
+                    android:id="@+id/input_match_title"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:textColor="@color/main_color"
+                    android:background="@drawable/activity_create_match_eidttext_bg"
+                    android:hint="请输入"
+                    android:padding="10dp"
+                    android:textSize="18sp" />
             </LinearLayout>
             <LinearLayout
                 android:layout_marginTop="10dp"
@@ -68,14 +71,17 @@
                     android:text="简要说明"
                     android:textColor="@color/baseFontColor"
                     android:textStyle="bold" />
+
                 <EditText
-                    android:textSize="14sp"
-                    android:padding="10dp"
-                    android:hint="请输入"
-                    android:layout_marginTop="10dp"
-                    android:background="@drawable/activity_create_match_eidttext_bg"
+                    android:id="@+id/input_match_abstract"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:textColor="@color/main_color"
+                    android:background="@drawable/activity_create_match_eidttext_bg"
+                    android:hint="请输入"
+                    android:padding="10dp"
+                    android:textSize="18sp" />
             </LinearLayout>
             <LinearLayout
                 android:orientation="horizontal"
@@ -95,11 +101,13 @@
                         android:text="类型"
                         android:textColor="@color/baseFontColor"
                         android:textStyle="bold" />
-                    <EditText
-                        android:textSize="14sp"
+                    <TextView
+                        android:id="@+id/select_match_type"
+                        android:textSize="18sp"
                         android:padding="10dp"
-                        android:hint="请输入"
+                        android:hint="请选择"
                         android:layout_marginTop="10dp"
+                        android:textColor="@color/main_color"
                         android:background="@drawable/activity_create_match_eidttext_bg"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />
@@ -118,14 +126,18 @@
                         android:text="人数"
                         android:textColor="@color/baseFontColor"
                         android:textStyle="bold" />
+
                     <EditText
-                        android:textSize="14sp"
-                        android:padding="10dp"
-                        android:hint="请输入"
-                        android:layout_marginTop="10dp"
-                        android:background="@drawable/activity_create_match_eidttext_bg"
+                        android:id="@+id/input_match_number"
+                        android:inputType="number"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:textColor="@color/main_color"
+                        android:background="@drawable/activity_create_match_eidttext_bg"
+                        android:hint="请输入"
+                        android:padding="10dp"
+                        android:textSize="18sp" />
                 </LinearLayout>
             </LinearLayout>
             <LinearLayout
@@ -140,10 +152,12 @@
                     android:text="裁判员"
                     android:textColor="@color/baseFontColor"
                     android:textStyle="bold" />
-                <EditText
-                    android:textSize="14sp"
+                <TextView
+                    android:id="@+id/select_referee"
+                    android:textSize="18sp"
                     android:padding="10dp"
-                    android:hint="请输入"
+                    android:hint="请选择"
+                    android:textColor="@color/main_color"
                     android:layout_marginTop="10dp"
                     android:background="@drawable/activity_create_match_eidttext_bg"
                     android:layout_width="match_parent"
@@ -162,14 +176,17 @@
                     android:text="比赛要求"
                     android:textColor="@color/baseFontColor"
                     android:textStyle="bold" />
+
                 <EditText
-                    android:textSize="14sp"
-                    android:padding="10dp"
-                    android:hint="请输入"
-                    android:layout_marginTop="10dp"
-                    android:background="@drawable/activity_create_match_eidttext_bg"
+                    android:id="@+id/input_match_detail"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:textColor="@color/main_color"
+                    android:background="@drawable/activity_create_match_eidttext_bg"
+                    android:hint="请输入"
+                    android:padding="10dp"
+                    android:textSize="18sp" />
             </LinearLayout>
             <LinearLayout
                 android:layout_marginTop="10dp"
@@ -182,14 +199,17 @@
                     android:text="比赛时间"
                     android:textColor="@color/baseFontColor"
                     android:textStyle="bold" />
-                <EditText
-                    android:textSize="14sp"
-                    android:padding="10dp"
-                    android:hint="请输入"
-                    android:layout_marginTop="10dp"
-                    android:background="@drawable/activity_create_match_eidttext_bg"
+
+                <TextView
+                    android:id="@+id/select_match_time"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:textColor="@color/main_color"
+                    android:background="@drawable/activity_create_match_eidttext_bg"
+                    android:hint="请选择"
+                    android:padding="10dp"
+                    android:textSize="18sp" />
             </LinearLayout>
             <LinearLayout
                 android:layout_marginTop="10dp"
@@ -203,14 +223,41 @@
                     android:text="比赛地点"
                     android:textColor="@color/baseFontColor"
                     android:textStyle="bold" />
+
                 <EditText
-                    android:textSize="14sp"
-                    android:padding="10dp"
+                    android:id="@+id/input_match_address"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:textColor="@color/main_color"
+                    android:background="@drawable/activity_create_match_eidttext_bg"
                     android:hint="请输入"
+                    android:padding="10dp"
+                    android:textSize="18sp" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_marginTop="10dp"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="主办方"
+                    android:textColor="@color/baseFontColor"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/select_match_organizer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:background="@drawable/activity_create_match_eidttext_bg"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:hint="请选择"
+                    android:padding="10dp"
+                    android:textColor="@color/main_color"
+                    android:textSize="18sp" />
             </LinearLayout>
             <LinearLayout
                 android:layout_marginTop="10dp"
@@ -225,20 +272,21 @@
                     android:textColor="@color/baseFontColor"
                     android:textStyle="bold" />
 
-                <EditText
+                <ImageView
+                    android:id="@+id/select_match_img"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:background="@drawable/activity_create_match_eidttext_bg"
                     android:hint="请选择图片"
+                    android:background="@color/white"
                     android:padding="10dp"
-                    android:textSize="14sp" />
+                    android:src="@mipmap/img_add"
+                    android:textSize="18sp" />
             </LinearLayout>
 
         </LinearLayout>
 
     </ScrollView>
-
     <TextView
         android:id="@+id/footer"
         android:textColor="@color/white"
@@ -250,4 +298,10 @@
         android:background="@color/main_color"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
+    <com.jenking.xiaoyunhui.customui.CommonLoading
+        android:id="@+id/loading"
+        android:visibility="gone"
+        android:layout_centerInParent="true"
+        android:layout_width="100dp"
+        android:layout_height="120dp" />
 </RelativeLayout>

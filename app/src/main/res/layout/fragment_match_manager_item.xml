@@ -11,29 +11,38 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-            <TextView
-                android:text="男子组400米半决赛"
-                android:textColor="@color/baseFontColor"
-                android:layout_margin="15dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
 
             <TextView
+                android:id="@+id/match_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="15dp"
+                android:text="男子组400米半决赛"
+                android:textColor="@color/baseFontColor" />
+
+            <TextView
+                android:id="@+id/match_create_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:layout_margin="15dp"
-                android:text="裁判员：A36523" />
+                android:layout_marginStart="15dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginEnd="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginBottom="15dp" />
         </RelativeLayout>
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
             <TextView
-                android:text="比赛简介：xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+                android:id="@+id/match_abstract"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
                 android:layout_marginBottom="15dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:text="比赛简介" />
         </RelativeLayout>
         <RelativeLayout
             android:layout_marginLeft="15dp"
@@ -43,6 +52,7 @@
             android:layout_height="180dp">
 
             <ImageView
+                android:id="@+id/match_img"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scaleType="centerCrop"
@@ -53,25 +63,39 @@
                 android:layout_alignParentBottom="true"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
-
                 <TextView
-                    android:text="比赛时间：2019年1月21日"
-                    android:layout_marginTop="10dp"
-                    android:textColor="@color/white"
+                    android:id="@+id/match_status"
+                    android:layout_above="@+id/detail_button"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="15dp"
+                    android:text="状态"
+                    android:padding="3dp"
+                    android:background="@color/colorAccent"
+                    android:textColor="@color/white"
+                    android:textSize="10sp" />
+                <TextView
+                    android:id="@+id/match_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="比赛时间：2019年1月21日"
+                    android:textColor="@color/white" />
             </LinearLayout>
+
             <TextView
-                android:text="查看详情"
-                android:textSize="13sp"
-                android:layout_margin="15dp"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentRight="true"
-                android:padding="3dp"
-                android:background="@color/main_color"
-                android:textColor="@color/white"
+                android:id="@+id/detail_button"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentBottom="true"
+                android:layout_margin="15dp"
+                android:background="@color/main_color"
+                android:padding="3dp"
+                android:text="查看详情"
+                android:textColor="@color/white"
+                android:textSize="13sp" />
         </RelativeLayout>
     </LinearLayout>
 

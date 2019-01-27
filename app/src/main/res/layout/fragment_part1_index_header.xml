@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
+    android:paddingTop="15dp"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
     <LinearLayout
-        android:layout_margin="15dp"
+        android:id="@+id/usertype_one"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginBottom="15dp"
         android:background="@drawable/fragment_part_index_header_bg"
         android:orientation="vertical"
         android:layout_width="match_parent"
@@ -45,7 +49,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
                 <TextView
-                    android:text="4"
+                    android:id="@+id/user_match_account"
+                    android:text="0"
                     android:textSize="30sp"
                     android:textStyle="bold"
                     android:textColor="@color/black"
@@ -83,6 +88,7 @@
         </RelativeLayout>
     </LinearLayout>
     <LinearLayout
+        android:id="@+id/usertype_two"
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
         android:layout_marginBottom="15dp"
@@ -128,9 +134,10 @@
                 android:layout_height="wrap_content">
 
                 <TextView
+                    android:id="@+id/referee_match_account"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="10"
+                    android:text="0"
                     android:textColor="@color/black"
                     android:textSize="30sp"
                     android:textStyle="bold" />

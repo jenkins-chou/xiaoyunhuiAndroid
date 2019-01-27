@@ -1,24 +1,24 @@
 package com.jenking.xiaoyunhui.models.base;
 
 public class UserModel {
-    private String user_id;
-    private String user_name;
-    private String user_pass;
-    private String user_realname;
-    private String user_sex;
-    private String user_avatar;
-    private String user_slogan;
-    private String user_phone;
-    private String user_email;
-    private String user_health;
-    private String user_address;
-    private String user_type;
-    private String user_status;
-    private String user_create_time;
-    private String user_remark;
-    private String user_del;
-    private String user_school;
-    private String user_class;
+    public String user_id;
+    public String user_name;
+    public String user_pass;
+    public String user_realname;
+    public String user_sex;
+    public String user_avatar;
+    public String user_slogan;
+    public String user_phone;
+    public String user_email;
+    public String user_health;
+    public String user_address;
+    public String user_type;
+    public String user_status;
+    public String user_create_time;
+    public String user_remark;
+    public String user_del;
+    public String user_school;
+    public String user_class;
 
     public String getUser_id() {
         return user_id;

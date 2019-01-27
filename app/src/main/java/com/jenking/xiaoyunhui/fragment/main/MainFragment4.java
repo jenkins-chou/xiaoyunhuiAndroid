@@ -17,7 +17,9 @@ import com.bumptech.glide.request.RequestOptions;
 import com.jenking.xiaoyunhui.R;
 import com.jenking.xiaoyunhui.activity.LoginActivity;
 import com.jenking.xiaoyunhui.activity.MessageActivity;
+import com.jenking.xiaoyunhui.activity.RefereeAuthctivity;
 import com.jenking.xiaoyunhui.activity.SettingActivity;
+import com.jenking.xiaoyunhui.dialog.CommonTipsDialog;
 import com.jenking.xiaoyunhui.models.base.UserModel;
 import com.jenking.xiaoyunhui.tools.AccountTool;
 import com.jenking.xiaoyunhui.tools.StringUtil;
@@ -38,6 +40,23 @@ public class MainFragment4 extends Fragment {
     TextView user_name;
     @BindView(R.id.user_slogan)
     TextView user_slogan;
+
+    @OnClick(R.id.referee_auth)
+    void referee_auth(){
+        if (AccountTool.isLogin(getContext())){
+            if (AccountTool.getUserType(getContext()).equals("1")){
+                Intent intent = new Intent(getContext(),RefereeAuthctivity.class);
+                startActivity(intent);
+            }else if (AccountTool.getUserType(getContext()).equals("2")){
+                CommonTipsDialog.showTip(getContext(),"温馨提示","您当前已经是裁判了",false);
+            }else if (AccountTool.getUserType(getContext()).equals("3")){
+                CommonTipsDialog.showTip(getContext(),"温馨提示","您是管理员，无需进行裁判认证",false);
+            }
+        }else{
+            CommonTipsDialog.showTip(getContext(),"温馨提示","请登录后重试",false);
+        }
+
+    }
 
     @OnClick(R.id.user_bar)
     void user_bar(){

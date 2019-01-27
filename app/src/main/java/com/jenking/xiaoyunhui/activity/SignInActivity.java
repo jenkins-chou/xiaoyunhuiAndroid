@@ -38,7 +38,7 @@ public class SignInActivity extends BaseActivity {
             finish();
         }else {
             root_view.setVisibility(View.VISIBLE);
-            initVideoBg();
+            initVideoBg();//播放视频桌面
             initView();
         }
     }

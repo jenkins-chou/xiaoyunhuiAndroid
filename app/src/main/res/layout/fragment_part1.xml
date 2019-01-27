@@ -48,14 +48,37 @@
             tl:tl_indicator_margin_right="2dp"
             tl:tl_indicator_style="BLOCK"/>
     </LinearLayout>
-    <android.support.v4.view.ViewPager
-        android:id="@+id/viewPager"
+    <RelativeLayout
         android:layout_below="@+id/header"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"></android.support.v4.view.ViewPager>
+        android:layout_height="match_parent">
+        <android.support.v4.view.ViewPager
+            android:id="@+id/viewPager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"></android.support.v4.view.ViewPager>
+
+        <TextView
+            android:id="@+id/get_data_again"
+            android:layout_marginTop="20dp"
+            android:padding="3dp"
+            android:visibility="gone"
+            android:layout_centerHorizontal="true"
+            android:textColor="@color/main_color"
+            android:text="服务器开小差了？点击重试"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <com.jenking.xiaoyunhui.customui.CommonLoading
+            android:id="@+id/loading"
+            android:visibility="gone"
+            android:layout_centerInParent="true"
+            android:layout_width="100dp"
+            android:layout_height="120dp" />
+    </RelativeLayout>
+
 
     <LinearLayout
         android:id="@+id/manager_in"
+        android:visibility="gone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
@@ -71,6 +94,7 @@
         android:paddingTop="8dp">
 
         <TextView
+            android:id="@+id/manager_in_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="管理员入口"

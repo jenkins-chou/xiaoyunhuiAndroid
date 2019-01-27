@@ -4,7 +4,7 @@ import android.support.annotation.Nullable;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
-import com.jenking.xiaoyunhui.models.main.match_manager.MatchModel;
+import com.jenking.xiaoyunhui.models.base.MatchModel;
 
 import java.util.List;
 

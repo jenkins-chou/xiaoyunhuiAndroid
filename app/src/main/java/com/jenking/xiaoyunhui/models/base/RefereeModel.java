@@ -1,11 +1,10 @@
 package com.jenking.xiaoyunhui.models.base;
 
-public class RefereeModel {
-    private String referee_id;
-    private String user_id;
-    private String referee_status;
-    private String referee_manager;
-    private String referee_del;
+public class RefereeModel extends UserModel{
+    public String referee_id;
+    public String referee_status;
+    public String referee_manager;
+    public String referee_del;
 
     public String getReferee_id() {
         return referee_id;
@@ -38,7 +37,6 @@ public class RefereeModel {
     public void setReferee_manager(String referee_manager) {
         this.referee_manager = referee_manager;
     }
-
     public String getReferee_del() {
         return referee_del;
     }

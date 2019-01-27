@@ -225,11 +225,13 @@
                 android:layout_width="20dp"
                 android:layout_height="20dp" />
         </RelativeLayout>
+
         <RelativeLayout
-            android:background="@color/white"
-            android:layout_marginTop="1px"
+            android:id="@+id/referee_auth"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="1px"
+            android:background="@color/white">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -241,12 +243,36 @@
                 android:textColor="@color/baseFontColor" />
 
             <ImageView
-                android:layout_marginRight="15dp"
-                android:layout_centerVertical="true"
-                android:layout_alignParentRight="true"
-                android:src="@mipmap/right_black"
                 android:layout_width="20dp"
-                android:layout_height="20dp" />
+                android:layout_height="20dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="15dp"
+                android:src="@mipmap/right_black" />
+        </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/referee_manager"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="1px"
+            android:background="@color/white">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_margin="15dp"
+                android:text="裁判员管理"
+                android:textColor="@color/baseFontColor" />
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="15dp"
+                android:src="@mipmap/right_black" />
         </RelativeLayout>
     </LinearLayout>
 

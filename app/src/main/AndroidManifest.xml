@@ -22,6 +22,7 @@
     <!-- 安装权限 -->
     <!-- tools:replace="android:icon,android:label,android:theme,android:appComponentFactory" -->
     <application
+        android:name=".app.MyApp"
         android:allowBackup="true"
         android:hardwareAccelerated="false"
         android:icon="@mipmap/xiaoyunhui_icon"
@@ -43,7 +44,7 @@
             android:name="notch.config"
             android:value="portrait|landscape" />
 
-        <activity android:name=".MainActivity"></activity>
+        <activity android:name=".MainActivity" />
         <activity android:name=".activity.MatchDetailActivity" />
         <activity android:name=".activity.BaseActivity" />
         <activity android:name=".activity.MatchManagerActivity" />
@@ -59,7 +60,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.LoginActivity"></activity>
+        <activity android:name=".activity.LoginActivity" />
         <activity android:name=".activity.RegisterActivity" />
         <activity android:name=".activity.CreateMatchActivity" />
         <activity android:name=".activity.MatchSearchActivity" />
@@ -69,7 +70,13 @@
         <activity android:name=".activity.SettingActivity" />
         <activity android:name=".activity.MessageActivity" />
         <activity android:name=".activity.MineTeamActivity" />
-        <activity android:name=".activity.MatchEnrollActivity"></activity>
+        <activity android:name=".activity.MatchEnrollActivity" />
+        <activity android:name=".activity.RefereeAuthctivity" />
+        <activity android:name=".activity.RefereeListActivity" />
+        <activity android:name=".activity.MatchTypeListActivity" />
+        <activity android:name=".activity.MatchTypeAddActivity" />
+        <activity android:name=".activity.SchoolListActivity" />
+        <activity android:name=".activity.SchoolAddActivity"></activity>
     </application>
 
 </manifest>

@@ -158,7 +158,46 @@
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="10dp"
                         android:layout_toRightOf="@+id/icon2"
-                        android:text="我是裁判"
+                        android:text="我是裁判预员"
+                        android:textColor="@color/main_color_light"
+                        android:textSize="17sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="15dp"
+                        android:text="点此进入"
+                        android:textColor="#ffffff"
+                        android:textSize="17sp" />
+                </RelativeLayout>
+                <RelativeLayout
+                    android:id="@+id/score_manager"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp">
+
+                    <com.jenking.xiaoyunhui.customui.part2.ScoreRefereeButtonBg
+                        android:layout_width="match_parent"
+                        android:layout_height="60dp"/>
+                    <ImageView
+                        android:id="@+id/icon3"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_alignParentLeft="true"
+                        android:layout_marginLeft="15dp"
+                        android:layout_centerVertical="true"
+                        android:src="@mipmap/fragment_part2_score_icon2" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="10dp"
+                        android:layout_toRightOf="@+id/icon3"
+                        android:text="我是管理员"
                         android:textColor="@color/main_color_light"
                         android:textSize="17sp" />
 
