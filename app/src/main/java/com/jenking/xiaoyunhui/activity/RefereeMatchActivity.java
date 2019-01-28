@@ -1,6 +1,5 @@
 package com.jenking.xiaoyunhui.activity;
 
-import android.app.DownloadManager;
 import android.content.Intent;
 import android.os.Build;
 import android.service.autofill.FieldClassification;
@@ -32,12 +31,9 @@ import java.util.List;
 import java.util.Map;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
-import butterknife.Unbinder;
 
-public class MineMatchActivity extends BaseActivity implements MatchContract{
-
+public class RefereeMatchActivity extends BaseActivity implements MatchContract {
 
     @BindView(R.id.loading)
     CommonLoading loading;
@@ -51,11 +47,13 @@ public class MineMatchActivity extends BaseActivity implements MatchContract{
     void back(){
         finish();
     }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_mine_match);
+        setContentView(R.layout.activity_referee_match);
     }
+
 
     @Override
     public void initData() {
@@ -74,7 +72,6 @@ public class MineMatchActivity extends BaseActivity implements MatchContract{
                 if (!isDestroyed()){
                     Glide.with(context).load(BaseAPI.base_url+item.getMatch_img()).into(item_image);
                 }
-
             }
         };
         baseRecyclerAdapter.setOnRecyclerItemClickListener(new OnRecyclerItemClickListener() {
@@ -98,7 +95,7 @@ public class MineMatchActivity extends BaseActivity implements MatchContract{
         Map<String,String> params = RequestService.getBaseParams(context);
         params.put("user_id", AccountTool.getLoginUser(context).getUser_id());
         if (matchPresenter!=null){
-            matchPresenter.getMatchByUserId(params);
+            matchPresenter.getMatchByRefereeId(params);
         }
     }
 
@@ -139,6 +136,11 @@ public class MineMatchActivity extends BaseActivity implements MatchContract{
 
     @Override
     public void getMatchByUserIdResult(boolean isSuccess, Object object) {
+
+    }
+
+    @Override
+    public void getMatchByRefereeIdResult(boolean isSuccess, Object object) {
         setLoadingEnable(false);
         if (isSuccess&&object!=null){
             ResultModel resultModel = (ResultModel)object;
@@ -147,11 +149,6 @@ public class MineMatchActivity extends BaseActivity implements MatchContract{
                 baseRecyclerAdapter.setData(datas);
             }
         }
-    }
-
-    @Override
-    public void getMatchByRefereeIdResult(boolean isSuccess, Object object) {
-
     }
 
     @Override

@@ -25,6 +25,7 @@ import com.jenking.xiaoyunhui.R;
 import com.jenking.xiaoyunhui.activity.LoginActivity;
 import com.jenking.xiaoyunhui.activity.MatchDetailActivity;
 import com.jenking.xiaoyunhui.activity.MineMatchActivity;
+import com.jenking.xiaoyunhui.activity.RefereeMatchActivity;
 import com.jenking.xiaoyunhui.api.BaseAPI;
 import com.jenking.xiaoyunhui.api.RequestService;
 import com.jenking.xiaoyunhui.contacts.MatchContract;
@@ -58,6 +59,7 @@ public class IndexFragment extends Fragment implements MatchContract,UserMatchCo
     private Context context;
 
     private LinearLayout mineMatch;//我的比赛项目
+    private LinearLayout refereeMatch;//裁判员负责的项目
 
     private MatchPresenter matchPresenter;
     private UserMatchPresenter userMatchPresenter;
@@ -97,7 +99,12 @@ public class IndexFragment extends Fragment implements MatchContract,UserMatchCo
             if (AccountTool.isLogin(context)){
                 Map<String,String> params = RequestService.getBaseParams(context);
                 params.put("user_id",AccountTool.getLoginUser(context).getUser_id());
-                userMatchPresenter.getUserMatchByUserId(params);
+                if (AccountTool.getUserType(context).equals("1")){
+                    userMatchPresenter.getUserMatchByUserId(params);
+                }else if (AccountTool.getUserType(context).equals("2")){
+                    userMatchPresenter.getRefereeMatchByUserId(params);
+                }
+
             }
         }
     }
@@ -137,6 +144,7 @@ public class IndexFragment extends Fragment implements MatchContract,UserMatchCo
         //添加头部
         headerView = getLayoutInflater().inflate(R.layout.fragment_part1_index_header,null,false);
         baseRecyclerAdapter.addHeaderView(headerView);
+
         recyclerView.setLayoutManager(new StaggeredGridLayoutManager(1,1));
         recyclerView.setAdapter(baseRecyclerAdapter);
 
@@ -148,6 +156,16 @@ public class IndexFragment extends Fragment implements MatchContract,UserMatchCo
                 startActivity(intent);
             }
         });
+
+        refereeMatch = headerView.findViewById(R.id.referee_match);
+        refereeMatch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context,RefereeMatchActivity.class);
+                startActivity(intent);
+            }
+        });
+
         getData();
 
     }
@@ -235,6 +253,11 @@ public class IndexFragment extends Fragment implements MatchContract,UserMatchCo
     }
 
     @Override
+    public void getMatchByRefereeIdResult(boolean isSuccess, Object object) {
+
+    }
+
+    @Override
     public void success(Object object) {
 
     }
@@ -255,6 +278,20 @@ public class IndexFragment extends Fragment implements MatchContract,UserMatchCo
                     if (user_match_account!=null){
                         user_match_account.setText(resultModel.getData().size()+"");
                     }
+                }
+            }
+        }
+    }
+
+    @Override
+    public void getRefereeMatchByUserIdResult(boolean isSuccess, Object object) {
+        if (isSuccess&&object!=null) {
+            ResultModel resultModel = (ResultModel) object;
+            if (resultModel != null && resultModel.getData() != null) {
+                Log.e("getRefereeMatchByUserId",""+resultModel.toString());
+                TextView referee_match_account = headerView.findViewById(R.id.referee_match_account);
+                if (referee_match_account!=null){
+                    referee_match_account.setText(resultModel.getData().size()+"");
                 }
             }
         }

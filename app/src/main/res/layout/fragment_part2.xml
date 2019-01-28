@@ -79,6 +79,7 @@
                 </android.support.v7.widget.RecyclerView>
             </LinearLayout>
             <LinearLayout
+                android:id="@+id/score_manager_bar"
                 android:orientation="vertical"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
@@ -94,6 +95,7 @@
 
                 <!--android:background="@drawable/fragment_part2_score_item_bg1"-->
                 <RelativeLayout
+                    android:visibility="gone"
                     android:id="@+id/score_student"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -133,8 +135,8 @@
                         android:textColor="#ffffff"
                         android:textSize="17sp" />
                 </RelativeLayout>
-
                 <RelativeLayout
+                    android:visibility="gone"
                     android:id="@+id/score_referee"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -158,7 +160,7 @@
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="10dp"
                         android:layout_toRightOf="@+id/icon2"
-                        android:text="我是裁判预员"
+                        android:text="我是裁判员"
                         android:textColor="@color/main_color_light"
                         android:textSize="17sp" />
 
@@ -174,6 +176,7 @@
                         android:textSize="17sp" />
                 </RelativeLayout>
                 <RelativeLayout
+                    android:visibility="gone"
                     android:id="@+id/score_manager"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -212,20 +215,22 @@
                         android:textColor="#ffffff"
                         android:textSize="17sp" />
                 </RelativeLayout>
+                <RelativeLayout
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginBottom="15dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_marginRight="15dp"
+                        android:layout_alignParentRight="true"
+                        android:textColor="#ff9900"
+                        android:text="对成绩有疑问？"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </RelativeLayout>
             </LinearLayout>
-            <RelativeLayout
-                android:layout_marginLeft="15dp"
-                android:layout_marginBottom="15dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <TextView
-                    android:layout_marginRight="15dp"
-                    android:layout_alignParentRight="true"
-                    android:textColor="#ff9900"
-                    android:text="对成绩有疑问？"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-            </RelativeLayout>
+
         </LinearLayout>
     </ScrollView>
 

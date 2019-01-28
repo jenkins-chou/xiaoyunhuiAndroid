@@ -40,6 +40,8 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 
+import static com.jenking.xiaoyunhui.tools.MatchTypeTool.getMatchType;
+
 public class MatchDetailActivity extends BaseActivity implements MatchContract {
 
     private Unbinder unbinder;
@@ -117,6 +119,7 @@ public class MatchDetailActivity extends BaseActivity implements MatchContract {
                     Map<String,String> params = RequestService.getBaseParams(context);
                     params.put("match_id",match_id);
                     params.put("user_id",AccountTool.getLoginUser(context).getUser_id());
+                    params.put("user_match_status","1");//报名中,跟随match_status
                     matchPresenter.addUserMatch(params);
                     setLoadingEnable(true);
                 }
@@ -201,7 +204,7 @@ public class MatchDetailActivity extends BaseActivity implements MatchContract {
             match_type.setText(matchDetailModel.getMatch_type());
             match_number.setText(matchDetailModel.getMatch_athletes_num());
             match_time.setText(StringUtil.getStrTime(matchDetailModel.getMatch_time(),"yyyy-MM-dd HH:mm:ss"));
-            match_status.setText(matchDetailModel.getMatch_status());
+            match_status.setText(getMatchType(matchDetailModel.getMatch_status()));
 //            match_register_number.setText(matchDetailModel.getMatch_athletes_num());//已报名人数
             match_address.setText(matchDetailModel.getMatch_address());
             match_referee.setText(matchDetailModel.getUser_name());
@@ -234,6 +237,7 @@ public class MatchDetailActivity extends BaseActivity implements MatchContract {
 
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
     @Override
     public void getMatchByIdResult(boolean isSuccess, Object object) {
         loadFinishOne = true;
@@ -287,10 +291,17 @@ public class MatchDetailActivity extends BaseActivity implements MatchContract {
 
     }
 
+    @Override
+    public void getMatchByRefereeIdResult(boolean isSuccess, Object object) {
+
+    }
+
     private void refreshUserMatch(){
         if (userMatchModelList!=null&&userMatchModelList.size()>0){
-            match_register_number.setText(userMatchModelList.size()+"");
+            match_register_number.setText(userMatchModelList.size()+"人");
 //            match_status.setText();
+        }else{
+            match_register_number.setText("0人");
         }
     }
 

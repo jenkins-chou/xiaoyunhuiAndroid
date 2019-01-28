@@ -251,6 +251,42 @@ public class MatchPresenter {
                 });
     }
 
+    public void getMatchByRefereeId(Map<String,String> params){
+        if (params==null)return;
+        Log.e("开始请求","p-->"+params.toString());
+        new ApiUtil(context)
+                .getServer(ApiService.class)
+                //记得更改请求接口数据
+                .getmatchByRefereeId(params)
+                .subscribeOn(Schedulers.io())//后台处理线程
+                .observeOn(AndroidSchedulers.mainThread())//指定回调发生的线程
+                .subscribe(new Observer<ResultModel<MatchModel>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                        System.out.print(d);
+                    }
+
+                    @Override
+                    public void onNext(ResultModel<MatchModel> resultModel) {
+                        //更新视图
+                        MatchContract matchContract = (MatchContract)view;
+                        matchContract.getMatchByRefereeIdResult(true,resultModel);
+                        //view.success(resultModel);
+                    }
+                    @Override
+                    public void onError(Throwable e) {
+                        System.out.print("----error");
+                        e.printStackTrace();
+                        MatchContract matchContract = (MatchContract)view;
+                        matchContract.getMatchByRefereeIdResult(false,e);
+                        //view.failed(e);
+                    }
+                    @Override
+                    public void onComplete() {
+                    }
+                });
+    }
+
     //模糊查询比赛
     public void searchMatch(Map<String,String> params){
         if (params==null)return;

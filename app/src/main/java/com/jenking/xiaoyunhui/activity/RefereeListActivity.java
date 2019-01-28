@@ -70,7 +70,7 @@ public class RefereeListActivity extends BaseActivity implements RefereeContract
         if (datas!=null&&datas.get(i)!=null){
             RefereeModel refereeModel = datas.get(i);
             Intent intent = getIntent();
-            intent.putExtra("select_referee_id",refereeModel.getUser_id());
+            intent.putExtra("select_referee_id",refereeModel.getReferee_id());
             intent.putExtra("select_referee_name",refereeModel.getUser_name());
             Log.e("select_referee_id",refereeModel.getUser_id());
             Log.e("select_referee_name",refereeModel.getUser_name());

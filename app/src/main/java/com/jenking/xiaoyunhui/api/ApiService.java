@@ -89,6 +89,11 @@ public interface ApiService {
     @POST("match/getmatchByUserId")
     Observable<ResultModel<MatchModel>> getmatchByUserId(@FieldMap Map<String, String> body);
 
+    //根据refereeid获取比赛
+    @FormUrlEncoded
+    @POST("match/getmatchByRefereeId")
+    Observable<ResultModel<MatchModel>> getmatchByRefereeId(@FieldMap Map<String, String> body);
+
     //根据keyword获取比赛
     @FormUrlEncoded
     @POST("match/searchmatch")

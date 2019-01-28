@@ -165,6 +165,11 @@ public class MatchManagerFragment extends Fragment implements MatchContract {
     }
 
     @Override
+    public void getMatchByRefereeIdResult(boolean isSuccess, Object object) {
+
+    }
+
+    @Override
     public void success(Object object) {
 
     }
