@@ -160,6 +160,11 @@ public class MatchManagerFragment extends Fragment implements MatchContract {
     }
 
     @Override
+    public void getMatchByUserIdResult(boolean isSuccess, Object object) {
+
+    }
+
+    @Override
     public void success(Object object) {
 
     }

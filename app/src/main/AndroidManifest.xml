@@ -76,7 +76,8 @@
         <activity android:name=".activity.MatchTypeListActivity" />
         <activity android:name=".activity.MatchTypeAddActivity" />
         <activity android:name=".activity.SchoolListActivity" />
-        <activity android:name=".activity.SchoolAddActivity"></activity>
+        <activity android:name=".activity.SchoolAddActivity" />
+        <activity android:name=".activity.RefereeManagerActivity"></activity>
     </application>
 
 </manifest>

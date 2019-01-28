@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -8,6 +8,7 @@
     android:orientation="vertical"
     tools:context=".activity.MatchSearchActivity">
     <RelativeLayout
+        android:id="@+id/header"
         android:background="@color/white"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -19,21 +20,23 @@
             android:layout_centerVertical="true"
             android:layout_margin="15dp"
             android:src="@mipmap/back_black" />
+
         <EditText
+            android:id="@+id/input_keyword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_toLeftOf="@+id/search_button"
+            android:layout_toRightOf="@+id/back"
+            android:background="@drawable/activity_match_search_edittext"
             android:hint="请输入比赛关键字"
-            android:textSize="16sp"
+            android:maxLines="1"
             android:padding="10dp"
             android:singleLine="true"
-            android:maxLines="1"
-            android:background="@drawable/activity_match_search_edittext"
-            android:layout_marginRight="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_toRightOf="@+id/back"
-            android:layout_toLeftOf="@+id/search_button"
             android:textColor="@color/baseFontColor"
-            android:layout_centerInParent="true"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:textSize="16sp" />
 
         <TextView
             android:id="@+id/search_button"
@@ -45,7 +48,28 @@
             android:text="搜索"
             android:textColor="@color/main_color" />
     </RelativeLayout>
+
     <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerview"
+        android:layout_below="@+id/header"
+        android:layout_marginTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"></android.support.v7.widget.RecyclerView>
-</LinearLayout>
+
+    <TextView
+        android:text="空空如也"
+        android:id="@+id/empty_show"
+        android:visibility="gone"
+        android:layout_below="@+id/header"
+        android:layout_marginTop="10dp"
+        android:layout_centerHorizontal="true"
+        android:textColor="@color/main_color"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <com.jenking.xiaoyunhui.customui.CommonLoading
+        android:id="@+id/loading"
+        android:visibility="gone"
+        android:layout_centerInParent="true"
+        android:layout_width="100dp"
+        android:layout_height="120dp" />
+</RelativeLayout>

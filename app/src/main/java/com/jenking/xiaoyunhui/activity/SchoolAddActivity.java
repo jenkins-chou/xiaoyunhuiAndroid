@@ -60,6 +60,11 @@ public class SchoolAddActivity extends BaseActivity implements SchoolContract {
     @BindView(R.id.loading)
     CommonLoading loading;
 
+    @OnClick(R.id.back)
+    void back(){
+        finish();
+    }
+
     @OnClick({R.id.school_logo, R.id.select_logo_text})
     void select_logo() {
         // 进入相册 以下是例子：用不到的api可以不写

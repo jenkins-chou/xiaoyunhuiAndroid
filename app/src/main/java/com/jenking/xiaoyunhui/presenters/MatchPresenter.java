@@ -7,6 +7,7 @@ import com.jenking.xiaoyunhui.api.ApiService;
 import com.jenking.xiaoyunhui.api.ApiUtil;
 import com.jenking.xiaoyunhui.contacts.BaseCallBack;
 import com.jenking.xiaoyunhui.contacts.MatchContract;
+import com.jenking.xiaoyunhui.contacts.MatchSearchContract;
 import com.jenking.xiaoyunhui.models.base.MatchDetailModel;
 import com.jenking.xiaoyunhui.models.base.MatchModel;
 import com.jenking.xiaoyunhui.models.base.ResultModel;
@@ -206,6 +207,79 @@ public class MatchPresenter {
                         e.printStackTrace();
                         MatchContract matchContract = (MatchContract)view;
                         matchContract.getMatchByStatusResult(false,e);
+                        //view.failed(e);
+                    }
+                    @Override
+                    public void onComplete() {
+                    }
+                });
+    }
+
+    public void getMatchByUserId(Map<String,String> params){
+        if (params==null)return;
+        Log.e("开始请求","p-->"+params.toString());
+        new ApiUtil(context)
+                .getServer(ApiService.class)
+                //记得更改请求接口数据
+                .getmatchByUserId(params)
+                .subscribeOn(Schedulers.io())//后台处理线程
+                .observeOn(AndroidSchedulers.mainThread())//指定回调发生的线程
+                .subscribe(new Observer<ResultModel<MatchModel>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                        System.out.print(d);
+                    }
+
+                    @Override
+                    public void onNext(ResultModel<MatchModel> resultModel) {
+                        //更新视图
+                        MatchContract matchContract = (MatchContract)view;
+                        matchContract.getMatchByUserIdResult(true,resultModel);
+                        //view.success(resultModel);
+                    }
+                    @Override
+                    public void onError(Throwable e) {
+                        System.out.print("----error");
+                        e.printStackTrace();
+                        MatchContract matchContract = (MatchContract)view;
+                        matchContract.getMatchByUserIdResult(false,e);
+                        //view.failed(e);
+                    }
+                    @Override
+                    public void onComplete() {
+                    }
+                });
+    }
+
+    //模糊查询比赛
+    public void searchMatch(Map<String,String> params){
+        if (params==null)return;
+        Log.e("开始请求","p-->"+params.toString());
+        new ApiUtil(context)
+                .getServer(ApiService.class)
+                //记得更改请求接口数据
+                .searchMatch(params)
+                .subscribeOn(Schedulers.io())//后台处理线程
+                .observeOn(AndroidSchedulers.mainThread())//指定回调发生的线程
+                .subscribe(new Observer<ResultModel<MatchModel>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                        System.out.print(d);
+                    }
+
+                    @Override
+                    public void onNext(ResultModel<MatchModel> resultModel) {
+                        //更新视图
+                        MatchSearchContract matchContract = (MatchSearchContract)view;
+                        matchContract.searchMatchResult(true,resultModel);
+                        //view.success(resultModel);
+                    }
+                    @Override
+                    public void onError(Throwable e) {
+                        System.out.print("----error");
+                        e.printStackTrace();
+                        MatchSearchContract matchContract = (MatchSearchContract)view;
+                        matchContract.searchMatchResult(false,e);
                         //view.failed(e);
                     }
                     @Override

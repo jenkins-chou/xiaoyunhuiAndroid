@@ -133,7 +133,6 @@ public class TamplateFragment extends Fragment implements MatchContract {
     @Override
     public void getMatchByTypeResult(boolean isSuccess, Object object) {
         smartRefreshLayout.finishRefresh();
-
         if (isSuccess&&object!=null){
             ResultModel resultModel = (ResultModel)object;
             if (StringUtil.isEquals(resultModel.getStatus(),"200")){
@@ -160,6 +159,11 @@ public class TamplateFragment extends Fragment implements MatchContract {
 
     @Override
     public void getUserMatchByMatchIdResult(boolean isSuccess, Object object) {
+
+    }
+
+    @Override
+    public void getMatchByUserIdResult(boolean isSuccess, Object object) {
 
     }
 

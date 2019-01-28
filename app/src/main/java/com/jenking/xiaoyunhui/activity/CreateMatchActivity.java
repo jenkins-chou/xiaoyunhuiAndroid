@@ -456,6 +456,11 @@ public class CreateMatchActivity extends BaseActivity implements MatchContract {
     }
 
     @Override
+    public void getMatchByUserIdResult(boolean isSuccess, Object object) {
+
+    }
+
+    @Override
     public void success(Object object) {
 
     }

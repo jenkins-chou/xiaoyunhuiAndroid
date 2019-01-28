@@ -1,8 +1,6 @@
 package com.jenking.xiaoyunhui.activity;
 
 import android.content.Intent;
-import android.support.annotation.BinderThread;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
@@ -21,13 +19,13 @@ import com.jenking.xiaoyunhui.presenters.RefereePresenter;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.OnClick;
 
 public class RefereeListActivity extends BaseActivity implements RefereeContract {
     public final static int SelectRefereeResultId = 3090;
-
 
     @BindView(R.id.recyclerview)
     RecyclerView recyclerView;
@@ -38,6 +36,7 @@ public class RefereeListActivity extends BaseActivity implements RefereeContract
     void back(){
         finish();
     }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -84,7 +83,9 @@ public class RefereeListActivity extends BaseActivity implements RefereeContract
     protected void onResume() {
         super.onResume();
         if (refereePresenter!=null){
-            refereePresenter.getAllReferee(RequestService.getBaseParams(context));
+            Map<String,String> params = RequestService.getBaseParams(context);
+            params.put("referee_status","2");
+            refereePresenter.getAllRefereeByStatus(params);
         }
     }
 
@@ -99,6 +100,11 @@ public class RefereeListActivity extends BaseActivity implements RefereeContract
 
     @Override
     public void addRefereeResult(boolean isSuccess, Object object) {
+
+    }
+
+    @Override
+    public void updateRefereeResult(boolean isSuccess, Object object) {
 
     }
 

@@ -8,7 +8,8 @@
     tools:context=".activity.MatchDetailActivity">
     <com.jenking.xiaoyunhui.customui.CommonScrollView
         android:id="@+id/scrollView"
-        android:layout_above="@+id/footer"
+        android:layout_alignParentTop="true"
+        android:layout_above="@+id/footer_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
     <LinearLayout
@@ -17,7 +18,7 @@
         android:layout_height="wrap_content">
         <LinearLayout
         android:id="@+id/content"
-        android:layout_above="@+id/footer"
+        android:layout_above="@+id/footer_bar"
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -108,7 +109,6 @@
                         android:text="时间"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
-
                     <TextView
                         android:id="@+id/match_time"
                         android:layout_width="wrap_content"
@@ -332,18 +332,36 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
     </RelativeLayout>
-    <TextView
-        android:id="@+id/footer"
+    <LinearLayout
+        android:id="@+id/footer_bar"
+        android:orientation="vertical"
         android:layout_alignParentBottom="true"
-        android:layout_marginTop="10dp"
-        android:alpha="0.7"
-        android:background="@color/main_color"
-        android:textColor="@color/white"
-        android:text="立即报名"
-        android:gravity="center"
-        android:padding="15dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/footer"
+            android:layout_marginTop="10dp"
+            android:alpha="0.7"
+            android:background="@color/main_color"
+            android:textColor="@color/white"
+            android:text="立即报名"
+            android:gravity="center"
+            android:padding="15dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/footer2"
+            android:layout_marginTop="1dp"
+            android:alpha="0.7"
+            android:background="@color/colorAccent"
+            android:textColor="@color/white"
+            android:text="更改进程"
+            android:gravity="center"
+            android:padding="15dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
     <com.jenking.xiaoyunhui.customui.CommonLoading
         android:id="@+id/loading"
         android:visibility="gone"

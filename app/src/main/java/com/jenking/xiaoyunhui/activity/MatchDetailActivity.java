@@ -81,6 +81,11 @@ public class MatchDetailActivity extends BaseActivity implements MatchContract {
     @BindView(R.id.match_detail)
     TextView match_detail;
 
+    @BindView(R.id.footer)
+    TextView footer;
+    @BindView(R.id.footer2)
+    TextView footer2;
+
     @BindView(R.id.loading)
     CommonLoading loading;
 
@@ -153,6 +158,19 @@ public class MatchDetailActivity extends BaseActivity implements MatchContract {
                 }
             }
         });
+
+        if (AccountTool.isLogin(context)){
+            if (!AccountTool.getLoginUser(context).getUser_type().equals("1")){
+                footer.setVisibility(View.GONE);
+            }
+            if (AccountTool.getLoginUser(context).getUser_type().equals("3")){
+                footer2.setVisibility(View.VISIBLE);
+            }else{
+                footer2.setVisibility(View.GONE);
+            }
+        }else{
+            footer2.setVisibility(View.GONE);
+        }
     }
 
     public void initData(){
@@ -188,7 +206,10 @@ public class MatchDetailActivity extends BaseActivity implements MatchContract {
             match_address.setText(matchDetailModel.getMatch_address());
             match_referee.setText(matchDetailModel.getUser_name());
 
-            Glide.with(context).load(BaseAPI.base_url+matchDetailModel.getSchool_logo()).into(school_icon);
+            if (!isDestroyed()){
+                Glide.with(context).load(BaseAPI.base_url+matchDetailModel.getSchool_logo()).into(school_icon);
+            }
+
             school_name.setText(matchDetailModel.getSchool_name());
             school_abstract.setText(matchDetailModel.getSchool_abstract());
 
@@ -259,6 +280,11 @@ public class MatchDetailActivity extends BaseActivity implements MatchContract {
             userMatchModelList = new ArrayList<>();
         }
         refreshUserMatch();
+    }
+
+    @Override
+    public void getMatchByUserIdResult(boolean isSuccess, Object object) {
+
     }
 
     private void refreshUserMatch(){

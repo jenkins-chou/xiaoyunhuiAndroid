@@ -72,7 +72,7 @@ public class RefereeAuthctivity extends BaseActivity implements RefereeContract 
                                         public void confirm() {
                                             finish();
                                         }
-                                    });
+                                    }).show();
                             break;
                         case "201":
                             CommonTipsDialog.create(context,"温馨提示","您已经申请过了",false)
@@ -86,7 +86,7 @@ public class RefereeAuthctivity extends BaseActivity implements RefereeContract 
                                         public void confirm() {
                                             finish();
                                         }
-                                    });
+                                    }).show();
                             break;
                     }
                 }
@@ -94,6 +94,11 @@ public class RefereeAuthctivity extends BaseActivity implements RefereeContract 
         }else{
             CommonTipsDialog.showTip(context,"温馨提示","网络超时",false);
         }
+    }
+
+    @Override
+    public void updateRefereeResult(boolean isSuccess, Object object) {
+
     }
 
     @Override

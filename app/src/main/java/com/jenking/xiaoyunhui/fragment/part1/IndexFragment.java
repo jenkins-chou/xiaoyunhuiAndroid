@@ -230,6 +230,11 @@ public class IndexFragment extends Fragment implements MatchContract,UserMatchCo
     }
 
     @Override
+    public void getMatchByUserIdResult(boolean isSuccess, Object object) {
+
+    }
+
+    @Override
     public void success(Object object) {
 
     }

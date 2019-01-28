@@ -63,10 +63,15 @@ public interface ApiService {
     @POST("referee/addReferee")
     Observable<ResultModel<RefereeModel>> addReferee(@FieldMap Map<String, String> body);
 
-    //获取所有裁判员
+    //通过裁判员认证
     @FormUrlEncoded
-    @POST("referee/getReferees")
-    Observable<ResultModel<RefereeModel>> getAllReferee(@FieldMap Map<String, String> body);
+    @POST("referee/updateReferee")
+    Observable<ResultModel<RefereeModel>> updateReferee(@FieldMap Map<String, String> body);
+
+    //根据status获取所有裁判员
+    @FormUrlEncoded
+    @POST("referee/getRefereeByStatus")
+    Observable<ResultModel<RefereeModel>> getRefereeByStatus(@FieldMap Map<String, String> body);
 
 
     //获取所有比赛
@@ -79,6 +84,15 @@ public interface ApiService {
     @POST("match/getmatchByStatus")
     Observable<ResultModel<MatchModel>> getmatchByStatus(@FieldMap Map<String, String> body);
 
+    //根据userid获取比赛
+    @FormUrlEncoded
+    @POST("match/getmatchByUserId")
+    Observable<ResultModel<MatchModel>> getmatchByUserId(@FieldMap Map<String, String> body);
+
+    //根据keyword获取比赛
+    @FormUrlEncoded
+    @POST("match/searchmatch")
+    Observable<ResultModel<MatchModel>> searchMatch(@FieldMap Map<String, String> body);
 
     //添加比赛
     @FormUrlEncoded

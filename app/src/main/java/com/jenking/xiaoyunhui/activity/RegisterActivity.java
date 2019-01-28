@@ -70,6 +70,7 @@ public class RegisterActivity extends BaseActivity implements LoginContract {
         Map<String,String> params = RequestService.getBaseParams(context);
         params.put("user_name",username);
         params.put("user_pass",password);
+        params.put("user_create_time",StringUtil.getTime());
         if (loginPresenter!=null){
             loginPresenter.register(params);
         }
@@ -127,7 +128,7 @@ public class RegisterActivity extends BaseActivity implements LoginContract {
         if (isSuccess){
             if (object!=null){
                 ResultModel resultModel = (ResultModel)object;
-                if (resultModel!=null&&resultModel.getData()!=null&&resultModel.getData().size()==1){
+                if (resultModel!=null&&resultModel.getData()!=null&&resultModel.getData().size()>=1){
                     AccountTool.saveUser(context,resultModel.getData().get(0));
                     Intent intent = new Intent(this,MainActivity.class);
                     startActivity(intent);

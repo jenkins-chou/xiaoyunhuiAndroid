@@ -18,6 +18,7 @@ import com.jenking.xiaoyunhui.R;
 import com.jenking.xiaoyunhui.activity.LoginActivity;
 import com.jenking.xiaoyunhui.activity.MessageActivity;
 import com.jenking.xiaoyunhui.activity.RefereeAuthctivity;
+import com.jenking.xiaoyunhui.activity.RefereeManagerActivity;
 import com.jenking.xiaoyunhui.activity.SettingActivity;
 import com.jenking.xiaoyunhui.dialog.CommonTipsDialog;
 import com.jenking.xiaoyunhui.models.base.UserModel;
@@ -40,6 +41,11 @@ public class MainFragment4 extends Fragment {
     TextView user_name;
     @BindView(R.id.user_slogan)
     TextView user_slogan;
+
+    @BindView(R.id.referee_auth)
+    RelativeLayout referee_auth;
+    @BindView(R.id.referee_manager)
+    RelativeLayout referee_manager;
 
     @OnClick(R.id.referee_auth)
     void referee_auth(){
@@ -78,6 +84,12 @@ public class MainFragment4 extends Fragment {
         Intent intent = new Intent(getContext(),SettingActivity.class);
         startActivity(intent);
     }
+
+    @OnClick(R.id.referee_manager)
+    void referee_manager(){
+        Intent intent = new Intent(getContext(),RefereeManagerActivity.class);
+        startActivity(intent);
+    }
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -105,10 +117,32 @@ public class MainFragment4 extends Fragment {
                 if (StringUtil.isNotEmpty(userModel.getUser_slogan())){
                     user_slogan.setText(userModel.getUser_slogan());
                 }
+
+                switch (userModel.getUser_type()){
+                    //队员或领队
+                    case "1":
+                        referee_manager.setVisibility(View.GONE);
+                        referee_auth.setVisibility(View.VISIBLE);
+                        break;
+                    //裁判
+                    case "2":
+                        referee_manager.setVisibility(View.GONE);
+                        referee_auth.setVisibility(View.GONE);
+                        break;
+                    //管理员
+                    case "3":
+                        referee_manager.setVisibility(View.VISIBLE);
+                        referee_auth.setVisibility(View.GONE);
+                        break;
+                }
+
             }
+
+
 
         }else{
             Glide.with(getContext()).load(R.mipmap.avatar1).into(avatar);
+            referee_manager.setVisibility(View.GONE);
             user_name.setText("请登录");
             user_slogan.setText("登录后查看更多");
         }

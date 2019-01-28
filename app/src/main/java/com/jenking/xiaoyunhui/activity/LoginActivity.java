@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 import android.widget.VideoView;
 
 import com.google.gson.Gson;
@@ -89,7 +90,7 @@ public class LoginActivity extends BaseActivity implements LoginContract {
     public void initData() {
         super.initData();
         loginPresenter = new LoginPresenter(context,this);
-        button_login.getBackground().mutate().setAlpha(100);
+//        button_login.getBackground().mutate().setAlpha(100);
     }
 
     //初始化视频桌面
@@ -125,32 +126,35 @@ public class LoginActivity extends BaseActivity implements LoginContract {
     @Override
     public void loginResult(boolean isSuccess, Object object) {
         setLoadingEnable(false);
-        if (object!=null){
-            ResultModel resultModel = (ResultModel)object;
-            if (resultModel!=null&&resultModel.getData()!=null&&resultModel.getData().size()==1){
-                AccountTool.saveUser(context,resultModel.getData().get(0));
-                Intent intent = new Intent(this,MainActivity.class);
-                startActivity(intent);
-                finish();
-            }else{
-                CommonTipsDialog.create(context,"温馨提示","用户不存在请前往注册",false)
-                        .setOnClickListener(new CommonTipsDialog.OnClickListener() {
-                            @Override
-                            public void cancel() {
+        if(isSuccess){
+            if (object!=null){
+                ResultModel resultModel = (ResultModel)object;
+                if (resultModel!=null&&resultModel.getData()!=null&&resultModel.getData().size()==1){
+                    AccountTool.saveUser(context,resultModel.getData().get(0));
+                    Intent intent = new Intent(this,MainActivity.class);
+                    startActivity(intent);
+                    finish();
+                }else{
+                    CommonTipsDialog.create(context,"温馨提示","用户不存在请前往注册",false)
+                            .setOnClickListener(new CommonTipsDialog.OnClickListener() {
+                                @Override
+                                public void cancel() {
 
-                            }
+                                }
 
-                            @Override
-                            public void confirm() {
-                                Intent intent = new Intent(context,RegisterActivity.class);
-                                startActivity(intent);
-                                finish();
-                            }
-                        }).show();
+                                @Override
+                                public void confirm() {
+                                    Intent intent = new Intent(context,RegisterActivity.class);
+                                    startActivity(intent);
+                                    finish();
+                                }
+                            }).show();
+                }
+                Log.e("loginResult",""+object.toString());
             }
-            Log.e("loginResult",""+object.toString());
+        }else{
+            Toast.makeText(context, "服务器开小差了？请重试", Toast.LENGTH_SHORT).show();
         }
-
     }
 
     @Override

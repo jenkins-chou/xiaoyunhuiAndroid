@@ -239,7 +239,7 @@
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
                 android:layout_margin="15dp"
-                android:text="裁判员认证"
+                android:text="成为裁判员"
                 android:textColor="@color/baseFontColor" />
 
             <ImageView
