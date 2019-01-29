@@ -1,14 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <View
+        android:background="@color/baseLayoutColor"
+        android:layout_width="match_parent"
+        android:layout_height="1px"/>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
     android:layout_height="wrap_content">
     <ImageView
+        android:layout_margin="3dp"
         android:id="@+id/item_avatar"
-        android:layout_margin="10dp"
         android:src="@mipmap/avatar1"
-        android:layout_width="30dp"
-        android:layout_height="30dp" />
+        android:scaleType="center"
+        android:layout_width="60dp"
+        android:layout_height="60dp" />
     <TextView
+        android:id="@+id/item_name"
         android:text="用户名"
         android:layout_marginLeft="10dp"
         android:layout_toRightOf="@+id/item_avatar"
@@ -16,10 +27,16 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
     <EditText
+        android:padding="5dp"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:background="@drawable/activity_userinfo_edittext"
         android:hint="请输入成绩"
+        android:gravity="right"
         android:layout_marginRight="15dp"
         android:layout_centerVertical="true"
         android:layout_alignParentRight="true"
-        android:layout_width="100dp"
+        android:layout_width="150dp"
         android:layout_height="wrap_content" />
 </RelativeLayout>
+</LinearLayout>

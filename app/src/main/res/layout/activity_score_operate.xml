@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -17,6 +17,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="180dp">
                 <ImageView
+                    android:id="@+id/match_image"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:scaleType="centerCrop"
@@ -44,13 +45,15 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
                     <TextView
-                        android:text="2019年1月21日"
+                        android:id="@+id/match_create_time"
+                        android:text=""
                         android:textSize="14sp"
                         android:textColor="@color/white"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
                     <TextView
-                        android:text="男子组400米接力赛"
+                        android:id="@+id/match_title"
+                        android:text=""
                         android:textSize="18sp"
                         android:textStyle="bold"
                         android:textColor="@color/white"
@@ -68,14 +71,15 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:orientation="vertical"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content">
                     <TextView
                         android:text="类型"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
                     <TextView
-                        android:text="男子组"
+                        android:id="@+id/match_type"
+                        android:text=""
                         android:textSize="18sp"
                         android:textColor="@color/baseFontColor"
                         android:layout_marginTop="5dp"
@@ -86,14 +90,15 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:orientation="vertical"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content">
                     <TextView
                         android:text="人数"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
                     <TextView
-                        android:text="12人"
+                        android:id="@+id/match_number"
+                        android:text=""
                         android:textSize="18sp"
                         android:textColor="@color/baseFontColor"
                         android:layout_marginTop="5dp"
@@ -104,13 +109,14 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:orientation="vertical"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content">
                     <TextView
                         android:text="时间"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
                     <TextView
+                        android:id="@+id/match_time"
                         android:text="2019年\n1月21日"
                         android:textSize="13sp"
                         android:textColor="@color/baseFontColor"
@@ -131,21 +137,44 @@
                     android:layout_width="match_parent"
                     android:layout_height="1px"/>
             </LinearLayout>
-
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/recyclerView"
+            <LinearLayout
+                android:gravity="center"
                 android:layout_marginTop="10dp"
                 android:background="@color/white"
+                android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
+                <TextView
+                    android:text="参赛人员"
+                    android:textStyle="bold"
+                    android:layout_margin="15dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:id="@+id/empty_show"
+                    android:text="暂无参赛人员"
+                    android:textStyle="bold"
+                    android:visibility="gone"
+                    android:layout_marginBottom="15dp"
+                    android:textColor="@color/main_color"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recyclerView"
 
-            </android.support.v7.widget.RecyclerView>
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                </android.support.v7.widget.RecyclerView>
+            </LinearLayout>
+
+
 
             <TextView
+                android:id="@+id/submit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:alpha="0.5"
                 android:background="@color/main_color"
                 android:gravity="center"
                 android:padding="15dp"
@@ -153,4 +182,11 @@
                 android:textColor="@color/white" />
         </LinearLayout>
     </ScrollView>
-</LinearLayout>
+
+    <com.jenking.xiaoyunhui.customui.CommonLoading
+        android:id="@+id/loading"
+        android:visibility="gone"
+        android:layout_centerInParent="true"
+        android:layout_width="100dp"
+        android:layout_height="120dp" />
+</RelativeLayout>

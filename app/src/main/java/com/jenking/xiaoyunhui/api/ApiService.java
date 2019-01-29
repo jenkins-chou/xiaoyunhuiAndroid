@@ -131,6 +131,11 @@ public interface ApiService {
     @POST("userMatch/getUserMatchByMatchId")
     Observable<ResultModel<UserMatchModel>> getUserMatchByMatchId(@FieldMap Map<String, String> body);
 
+    //根据比赛id获取报名的名单
+    @FormUrlEncoded
+    @POST("userMatch/getUserMatchDetailByMatchId")
+    Observable<ResultModel<UserModel>> getUserMatchDetailByMatchId(@FieldMap Map<String, String> body);
+
     //根据user_id获取比赛信息
     @FormUrlEncoded
     @POST("userMatch/getUserMatchByUserId")

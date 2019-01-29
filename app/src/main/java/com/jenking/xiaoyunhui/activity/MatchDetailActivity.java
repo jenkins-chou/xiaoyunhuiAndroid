@@ -201,7 +201,7 @@ public class MatchDetailActivity extends BaseActivity implements MatchContract {
 
             match_create_time.setText(StringUtil.getStrTime(matchDetailModel.getMatch_create_time(),"yyyy-MM-dd HH:mm:ss"));
             match_title.setText(matchDetailModel.getMatch_title());
-            match_type.setText(matchDetailModel.getMatch_type());
+            match_type.setText(matchDetailModel.getMatch_type_name());
             match_number.setText(matchDetailModel.getMatch_athletes_num());
             match_time.setText(StringUtil.getStrTime(matchDetailModel.getMatch_time(),"yyyy-MM-dd HH:mm:ss"));
             match_status.setText(getMatchType(matchDetailModel.getMatch_status()));

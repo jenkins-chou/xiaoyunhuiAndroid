@@ -66,7 +66,7 @@ public class UnPublishScoreRefereeFragment extends Fragment implements MatchCont
     }
 
     private void initData(){
-        context = getActivity();
+        context = getContext();
         datas = new ArrayList<>();
 
         baseRecyclerAdapter = new BaseRecyclerAdapter<MatchModel>(context,datas,R.layout.fragment_publish_score2_item) {
@@ -96,15 +96,18 @@ public class UnPublishScoreRefereeFragment extends Fragment implements MatchCont
             public void onItemClick(View view, int position) {
                 if (datas.get(position)!=null){
                     String status = datas.get(position).getMatch_status();
-                    switch (status){
-                        case Const.Match_type_one: case Const.Match_type_two:
-                            CommonTipsDialog.showTip(context,"温馨提示",datas.get(position).getMatch_title()+"正在报名中/比赛中，请在比赛完成后公布成绩",false);
-                            break;
-                        case Const.Match_type_three:
-                            Intent intent = new Intent(context,ScoreOperateActivity.class);
-                            startActivity(intent);
-                            break;
-                    }
+//                    switch (status){
+//                        case Const.Match_type_one: case Const.Match_type_two:
+//                            CommonTipsDialog.showTip(context,"温馨提示",datas.get(position).getMatch_title()+"正在报名中/比赛中，请在比赛完成后公布成绩",false);
+//                            break;
+//                        case Const.Match_type_three:
+//                            Intent intent = new Intent(context,ScoreOperateActivity.class);
+//                            startActivity(intent);
+//                            break;
+//                    }
+                    Intent intent = new Intent(context,ScoreOperateActivity.class);
+                    intent.putExtra("match_id",datas.get(position).getMatch_id());
+                    startActivity(intent);
                 }
 
             }

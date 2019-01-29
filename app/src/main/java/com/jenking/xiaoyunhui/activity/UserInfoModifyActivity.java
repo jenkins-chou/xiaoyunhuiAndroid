@@ -275,7 +275,6 @@ public class UserInfoModifyActivity extends BaseActivity implements UserContract
                         }
                         Toast.makeText(x.app(), ex.getMessage(), Toast.LENGTH_LONG).show();
                     }
-
                     @Override
                     public void onCancelled(Callback.CancelledException cex) {
                         setLoadingEnable(false);
@@ -287,13 +286,17 @@ public class UserInfoModifyActivity extends BaseActivity implements UserContract
                         setLoadingEnable(false);
                     }
                 });
-        // cancelable.cancel(); // 取消请求
     }
 
     void submitData(){
         Map<String,String> params = RequestService.getBaseParams(context);
         params.put("user_id", AccountTool.getLoginUser(context).getUser_id()+"");
-        params.put("user_avatar",imageUrl+"");
+        if(imageUrl==null||imageUrl.equals("")){
+            params.put("user_avatar",AccountTool.getLoginUser(context).getUser_avatar()+"");
+        }else{
+            params.put("user_avatar",imageUrl+"");
+        }
+
         params.put("user_realname",input_realname.getText().toString()+"");
         params.put("user_sex",input_sex.getText().toString()+"");
         params.put("user_slogan",input_slogan.getText().toString()+"");

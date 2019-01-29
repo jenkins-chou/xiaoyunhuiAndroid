@@ -9,6 +9,7 @@ import com.jenking.xiaoyunhui.contacts.BaseCallBack;
 import com.jenking.xiaoyunhui.contacts.UserMatchContract;
 import com.jenking.xiaoyunhui.models.base.MatchModel;
 import com.jenking.xiaoyunhui.models.base.ResultModel;
+import com.jenking.xiaoyunhui.models.base.UserModel;
 
 import java.util.Map;
 
@@ -59,6 +60,42 @@ public class UserMatchPresenter {
                         e.printStackTrace();
                         UserMatchContract userMatchContract = (UserMatchContract)view;
                         userMatchContract.getUserMatchByUserIdResult(false,e);
+                        //view.failed(e);
+                    }
+                    @Override
+                    public void onComplete() {
+                    }
+                });
+    }
+
+    public void getUserMatchDetailByMatchId(Map<String,String> params){
+        if (params==null)return;
+        Log.e("开始请求","p-->"+params.toString());
+        new ApiUtil(context)
+                .getServer(ApiService.class)
+                //记得更改请求接口数据
+                .getUserMatchDetailByMatchId(params)
+                .subscribeOn(Schedulers.io())//后台处理线程
+                .observeOn(AndroidSchedulers.mainThread())//指定回调发生的线程
+                .subscribe(new Observer<ResultModel<UserModel>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                        System.out.print(d);
+                    }
+
+                    @Override
+                    public void onNext(ResultModel<UserModel> resultModel) {
+                        //更新视图
+                        UserMatchContract userMatchContract = (UserMatchContract)view;
+                        userMatchContract.getUserMatchDetailByMatchIdResult(true,resultModel);
+                        //view.success(resultModel);
+                    }
+                    @Override
+                    public void onError(Throwable e) {
+                        System.out.print("----error");
+                        e.printStackTrace();
+                        UserMatchContract userMatchContract = (UserMatchContract)view;
+                        userMatchContract.getUserMatchDetailByMatchIdResult(false,e);
                         //view.failed(e);
                     }
                     @Override

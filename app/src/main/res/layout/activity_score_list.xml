@@ -32,13 +32,6 @@
             tl:tl_indicator_color="@color/main_color"
             tl:tl_indicator_corner_radius="8dp"
             tl:tl_tab_padding="20dp"/>
-        <ImageView
-            android:layout_marginRight="15dp"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:src="@mipmap/search_black"
-            android:layout_width="25dp"
-            android:layout_height="25dp" />
     </RelativeLayout>
     <FrameLayout
         android:id="@+id/frameLayout"

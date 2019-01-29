@@ -284,6 +284,11 @@ public class IndexFragment extends Fragment implements MatchContract,UserMatchCo
     }
 
     @Override
+    public void getUserMatchDetailByMatchIdResult(boolean isSuccess, Object object) {
+
+    }
+
+    @Override
     public void getRefereeMatchByUserIdResult(boolean isSuccess, Object object) {
         if (isSuccess&&object!=null) {
             ResultModel resultModel = (ResultModel) object;

@@ -12,6 +12,7 @@ public class MatchDetailModel extends MatchModel {
     private String school_remark;
     private String school_del;
     private String school_create_time;
+    private String match_type_name;
 
     public String getUser_name() {
         return user_name;
@@ -101,25 +102,29 @@ public class MatchDetailModel extends MatchModel {
         this.school_create_time = school_create_time;
     }
 
+    public String getMatch_type_name() {
+        return match_type_name;
+    }
+
+    public void setMatch_type_name(String match_type_name) {
+        this.match_type_name = match_type_name;
+    }
+
     @Override
     public String toString() {
         return "MatchDetailModel{" +
-                "school_create_time='" + school_create_time + '\'' +
-                ", match_id='" + match_id + '\'' +
-                ", match_title='" + match_title + '\'' +
-                ", match_time='" + match_time + '\'' +
-                ", match_create_time='" + match_create_time + '\'' +
-                ", match_referee_id='" + match_referee_id + '\'' +
-                ", match_manager='" + match_manager + '\'' +
-                ", match_abstract='" + match_abstract + '\'' +
-                ", match_detail='" + match_detail + '\'' +
-                ", match_athletes_num='" + match_athletes_num + '\'' +
-                ", match_status='" + match_status + '\'' +
-                ", match_organizers='" + match_organizers + '\'' +
-                ", match_del='" + match_del + '\'' +
-                ", match_type='" + match_type + '\'' +
-                ", match_img='" + match_img + '\'' +
-                ", match_address='" + match_address + '\'' +
+                "user_name='" + user_name + '\'' +
+                ", school_id='" + school_id + '\'' +
+                ", school_logo='" + school_logo + '\'' +
+                ", school_name='" + school_name + '\'' +
+                ", school_address='" + school_address + '\'' +
+                ", school_manager='" + school_manager + '\'' +
+                ", school_abstract='" + school_abstract + '\'' +
+                ", school_detail='" + school_detail + '\'' +
+                ", school_remark='" + school_remark + '\'' +
+                ", school_del='" + school_del + '\'' +
+                ", school_create_time='" + school_create_time + '\'' +
+                ", match_type_name='" + match_type_name + '\'' +
                 '}';
     }
 }
