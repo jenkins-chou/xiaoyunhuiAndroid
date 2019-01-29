@@ -292,17 +292,17 @@ public class UserInfoModifyActivity extends BaseActivity implements UserContract
 
     void submitData(){
         Map<String,String> params = RequestService.getBaseParams(context);
-        params.put("user_id", AccountTool.getLoginUser(context).getUser_id());
-        params.put("user_avatar",imageUrl);
-        params.put("user_realname",input_realname.getText().toString());
-        params.put("user_sex",input_sex.getText().toString());
-        params.put("user_slogan",input_slogan.getText().toString());
-        params.put("user_phone",input_phone.getText().toString());
-        params.put("user_email",input_email.getText().toString());
-        params.put("user_health",selectHealth);
-        params.put("user_address",input_address.getText().toString());
-        params.put("user_school",selectSchoolId);
-        params.put("user_class",selectClassId);
+        params.put("user_id", AccountTool.getLoginUser(context).getUser_id()+"");
+        params.put("user_avatar",imageUrl+"");
+        params.put("user_realname",input_realname.getText().toString()+"");
+        params.put("user_sex",input_sex.getText().toString()+"");
+        params.put("user_slogan",input_slogan.getText().toString()+"");
+        params.put("user_phone",input_phone.getText().toString()+"");
+        params.put("user_email",input_email.getText().toString()+"");
+        params.put("user_health",selectHealth+"");
+        params.put("user_address",input_address.getText().toString()+"");
+        params.put("user_school",selectSchoolId+"");
+        params.put("user_class",selectClassId+"");
 
         userPresenter.updateUserInfo(params);
         Log.e("params",""+params.toString());
