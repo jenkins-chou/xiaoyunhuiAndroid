@@ -7,28 +7,52 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
+import com.github.library.BaseRecyclerAdapter;
+import com.github.library.BaseViewHolder;
 import com.jenking.xiaoyunhui.R;
 import com.jenking.xiaoyunhui.adapter.score1.PublishAdapter;
+import com.jenking.xiaoyunhui.api.RequestService;
+import com.jenking.xiaoyunhui.contacts.ScoreContract;
+import com.jenking.xiaoyunhui.models.base.MatchModel;
+import com.jenking.xiaoyunhui.models.base.ResultModel;
+import com.jenking.xiaoyunhui.models.base.ScoreModel;
+import com.jenking.xiaoyunhui.presenters.ScorePresenter;
+import com.jenking.xiaoyunhui.tools.AccountTool;
+import com.scwang.smartrefresh.header.TaurusHeader;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
-public class PublishScoreFragment extends Fragment {
+public class PublishScoreFragment extends Fragment implements ScoreContract {
     private Unbinder unbinder;
     private Context context;
-    private PublishAdapter publishAdapter;
-    private List<String> datas;
+    private BaseRecyclerAdapter publishAdapter;
+    private List<ScoreModel> datas;
+
+    private ScorePresenter scorePresenter;
 
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
+
+    @BindView(R.id.empty_show)
+    TextView empty_show;
+    @BindView(R.id.smartRefreshLayout)
+    SmartRefreshLayout smartRefreshLayout;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -41,14 +65,77 @@ public class PublishScoreFragment extends Fragment {
     private void initData(){
         context = getActivity();
         datas = new ArrayList<>();
-        datas.add("");
-        datas.add("");
-        datas.add("");
-        datas.add("");
-        datas.add("");
-        datas.add("");
-        publishAdapter = new PublishAdapter(R.layout.fragment_publish_score1_item,datas);
+        publishAdapter = new BaseRecyclerAdapter<ScoreModel>(context,datas,R.layout.fragment_publish_score1_item) {
+            @Override
+            protected void convert(BaseViewHolder helper, ScoreModel item) {
+                helper.setText(R.id.match_title,item.getMatch_title());
+                helper.setText(R.id.publish_time,item.getScore_publish_time());
+                helper.setText(R.id.score_value,item.getScore_value());
+                helper.setText(R.id.score_remark,item.getScore_remark());
+            }
+        };
         recyclerView.setLayoutManager(new StaggeredGridLayoutManager(1,1));
         recyclerView.setAdapter(publishAdapter);
+
+        scorePresenter = new ScorePresenter(context,this);
+
+        smartRefreshLayout.setRefreshHeader(new TaurusHeader(context));
+        smartRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                getData();
+            }
+        });
+        getData();
+    }
+
+    void getData(){
+        Map<String,String> params = RequestService.getBaseParams(context);
+        params.put("user_id", AccountTool.getLoginUser(context).getUser_id());
+        if (scorePresenter!=null){
+            scorePresenter.getScorePublishListByUserId(params);
+        }
+    }
+
+    @Override
+    public void getScoreListByUserIdResult(boolean isSuccess, Object object) {
+
+    }
+
+    @Override
+    public void getScorePublishListByUserIdResult(boolean isSuccess, Object object) {
+        smartRefreshLayout.finishRefresh();
+
+        if (isSuccess&&object!=null){
+            ResultModel resultModel = (ResultModel)object;
+            if (resultModel!=null&&resultModel.getStatus()!=null){
+                Log.e("getScoreListByUserId",resultModel.toString());
+                switch (resultModel.getStatus()){
+                    case "200":
+                        datas = resultModel.getData()!=null?resultModel.getData():new ArrayList<ScoreModel>();
+                        publishAdapter.setData(datas);
+                        break;
+                }
+            }
+        }
+        refershView();
+    }
+
+    private void refershView(){
+        if (datas==null||datas.size()<=0){
+            empty_show.setVisibility(View.VISIBLE);
+        }else{
+            empty_show.setVisibility(View.GONE);
+        }
+    }
+
+    @Override
+    public void success(Object object) {
+
+    }
+
+    @Override
+    public void failed(Object object) {
+
     }
 }

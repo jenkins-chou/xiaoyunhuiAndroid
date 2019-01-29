@@ -1,11 +1,13 @@
 package com.jenking.xiaoyunhui.api;
 
+import com.jenking.xiaoyunhui.models.base.ClassModel;
 import com.jenking.xiaoyunhui.models.base.MatchDetailModel;
 import com.jenking.xiaoyunhui.models.base.MatchModel;
 import com.jenking.xiaoyunhui.models.base.MatchTypeModel;
 import com.jenking.xiaoyunhui.models.base.RefereeModel;
 import com.jenking.xiaoyunhui.models.base.ResultModel;
 import com.jenking.xiaoyunhui.models.base.SchoolModel;
+import com.jenking.xiaoyunhui.models.base.ScoreModel;
 import com.jenking.xiaoyunhui.models.base.UserMatchModel;
 import com.jenking.xiaoyunhui.models.base.UserModel;
 
@@ -41,6 +43,16 @@ public interface ApiService {
     @FormUrlEncoded
     @POST("user/adduser")
     Observable<ResultModel<UserModel>> register(@FieldMap Map<String, String> body);
+
+    //修改个人信息
+    @FormUrlEncoded
+    @POST("user/updateuser")
+    Observable<ResultModel<UserModel>> updateUserInfo(@FieldMap Map<String, String> body);
+
+    //获取个人信息
+    @FormUrlEncoded
+    @POST("user/getuser")
+    Observable<ResultModel<UserModel>> getUserInfo(@FieldMap Map<String, String> body);
 
 
     //获取比赛类型
@@ -136,6 +148,28 @@ public interface ApiService {
     @FormUrlEncoded
     @POST("school/addSchool")
     Observable<ResultModel<SchoolModel>> addSchool(@FieldMap Map<String, String> body);
+
+    @FormUrlEncoded
+    @POST("school/getSchool")
+    Observable<ResultModel<SchoolModel>> getSchool(@FieldMap Map<String, String> body);
+
+
+    @FormUrlEncoded
+    @POST("score/getScoreListByUserId")
+    Observable<ResultModel<MatchModel>> getScoreListByUserId(@FieldMap Map<String, String> body);
+
+    @FormUrlEncoded
+    @POST("score/getScorePublishListByUserId")
+    Observable<ResultModel<ScoreModel>> getScorePublishListByUserId(@FieldMap Map<String, String> body);
+
+
+    @FormUrlEncoded
+    @POST("class/getAllClass")
+    Observable<ResultModel<ClassModel>> getAllClass(@FieldMap Map<String, String> body);
+
+    @FormUrlEncoded
+    @POST("class/addclass")
+    Observable<ResultModel<ClassModel>> addClass(@FieldMap Map<String, String> body);
 
 
 

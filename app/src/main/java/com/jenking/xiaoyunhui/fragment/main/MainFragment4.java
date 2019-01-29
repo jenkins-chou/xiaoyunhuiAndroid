@@ -20,6 +20,7 @@ import com.jenking.xiaoyunhui.activity.MessageActivity;
 import com.jenking.xiaoyunhui.activity.RefereeAuthctivity;
 import com.jenking.xiaoyunhui.activity.RefereeManagerActivity;
 import com.jenking.xiaoyunhui.activity.SettingActivity;
+import com.jenking.xiaoyunhui.api.BaseAPI;
 import com.jenking.xiaoyunhui.dialog.CommonTipsDialog;
 import com.jenking.xiaoyunhui.models.base.UserModel;
 import com.jenking.xiaoyunhui.tools.AccountTool;
@@ -109,15 +110,15 @@ public class MainFragment4 extends Fragment {
         if (AccountTool.isLogin(getContext())){
             RequestOptions requestOptions = new RequestOptions();
             requestOptions.circleCrop();
+            requestOptions.placeholder(R.mipmap.avatar1);
             requestOptions.error(R.mipmap.avatar1);
             UserModel userModel = AccountTool.getLoginUser(getContext());
             if (userModel!=null){
-                Glide.with(getContext()).load(userModel.getUser_avatar()).apply(requestOptions).into(avatar);
+                Glide.with(getContext()).load(BaseAPI.base_url+userModel.getUser_avatar()).apply(requestOptions).into(avatar);
                 user_name.setText(userModel.getUser_name());
                 if (StringUtil.isNotEmpty(userModel.getUser_slogan())){
                     user_slogan.setText(userModel.getUser_slogan());
                 }
-
                 switch (userModel.getUser_type()){
                     //队员或领队
                     case "1":

@@ -40,7 +40,6 @@ public class ScoreRefereeActivity extends AppCompatActivity {
         initData();
     }
 
-
     protected void initData() {
         context = this;
         unbinder = ButterKnife.bind(this);

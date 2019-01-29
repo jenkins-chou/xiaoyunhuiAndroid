@@ -6,9 +6,8 @@ import android.util.Log;
 import com.jenking.xiaoyunhui.api.ApiService;
 import com.jenking.xiaoyunhui.api.ApiUtil;
 import com.jenking.xiaoyunhui.contacts.BaseCallBack;
-import com.jenking.xiaoyunhui.contacts.SchoolContract;
+import com.jenking.xiaoyunhui.contacts.UserContract;
 import com.jenking.xiaoyunhui.models.base.ResultModel;
-import com.jenking.xiaoyunhui.models.base.SchoolModel;
 
 import java.util.Map;
 
@@ -20,28 +19,28 @@ import io.reactivex.schedulers.Schedulers;
 /**
  * presenter模板
  */
-public class SchoolPresenter {
+public class UserPresenter {
 
     private Context context;
 
     private BaseCallBack view;
 
-    public SchoolPresenter(Context context, BaseCallBack view){
+    public UserPresenter(Context context, BaseCallBack view){
         this.context = context;
         this.view = view;
     }
 
     //带参基本请求方法
-    public void getSchools(Map<String,String> params){
+    public void updateUserInfo(Map<String,String> params){
         if (params==null)return;
         Log.e("开始请求","p-->"+params.toString());
         new ApiUtil(context)
                 .getServer(ApiService.class)
                 //记得更改请求接口数据
-                .getSchools(params)
+                .updateUserInfo(params)
                 .subscribeOn(Schedulers.io())//后台处理线程
                 .observeOn(AndroidSchedulers.mainThread())//指定回调发生的线程
-                .subscribe(new Observer<ResultModel<SchoolModel>>() {
+                .subscribe(new Observer<ResultModel>() {
                     @Override
                     public void onSubscribe(Disposable d) {
                         System.out.print(d);
@@ -50,16 +49,16 @@ public class SchoolPresenter {
                     @Override
                     public void onNext(ResultModel resultModel) {
                         //更新视图
-                        SchoolContract schoolContract = (SchoolContract)view;
-                        schoolContract.getAllSchoolResult(true,resultModel);
+                        UserContract userContract = (UserContract)view;
+                        userContract.updateUserinfoResult(true,resultModel);
                         //view.success(resultModel);
                     }
                     @Override
                     public void onError(Throwable e) {
                         System.out.print("----error");
                         e.printStackTrace();
-                        SchoolContract schoolContract = (SchoolContract)view;
-                        schoolContract.getAllSchoolResult(false,e);
+                        UserContract userContract = (UserContract)view;
+                        userContract.updateUserinfoResult(false,e);
                         //view.failed(e);
                     }
                     @Override
@@ -69,16 +68,16 @@ public class SchoolPresenter {
     }
 
     //带参基本请求方法
-    public void addSchool(Map<String,String> params){
+    public void getUserInfo(Map<String,String> params){
         if (params==null)return;
         Log.e("开始请求","p-->"+params.toString());
         new ApiUtil(context)
                 .getServer(ApiService.class)
                 //记得更改请求接口数据
-                .addSchool(params)
+                .getUserInfo(params)
                 .subscribeOn(Schedulers.io())//后台处理线程
                 .observeOn(AndroidSchedulers.mainThread())//指定回调发生的线程
-                .subscribe(new Observer<ResultModel<SchoolModel>>() {
+                .subscribe(new Observer<ResultModel>() {
                     @Override
                     public void onSubscribe(Disposable d) {
                         System.out.print(d);
@@ -87,53 +86,16 @@ public class SchoolPresenter {
                     @Override
                     public void onNext(ResultModel resultModel) {
                         //更新视图
-                        SchoolContract schoolContract = (SchoolContract)view;
-                        schoolContract.addSchoolResult(true,resultModel);
+                        UserContract userContract = (UserContract)view;
+                        userContract.getUserinfoResult(true,resultModel);
                         //view.success(resultModel);
                     }
                     @Override
                     public void onError(Throwable e) {
                         System.out.print("----error");
                         e.printStackTrace();
-                        SchoolContract schoolContract = (SchoolContract)view;
-                        schoolContract.addSchoolResult(false,e);
-                        //view.failed(e);
-                    }
-                    @Override
-                    public void onComplete() {
-                    }
-                });
-    }
-
-    //带参基本请求方法
-    public void getSchoolById(Map<String,String> params){
-        if (params==null)return;
-        Log.e("开始请求","p-->"+params.toString());
-        new ApiUtil(context)
-                .getServer(ApiService.class)
-                //记得更改请求接口数据
-                .getSchool(params)
-                .subscribeOn(Schedulers.io())//后台处理线程
-                .observeOn(AndroidSchedulers.mainThread())//指定回调发生的线程
-                .subscribe(new Observer<ResultModel<SchoolModel>>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
-                        System.out.print(d);
-                    }
-
-                    @Override
-                    public void onNext(ResultModel resultModel) {
-                        //更新视图
-                        SchoolContract schoolContract = (SchoolContract)view;
-                        schoolContract.getSchoolByIdResult(true,resultModel);
-                        //view.success(resultModel);
-                    }
-                    @Override
-                    public void onError(Throwable e) {
-                        System.out.print("----error");
-                        e.printStackTrace();
-                        SchoolContract schoolContract = (SchoolContract)view;
-                        schoolContract.getSchoolByIdResult(false,e);
+                        UserContract userContract = (UserContract)view;
+                        userContract.getUserinfoResult(false,e);
                         //view.failed(e);
                     }
                     @Override
