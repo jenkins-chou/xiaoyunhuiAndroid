@@ -19,19 +19,17 @@ import com.jenking.xiaoyunhui.activity.MineTeamActivity;
 import com.jenking.xiaoyunhui.activity.ScoreSearchActivity;
 import com.jenking.xiaoyunhui.activity.TeamSearchActivity;
 import com.jenking.xiaoyunhui.adapter.MainFragment3Adapter;
-import com.jenking.xiaoyunhui.fragment.part3.MineClassFragment;
+import com.jenking.xiaoyunhui.fragment.part3.MineTeamFragment;
+import com.jenking.xiaoyunhui.fragment.part3.OtherTeamFragment;
 import com.jenking.xiaoyunhui.models.main.part3.TeamModel;
-
 import java.util.ArrayList;
-import java.util.List;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 
 public class MainFragment3 extends Fragment {
-    private String[] mTitles = {"我的班级", "其他班级"};
+    private String[] mTitles = {"我带领的", "我参与的"};
     private ArrayList<Fragment> fragments;
     private Unbinder unbinder;
     @BindView(R.id.segmentTabLayout)
@@ -42,12 +40,10 @@ public class MainFragment3 extends Fragment {
         Intent intent = new Intent(getContext(),TeamSearchActivity.class);
         startActivity(intent);
     }
-
     @OnClick(R.id.mine_team)
     void mine_team(){
-        Intent intent = new Intent(getContext(),MineTeamActivity.class);
-        startActivity(intent);
     }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -59,8 +55,8 @@ public class MainFragment3 extends Fragment {
 
     private void initData(){
         fragments = new ArrayList<>();
-        fragments.add(new MineClassFragment());
-        fragments.add(new MineClassFragment());
+        fragments.add(new MineTeamFragment());
+        fragments.add(new OtherTeamFragment());
         segmentTabLayout.setTabData(mTitles,getActivity(),R.id.frameLayout,fragments);
     }
 }

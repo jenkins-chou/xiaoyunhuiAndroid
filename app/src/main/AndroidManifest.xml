@@ -82,7 +82,9 @@
         <activity android:name=".activity.UserInfoDetailActivity" />
         <activity android:name=".activity.UserInfoModifyActivity" />
         <activity android:name=".activity.ClassListActivity" />
-        <activity android:name=".activity.ClassAddActivity"></activity>
+        <activity android:name=".activity.ClassAddActivity" />
+        <activity android:name=".activity.ScoreShowActivity" />
+        <activity android:name=".activity.TeamCreateActivity"></activity>
     </application>
 
 </manifest>

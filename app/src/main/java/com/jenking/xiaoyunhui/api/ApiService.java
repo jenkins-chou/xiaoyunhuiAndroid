@@ -7,7 +7,9 @@ import com.jenking.xiaoyunhui.models.base.MatchTypeModel;
 import com.jenking.xiaoyunhui.models.base.RefereeModel;
 import com.jenking.xiaoyunhui.models.base.ResultModel;
 import com.jenking.xiaoyunhui.models.base.SchoolModel;
+import com.jenking.xiaoyunhui.models.base.ScoreDetailModel;
 import com.jenking.xiaoyunhui.models.base.ScoreModel;
+import com.jenking.xiaoyunhui.models.base.TeamModel;
 import com.jenking.xiaoyunhui.models.base.UserMatchModel;
 import com.jenking.xiaoyunhui.models.base.UserModel;
 
@@ -164,8 +166,21 @@ public interface ApiService {
     Observable<ResultModel<MatchModel>> getScoreListByUserId(@FieldMap Map<String, String> body);
 
     @FormUrlEncoded
+    @POST("score/getScoreListByMatchId")
+    Observable<ResultModel<ScoreDetailModel>> getScoreListByMatchId(@FieldMap Map<String, String> body);
+
+    @FormUrlEncoded
+    @POST("score/getAllScoreList")
+    Observable<ResultModel<ScoreDetailModel>> getAllScoreList(@FieldMap Map<String, String> body);
+
+
+    @FormUrlEncoded
     @POST("score/getScorePublishListByUserId")
     Observable<ResultModel<ScoreModel>> getScorePublishListByUserId(@FieldMap Map<String, String> body);
+
+    @FormUrlEncoded
+    @POST("score/addScores")
+    Observable<ResultModel<ScoreModel>> addScores(@FieldMap Map<String, String> body);
 
 
     @FormUrlEncoded
@@ -177,5 +192,12 @@ public interface ApiService {
     Observable<ResultModel<ClassModel>> addClass(@FieldMap Map<String, String> body);
 
 
+    @FormUrlEncoded
+    @POST("team/addTeam")
+    Observable<ResultModel<TeamModel>> addTeam(@FieldMap Map<String, String> body);
+
+    @FormUrlEncoded
+    @POST("team/getTeamListByCreater")
+    Observable<ResultModel<TeamModel>> getTeamListByCreater(@FieldMap Map<String, String> body);
 
 }

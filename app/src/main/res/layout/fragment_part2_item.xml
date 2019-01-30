@@ -1,28 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="wrap_content">
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
     <ImageView
         android:id="@+id/item_img"
-        android:layout_margin="15dp"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         android:layout_alignParentLeft="true"
-        android:src="@mipmap/avatar1"
-        android:layout_width="40dp"
-        android:layout_height="40dp" />
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="10dp"
+        android:scaleType="center"
+        android:src="@mipmap/avatar1" />
     <LinearLayout
         android:layout_centerVertical="true"
         android:layout_toRightOf="@+id/item_img"
-        android:layout_marginLeft="15dp"
+        android:layout_marginLeft="10dp"
         android:orientation="vertical"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
+
         <TextView
-            android:text="某某某"
+            android:id="@+id/user_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textColor="@color/baseFontColor"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/match_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textColor="@color/baseFontColor2" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:gravity="center"
+        android:layout_marginRight="15dp"
+        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginLeft="15dp"
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/score_value"
+            android:text=""
             android:textSize="18sp"
             android:textColor="@color/baseFontColor"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
         <TextView
-            android:text="三项冠军"
+            android:id="@+id/score_unit"
+            android:text=""
             android:textColor="@color/baseFontColor2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />

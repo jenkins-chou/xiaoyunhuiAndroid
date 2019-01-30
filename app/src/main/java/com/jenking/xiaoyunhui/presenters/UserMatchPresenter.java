@@ -68,6 +68,7 @@ public class UserMatchPresenter {
                 });
     }
 
+    //获取所有参赛人员信息
     public void getUserMatchDetailByMatchId(Map<String,String> params){
         if (params==null)return;
         Log.e("开始请求","p-->"+params.toString());

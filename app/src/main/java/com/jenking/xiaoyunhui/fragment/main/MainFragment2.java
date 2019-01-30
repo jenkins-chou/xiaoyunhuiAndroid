@@ -7,20 +7,31 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
+import com.github.library.BaseRecyclerAdapter;
+import com.github.library.BaseViewHolder;
 import com.jenking.xiaoyunhui.R;
-import com.jenking.xiaoyunhui.activity.MatchSearchActivity;
 import com.jenking.xiaoyunhui.activity.ScoreRankingListActivity;
 import com.jenking.xiaoyunhui.activity.ScoreRefereeActivity;
 import com.jenking.xiaoyunhui.activity.ScoreSearchActivity;
 import com.jenking.xiaoyunhui.activity.ScoreStudentActivity;
 import com.jenking.xiaoyunhui.adapter.MainFragment2Adapter;
-import com.jenking.xiaoyunhui.models.main.part2.ScoreModel;
+import com.jenking.xiaoyunhui.api.BaseAPI;
+import com.jenking.xiaoyunhui.api.RequestService;
+import com.jenking.xiaoyunhui.contacts.ScoreContract;
+import com.jenking.xiaoyunhui.models.base.ResultModel;
+import com.jenking.xiaoyunhui.models.base.ScoreDetailModel;
+import com.jenking.xiaoyunhui.presenters.ScorePresenter;
 import com.jenking.xiaoyunhui.tools.AccountTool;
 import com.jenking.xiaoyunhui.tools.Const;
 
@@ -32,10 +43,14 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 
-public class MainFragment2 extends Fragment {
+public class MainFragment2 extends Fragment implements ScoreContract{
     private Unbinder unbinder;
-    private List<ScoreModel> scoreModels;
-    private MainFragment2Adapter mainFragment2Adapter;
+    private List<ScoreDetailModel> scoreDetailModels;
+    private BaseRecyclerAdapter baseRecyclerAdapter;
+    private ScorePresenter scorePresenter;
+
+    @BindView(R.id.empty_show)
+    TextView empty_show;
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
 
@@ -82,15 +97,28 @@ public class MainFragment2 extends Fragment {
     }
 
     private void initData(){
-        scoreModels = new ArrayList<>();
-        scoreModels.add(new ScoreModel(""));
-        scoreModels.add(new ScoreModel(""));
-        scoreModels.add(new ScoreModel(""));
-        scoreModels.add(new ScoreModel(""));
-        mainFragment2Adapter = new MainFragment2Adapter(R.layout.fragment_part2_item,scoreModels);
+        scoreDetailModels = new ArrayList<>();
+        scorePresenter = new ScorePresenter(getContext(),this);
+        scorePresenter.getAllScoreList(RequestService.getBaseParams(getContext()));
+        baseRecyclerAdapter = new BaseRecyclerAdapter<ScoreDetailModel>(getContext(),scoreDetailModels,R.layout.fragment_part2_item) {
+            @Override
+            protected void convert(BaseViewHolder helper, ScoreDetailModel item) {
+                RequestOptions requestOptions = new RequestOptions();
+                requestOptions.placeholder(R.mipmap.avatar2);
+                requestOptions.error(R.mipmap.avatar2);
+                ImageView imageView = helper.getView(R.id.item_img);
+                Glide.with(getActivity()).load(BaseAPI.base_url+item.getUser_avatar()).apply(requestOptions).into(imageView);
 
+                helper.setText(R.id.user_name,item.getUser_name());
+                helper.setText(R.id.match_name,item.getMatch_title());
+                helper.setText(R.id.score_value,item.getScore_value());
+                helper.setText(R.id.score_unit,item.getScore_unit());
+            }
+        };
+
+        baseRecyclerAdapter.openLoadAnimation(false);
         recyclerView.setLayoutManager(new StaggeredGridLayoutManager(1,1));
-        recyclerView.setAdapter(mainFragment2Adapter);
+        recyclerView.setAdapter(baseRecyclerAdapter);
     }
 
     @Override
@@ -118,5 +146,66 @@ public class MainFragment2 extends Fragment {
         }else{
             score_manager_bar.setVisibility(View.GONE);
         }
+    }
+
+    @Override
+    public void getScoreListByUserIdResult(boolean isSuccess, Object object) {
+
+    }
+
+    @Override
+    public void getScoreListByMatchIdResult(boolean isSuccess, Object object) {
+
+    }
+
+    @Override
+    public void getScorePublishListByUserIdResult(boolean isSuccess, Object object) {
+
+    }
+
+    @Override
+    public void getAllScoreList(boolean isSuccess, Object object) {
+        if (isSuccess&&object!=null){
+            ResultModel resultModel = (ResultModel)object;
+            if (resultModel!=null&&resultModel.getData()!=null){
+                Log.e("getUserMatchDetail",""+scoreDetailModels.toString());
+                if (resultModel.getData()!=null){
+                    if (resultModel.getData().size()>3){
+                        scoreDetailModels.clear();
+                        for (int i=0;i<resultModel.getData().size();i++){
+                            scoreDetailModels.add((ScoreDetailModel) resultModel.getData().get(i));
+                        }
+                        baseRecyclerAdapter.setData(scoreDetailModels);
+                    }else{
+                        scoreDetailModels = resultModel.getData();
+                        baseRecyclerAdapter.setData(scoreDetailModels);
+                    }
+                }
+            }
+        }
+        refreshUser();
+    }
+
+    private void refreshUser(){
+        if (scoreDetailModels==null||scoreDetailModels.size()<=0){
+            empty_show.setVisibility(View.VISIBLE);
+        }else{
+            empty_show.setVisibility(View.GONE);
+        }
+    }
+
+    @Override
+    public void addScoresResult(boolean isSuccess, Object object) {
+
+    }
+
+    @Override
+    public void success(Object object) {
+
+    }
+
+    @Override
+    public void failed(Object object) {
+
     }
 }

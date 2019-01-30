@@ -1,18 +1,19 @@
 package com.jenking.xiaoyunhui.models.base;
 
 public class ScoreModel {
-    private String score_id;
-    private String match_id;
-    private String user_id;
-    private String referee_id;
-    private String score_value;
-    private String score_create_time;
-    private String score_detail;
-    private String score_remark;
-    private String score_publish_time;
-    private String score_del;
+    public String score_id;
+    public String match_id;
+    public String user_id;
+    public String referee_id;
+    public String score_value;
+    public String score_create_time;
+    public String score_detail;
+    public String score_remark;
+    public String score_publish_time;
+    public String score_del;
+    public String score_unit;
 
-    private String match_title;
+    public String match_title;
 
     public String getScore_id() {
         return score_id;
@@ -94,6 +95,14 @@ public class ScoreModel {
         this.score_del = score_del;
     }
 
+    public String getScore_unit() {
+        return score_unit;
+    }
+
+    public void setScore_unit(String score_unit) {
+        this.score_unit = score_unit;
+    }
+
     public String getMatch_title() {
         return match_title;
     }
@@ -115,6 +124,7 @@ public class ScoreModel {
                 ", score_remark='" + score_remark + '\'' +
                 ", score_publish_time='" + score_publish_time + '\'' +
                 ", score_del='" + score_del + '\'' +
+                ", score_unit='" + score_unit + '\'' +
                 ", match_title='" + match_title + '\'' +
                 '}';
     }

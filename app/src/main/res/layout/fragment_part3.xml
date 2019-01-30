@@ -18,9 +18,9 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="15dp"
             android:layout_marginTop="15dp"
-            android:text="我的队伍"
-            android:textColor="@color/main_color"
-            android:textSize="15sp" />
+            android:text="团队"
+            android:textColor="@color/baseFontColor"
+            android:textSize="18sp" />
         <com.flyco.tablayout.SegmentTabLayout
             android:id="@+id/segmentTabLayout"
             android:layout_centerInParent="true"
@@ -44,6 +44,7 @@
     </RelativeLayout>
     <FrameLayout
         android:id="@+id/frameLayout"
+        android:background="@color/baseLayoutColor"
         android:layout_below="@+id/header"
         android:layout_width="match_parent"
         android:layout_height="match_parent"></FrameLayout>

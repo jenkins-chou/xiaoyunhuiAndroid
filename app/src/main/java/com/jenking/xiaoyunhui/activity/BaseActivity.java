@@ -46,7 +46,7 @@ public class BaseActivity extends AppCompatActivity {
     }
 
     public void initData(){
-        context = BaseActivity.this;
+        context = this;
         TAG = getClass().getCanonicalName();
         Intent intent = getIntent();
         if (intent!=null){

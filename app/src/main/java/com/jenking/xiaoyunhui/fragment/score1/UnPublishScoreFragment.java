@@ -24,6 +24,7 @@ import com.jenking.xiaoyunhui.models.base.ResultModel;
 import com.jenking.xiaoyunhui.models.base.ScoreModel;
 import com.jenking.xiaoyunhui.presenters.ScorePresenter;
 import com.jenking.xiaoyunhui.tools.AccountTool;
+import com.jenking.xiaoyunhui.tools.Const;
 import com.jenking.xiaoyunhui.tools.StringUtil;
 import com.scwang.smartrefresh.header.TaurusHeader;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -107,7 +108,17 @@ public class UnPublishScoreFragment extends Fragment implements ScoreContract {
                 Log.e("getScoreListByUserId",resultModel.toString());
                 switch (resultModel.getStatus()){
                     case "200":
-                        datas = resultModel.getData()!=null?resultModel.getData():new ArrayList<MatchModel>();
+                        datas.clear();
+                        if (resultModel.getData()!=null){
+                            List<MatchModel> items = (List<MatchModel>)resultModel.getData();
+                            for (int i = 0;i<items.size();i++){
+                                if (items.get(i)!=null
+                                        &&items.get(i).getMatch_status()!=null
+                                        &&!items.get(i).getMatch_status().equals(Const.Match_type_four)){
+                                    datas.add(items.get(i));
+                                }
+                            }
+                        }
                         publishAdapter.setData(datas);
                         break;
                 }
@@ -117,7 +128,22 @@ public class UnPublishScoreFragment extends Fragment implements ScoreContract {
     }
 
     @Override
+    public void getScoreListByMatchIdResult(boolean isSuccess, Object object) {
+
+    }
+
+    @Override
     public void getScorePublishListByUserIdResult(boolean isSuccess, Object object) {
+
+    }
+
+    @Override
+    public void getAllScoreList(boolean isSuccess, Object object) {
+
+    }
+
+    @Override
+    public void addScoresResult(boolean isSuccess, Object object) {
 
     }
 

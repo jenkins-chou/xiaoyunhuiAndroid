@@ -1,6 +1,7 @@
 package com.jenking.xiaoyunhui.fragment.score1;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -15,7 +16,9 @@ import android.widget.TextView;
 
 import com.github.library.BaseRecyclerAdapter;
 import com.github.library.BaseViewHolder;
+import com.github.library.listener.OnRecyclerItemClickListener;
 import com.jenking.xiaoyunhui.R;
+import com.jenking.xiaoyunhui.activity.ScoreShowActivity;
 import com.jenking.xiaoyunhui.adapter.score1.PublishAdapter;
 import com.jenking.xiaoyunhui.api.RequestService;
 import com.jenking.xiaoyunhui.contacts.ScoreContract;
@@ -72,8 +75,22 @@ public class PublishScoreFragment extends Fragment implements ScoreContract {
                 helper.setText(R.id.publish_time,item.getScore_publish_time());
                 helper.setText(R.id.score_value,item.getScore_value());
                 helper.setText(R.id.score_remark,item.getScore_remark());
+                helper.setText(R.id.score_unit,item.getScore_unit());
             }
         };
+
+        publishAdapter.setOnRecyclerItemClickListener(new OnRecyclerItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                if (datas.get(position)!=null){
+                    Intent intent = new Intent(context, ScoreShowActivity.class);datas.get(position);
+                    intent.putExtra("match_id",datas.get(position).getMatch_id());
+                    startActivity(intent);
+                }
+            }
+        });
+
+        publishAdapter.openLoadAnimation(false);
         recyclerView.setLayoutManager(new StaggeredGridLayoutManager(1,1));
         recyclerView.setAdapter(publishAdapter);
 
@@ -103,6 +120,11 @@ public class PublishScoreFragment extends Fragment implements ScoreContract {
     }
 
     @Override
+    public void getScoreListByMatchIdResult(boolean isSuccess, Object object) {
+
+    }
+
+    @Override
     public void getScorePublishListByUserIdResult(boolean isSuccess, Object object) {
         smartRefreshLayout.finishRefresh();
 
@@ -119,6 +141,16 @@ public class PublishScoreFragment extends Fragment implements ScoreContract {
             }
         }
         refershView();
+    }
+
+    @Override
+    public void getAllScoreList(boolean isSuccess, Object object) {
+
+    }
+
+    @Override
+    public void addScoresResult(boolean isSuccess, Object object) {
+
     }
 
     private void refershView(){

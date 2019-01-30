@@ -2,44 +2,51 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
+
     <RelativeLayout
-        android:layout_below="@+id/header"
         android:id="@+id/university_bar"
-        android:background="@color/white"
-        android:layout_marginTop="10dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/header"
+        android:layout_marginTop="10dp"
+        android:background="@color/white"
+        android:visibility="gone">
+
         <ImageView
-            android:layout_centerVertical="true"
             android:id="@+id/university_icon"
-            android:src="@mipmap/avatar1"
-            android:layout_margin="20dp"
             android:layout_width="50dp"
-            android:layout_height="50dp" />
+            android:layout_height="50dp"
+            android:layout_centerVertical="true"
+            android:layout_margin="20dp"
+            android:src="@mipmap/avatar1" />
+
         <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_toRightOf="@+id/university_icon"
-            android:orientation="vertical"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:orientation="vertical">
+
             <TextView
-                android:text="中国某某某大学"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:text="中国某某某大学" />
+
             <TextView
-                android:text="中国某某某大学"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:text="中国某某某大学" />
         </LinearLayout>
+
         <TextView
-            android:layout_marginRight="15dp"
-            android:layout_centerVertical="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="15dp"
             android:text="自动化1182班"
             android:textColor="@color/baseFontColor"
-            android:textStyle="bold"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:textStyle="bold" />
     </RelativeLayout>
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerView"

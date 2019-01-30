@@ -34,6 +34,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <LinearLayout
+                android:gravity="center_horizontal"
+                android:paddingBottom="15dp"
                 android:orientation="vertical"
                 android:background="@drawable/fragment_layout2_bg"
                 android:layout_margin="15dp"
@@ -69,12 +71,21 @@
                         android:textColor="@color/baseFontColor2"
                         android:textSize="14sp" />
                 </RelativeLayout>
-
+                <TextView
+                    android:id="@+id/empty_show"
+                    android:text="空空如也"
+                    android:visibility="gone"
+                    android:textColor="@color/main_color"
+                    android:layout_marginTop="10dp"
+                    android:layout_below="@+id/header"
+                    android:layout_centerHorizontal="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/recyclerView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp">
+                    android:layout_marginTop="1dp">
 
                 </android.support.v7.widget.RecyclerView>
             </LinearLayout>

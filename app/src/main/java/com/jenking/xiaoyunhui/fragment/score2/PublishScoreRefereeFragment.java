@@ -18,6 +18,7 @@ import com.github.library.BaseViewHolder;
 import com.github.library.listener.OnRecyclerItemClickListener;
 import com.jenking.xiaoyunhui.R;
 import com.jenking.xiaoyunhui.activity.ScoreOperateActivity;
+import com.jenking.xiaoyunhui.activity.ScoreShowActivity;
 import com.jenking.xiaoyunhui.api.RequestService;
 import com.jenking.xiaoyunhui.contacts.MatchContract;
 import com.jenking.xiaoyunhui.models.base.MatchModel;
@@ -82,7 +83,8 @@ public class PublishScoreRefereeFragment extends Fragment implements MatchContra
         baseRecyclerAdapter.setOnRecyclerItemClickListener(new OnRecyclerItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                Intent intent = new Intent(context,ScoreOperateActivity.class);
+                Intent intent = new Intent(context,ScoreShowActivity.class);
+                intent.putExtra("match_id",datas.get(position).getMatch_id());
                 startActivity(intent);
             }
         });

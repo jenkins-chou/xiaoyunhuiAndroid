@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:background="@color/baseLayoutColor"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <RelativeLayout
+        android:visibility="gone"
+        android:layout_below="@+id/header"
+        android:id="@+id/university_bar"
+        android:background="@color/white"
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:layout_centerVertical="true"
+            android:id="@+id/university_icon"
+            android:src="@mipmap/avatar1"
+            android:layout_margin="20dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp" />
+        <LinearLayout
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/university_icon"
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <TextView
+                android:text="中国某某某大学"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:text="中国某某某大学"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+        <TextView
+            android:layout_marginRight="15dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:text="自动化1182班"
+            android:textColor="@color/baseFontColor"
+            android:textStyle="bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/smartRefreshLayout"
+        android:background="@color/baseLayoutColor"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_below="@+id/university_bar"
+            android:layout_marginRight="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        </android.support.v7.widget.RecyclerView>
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+
+
+    <LinearLayout
+        android:id="@+id/create_team_in"
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/fragment_part1_index_manager_in"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:orientation="horizontal"
+        android:paddingBottom="8dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingTop="8dp">
+
+        <TextView
+            android:id="@+id/create_team_in_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="创建新团队"
+            android:textColor="@color/main_color" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tips_text"
+        android:layout_marginTop="10dp"
+        android:layout_centerHorizontal="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="请登录后查看"
+        android:textColor="@color/main_color" />
+</RelativeLayout>

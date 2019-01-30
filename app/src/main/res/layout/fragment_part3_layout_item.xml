@@ -3,103 +3,96 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
-    <LinearLayout
+    <RelativeLayout
         android:layout_marginTop="10dp"
         android:layout_marginLeft="5dp"
-        android:background="@drawable/fragment_part3_layout_item_bg"
-        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-        <RelativeLayout
-            android:layout_margin="10dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <ImageView
-                android:id="@+id/team_icon"
-                android:layout_margin="5dp"
-                android:src="@mipmap/avatar2"
-                android:layout_width="40dp"
-                android:layout_height="40dp" />
-            <LinearLayout
-                android:layout_toRightOf="@+id/team_icon"
-                android:layout_centerVertical="true"
-                android:orientation="vertical"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-                <TextView
-                    android:id="@+id/team_name"
-                    android:text="勇往直前队"
-                    android:textSize="18sp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-                <TextView
-                    android:text="200009039209q3"
-                    android:id="@+id/team_create_time"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-            </LinearLayout>
 
-        </RelativeLayout>
+        <ImageView
+            android:id="@+id/item_bg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scaleType="fitStart"
+            />
         <LinearLayout
-            android:layout_margin="15dp"
+            android:background="@color/white"
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-            <TextView
-                android:text="团队简介"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-            <TextView
-                android:layout_marginTop="10dp"
-                android:text="暂无简介"
-                android:gravity="center"
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-        </LinearLayout>
-        <LinearLayout
-            android:layout_margin="15dp"
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <LinearLayout
-                android:id="@+id/leader_bar"
-                android:orientation="vertical"
-                android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
-                <TextView
-                    android:text="领队"
-                    android:textColor="@color/baseFontColor"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+
+                <ImageView
+                    android:layout_margin="5dp"
+                    android:id="@+id/team_icon"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:scaleType="center"
+                    android:src="@mipmap/avatar2" />
                 <LinearLayout
-                    android:layout_marginTop="5dp"
-                    android:orientation="horizontal"
+                    android:layout_marginLeft="10dp"
+                    android:layout_toRightOf="@+id/team_icon"
+                    android:layout_centerVertical="true"
+                    android:orientation="vertical"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
-                    <ImageView
-                        android:src="@mipmap/avatar1"
-                        android:layout_width="25dp"
-                        android:layout_height="25dp" />
+
                     <TextView
-                        android:text="某某某"
+                        android:id="@+id/team_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="18sp" />
+
+                    <TextView
+                        android:textSize="11sp"
+                        android:id="@+id/team_create_time"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
                 </LinearLayout>
 
-            </LinearLayout>
-            <TextView
-                android:layout_marginTop="10dp"
-                android:layout_alignParentRight="true"
-                android:text="查看详情"
-                android:padding="5dp"
-                android:textColor="@color/white"
-                android:gravity="center"
-                android:background="@color/main_color"
-                android:alpha="0.5"
+            </RelativeLayout>
+            <LinearLayout
+                android:layout_margin="15dp"
+                android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content">
+                <TextView
+                    android:text="团队简介"
+
+                    android:textColor="@color/baseFontColor"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:id="@+id/team_abstract"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="暂无简介" />
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_margin="15dp"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_marginTop="10dp"
+                    android:layout_alignParentRight="true"
+                    android:text="查看详情"
+                    android:padding="5dp"
+                    android:textColor="@color/white"
+                    android:gravity="center"
+                    android:background="@color/main_color"
+                    android:alpha="0.5"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
         </LinearLayout>
-    </LinearLayout>
+    </RelativeLayout>
+
 
 </LinearLayout>
