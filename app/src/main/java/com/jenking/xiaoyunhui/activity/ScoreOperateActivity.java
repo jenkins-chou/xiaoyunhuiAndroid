@@ -6,8 +6,11 @@ import android.support.annotation.RequiresApi;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -17,19 +20,23 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.github.library.BaseRecyclerAdapter;
 import com.jenking.xiaoyunhui.R;
+import com.jenking.xiaoyunhui.adapter.score2.ScoreOperateAdapter;
 import com.jenking.xiaoyunhui.api.BaseAPI;
 import com.jenking.xiaoyunhui.api.RequestService;
 import com.jenking.xiaoyunhui.contacts.MatchContract;
 import com.jenking.xiaoyunhui.contacts.UserMatchContract;
 import com.jenking.xiaoyunhui.customui.CommonLoading;
+import com.jenking.xiaoyunhui.dialog.CommonTipsDialog;
 import com.jenking.xiaoyunhui.models.base.MatchDetailModel;
 import com.jenking.xiaoyunhui.models.base.ResultModel;
 import com.jenking.xiaoyunhui.models.base.UserModel;
 import com.jenking.xiaoyunhui.presenters.MatchPresenter;
 import com.jenking.xiaoyunhui.presenters.UserMatchPresenter;
+import com.jenking.xiaoyunhui.tools.Const;
 import com.jenking.xiaoyunhui.tools.StringUtil;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -39,12 +46,16 @@ import butterknife.OnClick;
 public class ScoreOperateActivity extends BaseActivity implements MatchContract,UserMatchContract {
 
 
+    private String match_id;
     private BaseRecyclerAdapter baseRecyclerAdapter;
+
     private List<UserModel> userModels;
     private MatchPresenter matchPresenter;//用于获取比赛详情
     private UserMatchPresenter userMatchPresenter;
 
     private MatchDetailModel matchDetailModel;
+
+    private Map<String,String> scoresMap;
 
 
     @BindView(R.id.recyclerView)
@@ -69,6 +80,9 @@ public class ScoreOperateActivity extends BaseActivity implements MatchContract,
     @BindView(R.id.empty_show)
     TextView empty_show;
 
+    @BindView(R.id.match_status)
+    TextView match_status;
+
     @OnClick(R.id.back)
     void back(){
         finish();
@@ -76,6 +90,22 @@ public class ScoreOperateActivity extends BaseActivity implements MatchContract,
 
     @OnClick(R.id.submit)
     void submit(){
+        if (matchDetailModel==null||
+                matchDetailModel.getMatch_status()==null||
+                !matchDetailModel.getMatch_status().equals(Const.Match_type_three)){
+            CommonTipsDialog.showTip(this,"温馨提示","当前比赛不能提交成绩",false);
+        }else if (match_id==null||match_id.equals("")){
+            CommonTipsDialog.showTip(this,"温馨提示","页面初始化失败",false);
+//            return;
+        }else if (userModels==null||userModels.size()<=0){
+            CommonTipsDialog.showTip(this,"温馨提示","暂时无人员报名",false);
+        }else{
+            for (int i = 0;i<userModels.size();i++){
+                Log.e("user_id",userModels.get(i).getUser_id());
+                Log.e("match_id",match_id);
+                Log.e("score_value",scoresMap.get(userModels.get(i).getUser_id())+"");
+            }
+        }
     }
 
     @Override
@@ -87,16 +117,36 @@ public class ScoreOperateActivity extends BaseActivity implements MatchContract,
     @Override
     public void initData(){
         userModels = new ArrayList<>();
+        scoresMap = new HashMap<>();
         baseRecyclerAdapter = new BaseRecyclerAdapter<UserModel>(this,userModels,R.layout.activity_score_operate_item) {
             @Override
-            protected void convert(com.github.library.BaseViewHolder helper, UserModel item) {
+            protected void convert(com.github.library.BaseViewHolder helper, final UserModel item) {
                 ImageView imageView = helper.getView(R.id.item_avatar);
 
                 RequestOptions requestOptions = new RequestOptions();
                 requestOptions.placeholder(R.mipmap.avatar2);
                 requestOptions.error(R.mipmap.avatar2);
-                Glide.with(ScoreOperateActivity.this).load(BaseAPI.base_url+item.getUser_avatar()).into(imageView);
+                Glide.with(ScoreOperateActivity.this).load(BaseAPI.base_url+item.getUser_avatar()).apply(requestOptions).into(imageView);
                 helper.setText(R.id.item_name,item.getUser_name());
+
+                final EditText editText = helper.getView(R.id.item_edittext);
+                editText.addTextChangedListener(new TextWatcher() {
+                    @Override
+                    public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                    }
+
+                    @Override
+                    public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                    }
+
+                    @Override
+                    public void afterTextChanged(Editable editable) {
+                        scoresMap.put(item.user_id,editable.toString());
+//                        Log.d("user_id : "+item.user_id, "afterTextChanged: "+editable.toString());
+                    }
+                });
             }
         };
         baseRecyclerAdapter.openLoadAnimation(false);
@@ -116,7 +166,7 @@ public class ScoreOperateActivity extends BaseActivity implements MatchContract,
     private void getData(){
         Intent intent = getIntent();
         if (intent!=null){
-            String match_id = intent.getStringExtra("match_id");
+            match_id = intent.getStringExtra("match_id");
 
             Map<String,String> params = RequestService.getBaseParams(context);
             params.put("match_id",match_id);
@@ -169,6 +219,21 @@ public class ScoreOperateActivity extends BaseActivity implements MatchContract,
             match_type.setText(matchDetailModel.getMatch_type_name());
             match_number.setText(matchDetailModel.getMatch_athletes_num());
             match_time.setText(StringUtil.getStrTime(matchDetailModel.getMatch_time(),"yyyy-MM-dd HH:mm:ss"));
+
+            switch (matchDetailModel.getMatch_status()){
+                case Const.Match_type_one:
+                    match_status.setText("报名中");
+                    break;
+                case Const.Match_type_two:
+                    match_status.setText("比赛中");
+                    break;
+                case Const.Match_type_three:
+                    match_status.setText("已完成");
+                    break;
+                case Const.Match_type_four:
+                    match_status.setText("已公布成绩");
+                    break;
+            }
 
 
         }else {

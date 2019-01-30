@@ -26,17 +26,19 @@
         android:layout_centerVertical="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
+
     <EditText
+        android:id="@+id/item_edittext"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="15dp"
+        android:background="@drawable/activity_userinfo_edittext"
+        android:gravity="right"
+        android:hint="请输入成绩"
         android:padding="5dp"
         android:textSize="18sp"
-        android:textStyle="bold"
-        android:background="@drawable/activity_userinfo_edittext"
-        android:hint="请输入成绩"
-        android:gravity="right"
-        android:layout_marginRight="15dp"
-        android:layout_centerVertical="true"
-        android:layout_alignParentRight="true"
-        android:layout_width="150dp"
-        android:layout_height="wrap_content" />
+        android:textStyle="bold" />
 </RelativeLayout>
 </LinearLayout>

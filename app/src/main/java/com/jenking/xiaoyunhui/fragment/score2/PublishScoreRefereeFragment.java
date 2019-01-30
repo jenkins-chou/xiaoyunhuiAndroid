@@ -52,6 +52,7 @@ public class PublishScoreRefereeFragment extends Fragment implements MatchContra
     TextView empty_show;
     @BindView(R.id.smartRefreshLayout)
     SmartRefreshLayout smartRefreshLayout;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -71,7 +72,6 @@ public class PublishScoreRefereeFragment extends Fragment implements MatchContra
                 helper.setText(R.id.match_status,getMatchStatusName(item.getMatch_status()));
                 helper.setText(R.id.match_number,item.getMatch_athletes_num());
                 helper.setText(R.id.match_time, StringUtil.getStrTime(item.getMatch_time(),"yyyy-MM-dd HH:ss"));
-
                 TextView item_button = helper.getView(R.id.item_button);
                 if (item.getMatch_status().equals(Const.Match_type_four)){
                     item_button.setText("查看详情");

@@ -126,16 +126,26 @@
                 </LinearLayout>
             </LinearLayout>
             <LinearLayout
-                android:orientation="vertical"
-                android:background="@color/white"
+                android:gravity="center"
                 android:layout_marginTop="10dp"
+                android:background="@color/white"
+                android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-
-                <View
-                    android:background="@color/baseLayoutColor"
-                    android:layout_width="match_parent"
-                    android:layout_height="1px"/>
+                <TextView
+                    android:text="比赛状态"
+                    android:textStyle="bold"
+                    android:layout_margin="15dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:id="@+id/match_status"
+                    android:text=""
+                    android:textStyle="bold"
+                    android:textColor="@color/main_color"
+                    android:layout_marginBottom="15dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
             </LinearLayout>
             <LinearLayout
                 android:gravity="center"
