@@ -93,9 +93,9 @@ public class MineTeamFragment extends Fragment implements TeamContract{
                 requestOptions.placeholder(R.mipmap.avatar1);
 
                 ImageView team_icon = helper.getView(R.id.team_icon);
-                ImageView item_bg = helper.getView(R.id.item_bg);
+//                ImageView item_bg = helper.getView(R.id.item_bg);
                 Glide.with(getContext()).load(BaseAPI.base_url+item.getTeam_logo()).into(team_icon);
-                Glide.with(getContext()).load(BaseAPI.base_url+item.getTeam_logo()).into(item_bg);
+//                Glide.with(getContext()).load(BaseAPI.base_url+item.getTeam_logo()).into(item_bg);
 
                 helper.setText(R.id.team_name,item.getTeam_name());
                 if (StringUtil.isNumber(item.getTeam_create_time())){
@@ -112,6 +112,8 @@ public class MineTeamFragment extends Fragment implements TeamContract{
             @Override
             public void onItemClick(View view, int position) {
                 Intent intent  = new Intent(getContext(),TeamDetailActivity.class);
+                intent.putExtra("team_id",teamModels.get(position).getTeam_id());
+                intent.putExtra("team_type",TeamDetailActivity.TeamTypeLeader);
                 startActivity(intent);
             }
         });
@@ -174,6 +176,11 @@ public class MineTeamFragment extends Fragment implements TeamContract{
             }
         }
         checkDatas();
+    }
+
+    @Override
+    public void getTeamByUserIdResult(boolean isSuccess, Object object) {
+
     }
 
     private void checkDatas(){

@@ -1,16 +1,16 @@
 package com.jenking.xiaoyunhui.models.base;
 
 public class TeamModel {
-    private String team_id;
-    private String team_leader;
-    private String team_create_time;
-    private String team_create_user;
-    private String team_name;
-    private String team_detail;
-    private String team_abstract;
-    private String team_status;
-    private String team_logo;
-    private String team_del;
+    public String team_id;
+    public String team_leader;
+    public String team_create_time;
+    public String team_create_user;
+    public String team_name;
+    public String team_detail;
+    public String team_abstract;
+    public String team_status;
+    public String team_logo;
+    public String team_del;
 
     public String getTeam_id() {
         return team_id;

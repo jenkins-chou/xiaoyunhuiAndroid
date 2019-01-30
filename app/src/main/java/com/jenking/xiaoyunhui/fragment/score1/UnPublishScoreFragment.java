@@ -26,6 +26,7 @@ import com.jenking.xiaoyunhui.presenters.ScorePresenter;
 import com.jenking.xiaoyunhui.tools.AccountTool;
 import com.jenking.xiaoyunhui.tools.Const;
 import com.jenking.xiaoyunhui.tools.StringUtil;
+import com.scwang.smartrefresh.header.MaterialHeader;
 import com.scwang.smartrefresh.header.TaurusHeader;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -81,7 +82,7 @@ public class UnPublishScoreFragment extends Fragment implements ScoreContract {
 
         scorePresenter = new ScorePresenter(context,this);
 
-        smartRefreshLayout.setRefreshHeader(new TaurusHeader(context));
+        smartRefreshLayout.setRefreshHeader(new MaterialHeader(context));
         smartRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {

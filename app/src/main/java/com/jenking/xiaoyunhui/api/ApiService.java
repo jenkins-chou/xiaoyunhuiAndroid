@@ -9,6 +9,7 @@ import com.jenking.xiaoyunhui.models.base.ResultModel;
 import com.jenking.xiaoyunhui.models.base.SchoolModel;
 import com.jenking.xiaoyunhui.models.base.ScoreDetailModel;
 import com.jenking.xiaoyunhui.models.base.ScoreModel;
+import com.jenking.xiaoyunhui.models.base.TeamDetailModel;
 import com.jenking.xiaoyunhui.models.base.TeamModel;
 import com.jenking.xiaoyunhui.models.base.UserMatchModel;
 import com.jenking.xiaoyunhui.models.base.UserModel;
@@ -199,5 +200,18 @@ public interface ApiService {
     @FormUrlEncoded
     @POST("team/getTeamListByCreater")
     Observable<ResultModel<TeamModel>> getTeamListByCreater(@FieldMap Map<String, String> body);
+
+    @FormUrlEncoded
+    @POST("team/getTeamListByUserId")
+    Observable<ResultModel<TeamModel>> getTeamListByUserId(@FieldMap Map<String, String> body);
+
+    @FormUrlEncoded
+    @POST("team/getTeamDetail")
+    Observable<ResultModel<TeamDetailModel>> getTeamDetail(@FieldMap Map<String, String> body);
+
+
+    @FormUrlEncoded
+    @POST("userTeam/getTeamMember")
+    Observable<ResultModel<UserModel>> getTeamMember(@FieldMap Map<String, String> body);
 
 }

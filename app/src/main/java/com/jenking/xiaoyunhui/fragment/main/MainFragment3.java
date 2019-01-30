@@ -17,6 +17,7 @@ import com.flyco.tablayout.listener.OnTabSelectListener;
 import com.jenking.xiaoyunhui.R;
 import com.jenking.xiaoyunhui.activity.MineTeamActivity;
 import com.jenking.xiaoyunhui.activity.ScoreSearchActivity;
+import com.jenking.xiaoyunhui.activity.TeamAllActivity;
 import com.jenking.xiaoyunhui.activity.TeamSearchActivity;
 import com.jenking.xiaoyunhui.adapter.MainFragment3Adapter;
 import com.jenking.xiaoyunhui.fragment.part3.MineTeamFragment;
@@ -40,8 +41,10 @@ public class MainFragment3 extends Fragment {
         Intent intent = new Intent(getContext(),TeamSearchActivity.class);
         startActivity(intent);
     }
-    @OnClick(R.id.mine_team)
-    void mine_team(){
+    @OnClick(R.id.allteam)
+    void allteam(){
+        Intent intent = new Intent(getContext(),TeamAllActivity.class);
+        startActivity(intent);
     }
 
     @Nullable

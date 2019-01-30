@@ -293,6 +293,11 @@ public class TeamCreateActivity extends BaseActivity implements TeamContract{
     }
 
     @Override
+    public void getTeamByUserIdResult(boolean isSuccess, Object object) {
+
+    }
+
+    @Override
     public void getOtherTeamResult(boolean isSuccess, Object object) {
 
     }

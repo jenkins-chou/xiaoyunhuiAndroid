@@ -12,13 +12,13 @@
         android:layout_height="48dp">
 
         <TextView
-            android:id="@+id/mine_team"
+            android:id="@+id/allteam"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="15dp"
             android:layout_marginTop="15dp"
-            android:text="团队"
+            android:text="团队大厅"
             android:textColor="@color/baseFontColor"
             android:textSize="18sp" />
         <com.flyco.tablayout.SegmentTabLayout
