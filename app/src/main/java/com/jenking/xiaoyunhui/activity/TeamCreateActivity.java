@@ -282,7 +282,7 @@ public class TeamCreateActivity extends BaseActivity implements TeamContract{
     public void addTeamResult(boolean isSuccess, Object object) {
         setLoadingEnable(false);
         if (checkResultModel(isSuccess,object)){
-            Toast.makeText(context, "创建成功", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, "创建成功,请刷新后查看", Toast.LENGTH_SHORT).show();
             finish();
         }
     }
@@ -298,7 +298,7 @@ public class TeamCreateActivity extends BaseActivity implements TeamContract{
     }
 
     @Override
-    public void getOtherTeamResult(boolean isSuccess, Object object) {
+    public void getAllTeamExceptUserIdResult(boolean isSuccess, Object object) {
 
     }
 

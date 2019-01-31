@@ -85,7 +85,8 @@
         <activity android:name=".activity.ClassAddActivity" />
         <activity android:name=".activity.ScoreShowActivity" />
         <activity android:name=".activity.TeamCreateActivity" />
-        <activity android:name=".activity.TeamAllActivity"></activity>
+        <activity android:name=".activity.TeamAllActivity" />
+        <activity android:name=".activity.TeamMemberDetailActivity"></activity>
     </application>
 
 </manifest>

@@ -104,4 +104,40 @@ public class ClassPresenter {
                 });
     }
 
+    public void getClassById(Map<String,String> params){
+        if (params==null)return;
+        Log.e("开始请求","p-->"+params.toString());
+        new ApiUtil(context)
+                .getServer(ApiService.class)
+                //记得更改请求接口数据
+                .getClassById(params)
+                .subscribeOn(Schedulers.io())//后台处理线程
+                .observeOn(AndroidSchedulers.mainThread())//指定回调发生的线程
+                .subscribe(new Observer<ResultModel<ClassModel>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                        System.out.print(d);
+                    }
+
+                    @Override
+                    public void onNext(ResultModel<ClassModel> resultModel) {
+                        //更新视图
+                        ClassContract classContract = (ClassContract)view;
+                        classContract.getClassResult(true,resultModel);
+                        //view.success(resultModel);
+                    }
+                    @Override
+                    public void onError(Throwable e) {
+                        System.out.print("----error");
+                        e.printStackTrace();
+                        ClassContract classContract = (ClassContract)view;
+                        classContract.getClassResult(false,e);
+                        //view.failed(e);
+                    }
+                    @Override
+                    public void onComplete() {
+                    }
+                });
+    }
+
 }

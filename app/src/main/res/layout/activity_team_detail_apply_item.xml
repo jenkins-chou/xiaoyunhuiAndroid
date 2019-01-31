@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <RelativeLayout
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal"
+        android:background="#ffffff"
+        android:gravity="center_vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/user_avatar"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:scaleType="center"
+            android:src="@mipmap/ic_launcher" />
+        <LinearLayout
+            android:layout_marginLeft="10dp"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/user_avatar"
+            android:layout_marginRight="15dp"
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/user_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxLength="12"
+                android:text="团队标题"
+                android:textColor="@color/baseFontColor" />
+
+            <TextView
+                android:id="@+id/user_slogan"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:maxLength="15"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:text="团队标题"
+                android:textSize="13sp" />
+        </LinearLayout>
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_alignParentRight="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/pass"
+                android:layout_width="40dp"
+                android:layout_height="50dp"
+                android:gravity="center"
+                android:text="通过"
+                android:textColor="@color/colorPrimary" />
+
+            <TextView
+                android:id="@+id/unpass"
+                android:layout_width="40dp"
+                android:layout_height="50dp"
+                android:gravity="center"
+                android:text="忽略"
+                android:textColor="@color/colorAccent" />
+
+            <TextView
+                android:id="@+id/show_member"
+                android:layout_width="70dp"
+                android:layout_height="50dp"
+                android:gravity="center"
+                android:text="查看"
+                android:textColor="@color/main_color" />
+        </LinearLayout>
+
+    </RelativeLayout>
+
+
+</LinearLayout>

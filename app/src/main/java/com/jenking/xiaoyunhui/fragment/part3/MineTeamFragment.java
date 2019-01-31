@@ -21,6 +21,7 @@ import com.github.library.BaseRecyclerAdapter;
 import com.github.library.BaseViewHolder;
 import com.github.library.listener.OnRecyclerItemClickListener;
 import com.jenking.xiaoyunhui.R;
+import com.jenking.xiaoyunhui.activity.TeamAllActivity;
 import com.jenking.xiaoyunhui.activity.TeamCreateActivity;
 import com.jenking.xiaoyunhui.activity.TeamDetailActivity;
 import com.jenking.xiaoyunhui.adapter.MainFragment3Adapter;
@@ -85,25 +86,14 @@ public class MineTeamFragment extends Fragment implements TeamContract{
         teamModels = new ArrayList<>();
         teamPresenter = new TeamPresenter(getContext(),this);
 
-        baseRecyclerAdapter = new BaseRecyclerAdapter<TeamModel>(getContext(),teamModels,R.layout.fragment_part3_layout_item) {
+        baseRecyclerAdapter = new BaseRecyclerAdapter<TeamModel>(getContext(),teamModels,R.layout.activity_mine_team_item) {
             @Override
             protected void convert(BaseViewHolder helper, TeamModel item) {
                 RequestOptions requestOptions = new RequestOptions();
-                requestOptions.error(R.mipmap.avatar1);
                 requestOptions.placeholder(R.mipmap.avatar1);
-
-                ImageView team_icon = helper.getView(R.id.team_icon);
-//                ImageView item_bg = helper.getView(R.id.item_bg);
-                Glide.with(getContext()).load(BaseAPI.base_url+item.getTeam_logo()).into(team_icon);
-//                Glide.with(getContext()).load(BaseAPI.base_url+item.getTeam_logo()).into(item_bg);
-
+                requestOptions.error(R.mipmap.avatar1);
+                Glide.with(getActivity()).load(BaseAPI.base_url+item.getTeam_logo()).apply(requestOptions).into((ImageView)helper.getView(R.id.team_logo));
                 helper.setText(R.id.team_name,item.getTeam_name());
-                if (StringUtil.isNumber(item.getTeam_create_time())){
-                    helper.setText(R.id.team_create_time, StringUtil.getStrTime(item.getTeam_create_time(),"yyyy-MM-dd HH:mm:ss"));
-                }else{
-                    helper.setText(R.id.team_create_time, StringUtil.getStrTime(StringUtil.getTime(),"yyyy-MM-dd HH:mm:ss"));
-                }
-
                 helper.setText(R.id.team_abstract,item.getTeam_abstract());
             }
         };
@@ -117,7 +107,7 @@ public class MineTeamFragment extends Fragment implements TeamContract{
                 startActivity(intent);
             }
         });
-        recyclerView.setLayoutManager(new StaggeredGridLayoutManager(2,1));
+        recyclerView.setLayoutManager(new StaggeredGridLayoutManager(1,1));
         recyclerView.setAdapter(baseRecyclerAdapter);
 
         smartRefreshLayout.setRefreshHeader(new MaterialHeader(getContext()));
@@ -183,6 +173,11 @@ public class MineTeamFragment extends Fragment implements TeamContract{
 
     }
 
+    @Override
+    public void getAllTeamExceptUserIdResult(boolean isSuccess, Object object) {
+
+    }
+
     private void checkDatas(){
         if (teamModels==null||teamModels.size()<=0){
             tips_text.setVisibility(View.VISIBLE);
@@ -190,11 +185,6 @@ public class MineTeamFragment extends Fragment implements TeamContract{
         }else{
             tips_text.setVisibility(View.GONE);
         }
-    }
-
-    @Override
-    public void getOtherTeamResult(boolean isSuccess, Object object) {
-
     }
 
     @Override

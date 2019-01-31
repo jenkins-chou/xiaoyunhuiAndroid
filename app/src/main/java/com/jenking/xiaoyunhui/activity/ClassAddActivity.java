@@ -88,6 +88,11 @@ public class ClassAddActivity extends BaseActivity implements ClassContract{
     }
 
     @Override
+    public void getClassResult(boolean isSuccess, Object object) {
+
+    }
+
+    @Override
     public void getAllClassResult(boolean isSuccess, Object object) {
 
     }

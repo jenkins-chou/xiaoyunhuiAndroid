@@ -12,46 +12,48 @@
         android:layout_height="wrap_content">
 
         <ImageView
-            android:id="@+id/team_logo"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
+            android:id="@+id/user_avatar"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:scaleType="center"
             android:src="@mipmap/ic_launcher" />
         <LinearLayout
             android:layout_marginLeft="10dp"
             android:layout_centerVertical="true"
-            android:layout_toRightOf="@+id/team_logo"
+            android:layout_toRightOf="@+id/user_avatar"
             android:layout_marginRight="15dp"
             android:orientation="vertical"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
-            <TextView
-                android:id="@+id/team_name"
-                android:text="团队标题"
-                android:maxLength="12"
-                android:textColor="@color/baseFontColor"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
 
             <TextView
-                android:id="@+id/team_abstract"
+                android:id="@+id/user_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxLength="12"
+                android:text="团队标题"
+                android:textColor="@color/baseFontColor" />
+
+            <TextView
+                android:id="@+id/user_slogan"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:text="团队标题"
                 android:maxLength="15"
-                android:singleLine="true"
                 android:maxLines="1"
+                android:singleLine="true"
+                android:text="团队标题"
                 android:textSize="13sp" />
         </LinearLayout>
+
         <TextView
+            android:id="@+id/show_member"
+            android:layout_width="70dp"
+            android:layout_height="50dp"
             android:layout_alignParentRight="true"
-            android:text="查看"
             android:gravity="center"
-            android:textColor="@color/white"
-            android:background="@color/main_color"
-            android:layout_width="80dp"
-            android:layout_height="60dp" />
+            android:text="查看"
+            android:textColor="@color/main_color" />
     </RelativeLayout>
 
 

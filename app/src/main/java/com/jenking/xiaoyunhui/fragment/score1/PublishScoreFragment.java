@@ -128,7 +128,6 @@ public class PublishScoreFragment extends Fragment implements ScoreContract {
     @Override
     public void getScorePublishListByUserIdResult(boolean isSuccess, Object object) {
         smartRefreshLayout.finishRefresh();
-
         if (isSuccess&&object!=null){
             ResultModel resultModel = (ResultModel)object;
             if (resultModel!=null&&resultModel.getStatus()!=null){

@@ -19,8 +19,8 @@
             android:layout_marginLeft="15dp"
             android:layout_marginTop="15dp"
             android:text="团队大厅"
-            android:textColor="@color/baseFontColor"
-            android:textSize="18sp" />
+            android:textColor="@color/main_color"
+            android:textSize="16sp" />
         <com.flyco.tablayout.SegmentTabLayout
             android:id="@+id/segmentTabLayout"
             android:layout_centerInParent="true"

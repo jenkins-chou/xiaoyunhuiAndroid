@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
 
+import com.jenking.xiaoyunhui.dialog.CommonTipsDialog;
 import com.jenking.xiaoyunhui.models.base.ResultModel;
 
 import butterknife.ButterKnife;
@@ -46,7 +47,7 @@ public class BaseActivity extends AppCompatActivity {
     }
 
     public void initData(){
-        context = this;
+        context = getBaseContext();
         TAG = getClass().getCanonicalName();
         Intent intent = getIntent();
         if (intent!=null){

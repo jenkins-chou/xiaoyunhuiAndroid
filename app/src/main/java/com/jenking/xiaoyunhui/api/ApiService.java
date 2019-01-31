@@ -192,6 +192,10 @@ public interface ApiService {
     @POST("class/addclass")
     Observable<ResultModel<ClassModel>> addClass(@FieldMap Map<String, String> body);
 
+    @FormUrlEncoded
+    @POST("class/getClass")
+    Observable<ResultModel<ClassModel>> getClassById(@FieldMap Map<String, String> body);
+
 
     @FormUrlEncoded
     @POST("team/addTeam")
@@ -209,9 +213,22 @@ public interface ApiService {
     @POST("team/getTeamDetail")
     Observable<ResultModel<TeamDetailModel>> getTeamDetail(@FieldMap Map<String, String> body);
 
+    @FormUrlEncoded
+    @POST("team/getTeamListExceptUserId")
+    Observable<ResultModel<TeamModel>> getTeamListExceptUserId(@FieldMap Map<String, String> body);
+
+
 
     @FormUrlEncoded
     @POST("userTeam/getTeamMember")
     Observable<ResultModel<UserModel>> getTeamMember(@FieldMap Map<String, String> body);
+
+    @FormUrlEncoded
+    @POST("userTeam/addUserTeam")
+    Observable<ResultModel<UserModel>> applyJoinTeam(@FieldMap Map<String, String> body);
+
+    @FormUrlEncoded
+    @POST("userTeam/operateUserTeamApply")
+    Observable<ResultModel> operateUserTeamApply(@FieldMap Map<String, String> body);
 
 }
