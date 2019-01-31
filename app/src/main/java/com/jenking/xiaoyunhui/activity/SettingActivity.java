@@ -42,11 +42,11 @@ public class SettingActivity extends BaseActivity {
 
     @OnClick({R.id.modify_userinfo})
     void modify_userinfo(){
-        if (AccountTool.isLogin(context)){
-            Intent intent = new Intent(context,UserInfoModifyActivity.class);
+        if (AccountTool.isLogin(this)){
+            Intent intent = new Intent(this,UserInfoModifyActivity.class);
             startActivity(intent);
         }else{
-            CommonTipsDialog.showTip(context,"温馨提示","请登录后重试",false);
+            CommonTipsDialog.showTip(this,"温馨提示","请登录后重试",false);
         }
 
     }

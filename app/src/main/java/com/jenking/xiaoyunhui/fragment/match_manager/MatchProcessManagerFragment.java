@@ -7,9 +7,12 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
@@ -17,9 +20,7 @@ import com.github.library.BaseRecyclerAdapter;
 import com.github.library.BaseViewHolder;
 import com.github.library.listener.OnRecyclerItemClickListener;
 import com.jenking.xiaoyunhui.R;
-import com.jenking.xiaoyunhui.activity.MatchDetailActivity;
 import com.jenking.xiaoyunhui.activity.ScoreShowActivity;
-import com.jenking.xiaoyunhui.adapter.MatchManagerAdapter;
 import com.jenking.xiaoyunhui.api.BaseAPI;
 import com.jenking.xiaoyunhui.api.RequestService;
 import com.jenking.xiaoyunhui.contacts.MatchContract;
@@ -30,51 +31,80 @@ import com.jenking.xiaoyunhui.tools.Const;
 import com.jenking.xiaoyunhui.tools.StringUtil;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
 
-public class MatchManagerFragment extends Fragment implements MatchContract {
+public class MatchProcessManagerFragment extends Fragment implements MatchContract {
     private Unbinder unbinder;
 
     private String match_status;
 
     private MatchPresenter matchPresenter;
 
+    private Map<String,Boolean> selectList;//match选择列表
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
     private List<MatchModel> MatchModels;
     private BaseRecyclerAdapter baseRecyclerAdapter;
+
+    @OnClick(R.id.footer)
+    void footer(){
+        List<String> matchIds = new ArrayList<>();
+        if (MatchModels!=null){
+            for (int i = 0;i<MatchModels.size();i++){
+                Log.e("match_id",MatchModels.get(i).getMatch_id());
+                Boolean check = selectList.get(MatchModels.get(i).getMatch_id());
+                Log.e("check",check+"");
+                if (check!=null&&check){
+                    matchIds.add(MatchModels.get(i).getMatch_id());
+                }
+            }
+
+            Log.e("matchIds",matchIds.toString());
+        }
+        if (selectList!=null){
+            Log.e("selectList",selectList.toString());
+        }
+    }
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_match_manager,container,false);
+        View view = inflater.inflate(R.layout.fragment_match_process_manager,container,false);
         unbinder = ButterKnife.bind(this,view);
         initData();
         return view;
     }
-
-    private void setMatch_status(String match_status){
-        this.match_status = match_status;
-    }
-
     private void initData(){
         MatchModels = new ArrayList<>();
-        baseRecyclerAdapter = new BaseRecyclerAdapter<MatchModel>(getContext(),MatchModels,R.layout.fragment_match_manager_item) {
+        selectList = new HashMap<>();
+        baseRecyclerAdapter = new BaseRecyclerAdapter<MatchModel>(getContext(),MatchModels,R.layout.fragment_match_process_manager_item) {
             @Override
             protected void convert(BaseViewHolder helper, MatchModel item) {
-                helper.setText(R.id.match_title,item.getMatch_title());
-                helper.setText(R.id.match_abstract,item.getMatch_abstract());
+                helper.setText(R.id.match_name,item.getMatch_title());
                 helper.setText(R.id.match_status,getStatusStr(item.getMatch_status()));
-                helper.setText(R.id.match_create_time,"创建时间"+StringUtil.getStrTime(item.getMatch_create_time(),"yyyy-MM-dd HH:mm:ss"));
-                helper.setText(R.id.match_time,"比赛时间:"+StringUtil.getStrTime(item.getMatch_time(),"yyyy-MM-dd HH:mm:ss"));
+                helper.setText(R.id.match_create_time,"创建时间"+ StringUtil.getStrTime(item.getMatch_create_time(),"yyyy-MM-dd HH:mm:ss"));
                 ImageView match_img = helper.getView(R.id.match_img);
                 if (getContext()!=null){
                     Glide.with(getContext()).load(BaseAPI.base_url+item.getMatch_img()).into(match_img);
                 }
+
+                CheckBox checkbox = helper.getView(R.id.checkbox);
+                checkbox.setTag(item.getMatch_id());
+                checkbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+//                        compoundButton.getTag();
+                        Log.e("match_id",compoundButton.getTag()+"");
+                        Log.e("check",b+"");
+                        selectList.put(compoundButton.getTag().toString(),b);
+                    }
+                });
             }
         };
         baseRecyclerAdapter.setOnRecyclerItemClickListener(new OnRecyclerItemClickListener() {
@@ -88,11 +118,6 @@ public class MatchManagerFragment extends Fragment implements MatchContract {
                             intent.putExtra("match_id",match_id);
                             startActivity(intent);
                             break;
-                            default:
-                                Intent intent2 = new Intent(getContext(), MatchDetailActivity.class);
-                                intent2.putExtra("match_id",match_id);
-                                startActivity(intent2);
-                                break;
                     }
                 }
             }
@@ -113,10 +138,14 @@ public class MatchManagerFragment extends Fragment implements MatchContract {
         }
     }
 
-    public static MatchManagerFragment init(String match_status){
-        MatchManagerFragment matchManagerFragment = new MatchManagerFragment();
-        matchManagerFragment.setMatch_status(match_status);
-        return matchManagerFragment;
+    private void setMatch_status(String match_status){
+        this.match_status = match_status;
+    }
+
+    public static MatchProcessManagerFragment init(String match_status){
+        MatchProcessManagerFragment matchProcessManagerFragment = new MatchProcessManagerFragment();
+        matchProcessManagerFragment.setMatch_status(match_status);
+        return matchProcessManagerFragment;
     }
 
     private String getStatusStr(String code){
@@ -137,7 +166,7 @@ public class MatchManagerFragment extends Fragment implements MatchContract {
                     break;
             }
         }
-            return result;
+        return result;
     }
 
     @Override
