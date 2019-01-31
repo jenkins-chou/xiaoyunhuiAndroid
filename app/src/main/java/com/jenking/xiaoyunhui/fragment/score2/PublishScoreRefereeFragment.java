@@ -173,6 +173,16 @@ public class PublishScoreRefereeFragment extends Fragment implements MatchContra
         refershView();
     }
 
+    @Override
+    public void excuteResult(boolean isSuccess, Object object) {
+
+    }
+
+    @Override
+    public void deleteMatchResult(boolean isSuccess, Object object) {
+
+    }
+
     private void filter(List<MatchModel> source){
         if (source==null){
             return;

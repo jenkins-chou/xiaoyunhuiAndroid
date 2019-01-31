@@ -104,7 +104,6 @@ public class IndexFragment extends Fragment implements MatchContract,UserMatchCo
                 }else if (AccountTool.getUserType(context).equals("2")){
                     userMatchPresenter.getRefereeMatchByUserId(params);
                 }
-
             }
         }
     }
@@ -122,7 +121,7 @@ public class IndexFragment extends Fragment implements MatchContract,UserMatchCo
                 helper.setText(R.id.item_match_name,item.getMatch_title());
                 helper.setText(R.id.item_match_time,"比赛时间："+StringUtil.getStrTime(item.getMatch_time(),"yyyy-MM-dd HH:mm:ss"));
                 helper.setText(R.id.item_match_address,"地址："+item.getMatch_address());
-
+                helper.setText(R.id.match_status_tag,getMatchStatusTag(item.getMatch_status()));
                 ImageView item_img = helper.getView(R.id.item_img);
                 RequestOptions requestOptions = new RequestOptions();
                 requestOptions.error(R.mipmap.avatar2);
@@ -168,6 +167,26 @@ public class IndexFragment extends Fragment implements MatchContract,UserMatchCo
 
         getData();
 
+    }
+
+    private String getMatchStatusTag(String match_status){
+        String result = "";
+        if (match_status==null)return result;
+        switch (match_status){
+            case "1":
+                result = "报名中";
+                break;
+            case "2":
+                result = "比赛中";
+                break;
+            case "3":
+                result = "比赛完成";
+                break;
+            case "4":
+                result = "已公布成绩";
+                break;
+        }
+        return result;
     }
 
     @Override
@@ -254,6 +273,16 @@ public class IndexFragment extends Fragment implements MatchContract,UserMatchCo
 
     @Override
     public void getMatchByRefereeIdResult(boolean isSuccess, Object object) {
+
+    }
+
+    @Override
+    public void excuteResult(boolean isSuccess, Object object) {
+
+    }
+
+    @Override
+    public void deleteMatchResult(boolean isSuccess, Object object) {
 
     }
 

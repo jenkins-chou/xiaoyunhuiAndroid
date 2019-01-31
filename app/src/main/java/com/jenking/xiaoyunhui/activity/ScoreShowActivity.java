@@ -228,6 +228,16 @@ public class ScoreShowActivity extends BaseActivity implements MatchContract,Use
     }
 
     @Override
+    public void excuteResult(boolean isSuccess, Object object) {
+
+    }
+
+    @Override
+    public void deleteMatchResult(boolean isSuccess, Object object) {
+
+    }
+
+    @Override
     public void success(Object object) {
 
     }

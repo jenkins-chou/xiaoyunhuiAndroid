@@ -14,6 +14,9 @@ public class MatchTypeTool {
             case "3":
                 matchType = "已完成";
                 break;
+            case "4":
+                matchType = "已公布成绩";
+                break;
         }
         return matchType;
     }

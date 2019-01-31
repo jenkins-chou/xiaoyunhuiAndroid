@@ -24,12 +24,27 @@
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-            <TextView
-                android:id="@+id/item_match_name"
-                android:textColor="@color/baseFontColor"
-                android:text="男子组400米接力赛"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/item_match_name"
+                    android:textStyle="bold"
+                    android:textColor="@color/baseFontColor"
+                    android:text=""
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:text=""
+                    android:layout_marginLeft="5dp"
+                    android:textColor="@color/white"
+                    android:id="@+id/match_status_tag"
+                    android:background="@color/colorAccent"
+                    android:textSize="11sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
             <LinearLayout
                 android:layout_marginTop="10dp"
                 android:layout_width="match_parent"
@@ -37,14 +52,14 @@
                 <TextView
                     android:id="@+id/item_match_time"
                     android:textSize="10sp"
-                    android:text="时间：2019年1月28日"
+                    android:text=""
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
                 <TextView
                     android:id="@+id/item_match_address"
                     android:textSize="10sp"
                     android:layout_marginLeft="5dp"
-                    android:text="地点：主校区体育场"
+                    android:text=""
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
             </LinearLayout>

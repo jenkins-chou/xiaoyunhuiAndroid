@@ -45,6 +45,7 @@
         </LinearLayout>
         <TextView
             android:text="时间"
+            android:textSize="11sp"
             android:layout_centerVertical="true"
             android:layout_marginRight="10dp"
             android:layout_alignParentRight="true"

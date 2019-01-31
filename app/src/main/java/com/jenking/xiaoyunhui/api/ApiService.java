@@ -124,6 +124,16 @@ public interface ApiService {
     @POST("match/getmatchDetail")
     Observable<ResultModel<MatchDetailModel>> getMatchById(@FieldMap Map<String, String> body);
 
+    //批量执行函数
+    @FormUrlEncoded
+    @POST("match/excute")
+    Observable<ResultModel> excuteMatchSql(@FieldMap Map<String, String> body);
+
+    //删除函数
+    @FormUrlEncoded
+    @POST("match/deletematch")
+    Observable<ResultModel> deleteMatch(@FieldMap Map<String, String> body);
+
     //比赛报名
     @FormUrlEncoded
     @POST("userMatch/addUserMatch")

@@ -349,17 +349,49 @@
             android:padding="15dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
-        <TextView
+        <LinearLayout
+            android:orientation="horizontal"
             android:id="@+id/footer2"
-            android:layout_marginTop="1dp"
-            android:alpha="0.7"
-            android:background="@color/colorAccent"
-            android:textColor="@color/white"
-            android:text="更改进程"
-            android:gravity="center"
-            android:padding="15dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/delete_match"
+                android:layout_marginTop="1dp"
+                android:alpha="0.7"
+                android:background="@color/colorAccent"
+                android:textColor="@color/white"
+                android:text="删除"
+                android:gravity="center"
+                android:padding="15dp"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/update_match"
+                android:layout_marginTop="1dp"
+                android:alpha="0.7"
+                android:visibility="gone"
+                android:background="@color/main_color"
+                android:textColor="@color/white"
+                android:text="修改"
+                android:gravity="center"
+                android:padding="15dp"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/modify_match_status"
+                android:layout_marginTop="1dp"
+                android:alpha="0.7"
+                android:background="@color/colorPrimary"
+                android:textColor="@color/white"
+                android:text="更改进程"
+                android:gravity="center"
+                android:padding="15dp"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
     </LinearLayout>
 
     <com.jenking.xiaoyunhui.customui.CommonLoading

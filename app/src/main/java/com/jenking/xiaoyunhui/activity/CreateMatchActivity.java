@@ -130,7 +130,7 @@ public class CreateMatchActivity extends BaseActivity implements MatchContract {
     @OnClick(R.id.select_match_time)
     void setSelect_match_time(){
         //时间选择器
-        TimePickerView pvTime = new TimePickerBuilder(context, new OnTimeSelectListener() {
+        TimePickerView pvTime = new TimePickerBuilder(this, new OnTimeSelectListener() {
             @Override
             public void onTimeSelect(Date date, View v) {
                 Log.e("date",date.getTime()/1000+"");
@@ -462,6 +462,16 @@ public class CreateMatchActivity extends BaseActivity implements MatchContract {
 
     @Override
     public void getMatchByRefereeIdResult(boolean isSuccess, Object object) {
+
+    }
+
+    @Override
+    public void excuteResult(boolean isSuccess, Object object) {
+
+    }
+
+    @Override
+    public void deleteMatchResult(boolean isSuccess, Object object) {
 
     }
 

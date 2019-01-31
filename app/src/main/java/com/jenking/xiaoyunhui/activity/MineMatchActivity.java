@@ -155,6 +155,16 @@ public class MineMatchActivity extends BaseActivity implements MatchContract{
     }
 
     @Override
+    public void excuteResult(boolean isSuccess, Object object) {
+
+    }
+
+    @Override
+    public void deleteMatchResult(boolean isSuccess, Object object) {
+
+    }
+
+    @Override
     public void success(Object object) {
 
     }

@@ -28,6 +28,11 @@ import com.jenking.xiaoyunhui.models.base.ResultModel;
 import com.jenking.xiaoyunhui.presenters.MatchPresenter;
 import com.jenking.xiaoyunhui.tools.Const;
 import com.jenking.xiaoyunhui.tools.StringUtil;
+import com.scwang.smartrefresh.header.MaterialHeader;
+import com.scwang.smartrefresh.header.TaurusHeader;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,6 +51,9 @@ public class MatchManagerFragment extends Fragment implements MatchContract {
 
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
+    @BindView(R.id.smartRefreshLayout)
+    SmartRefreshLayout smartRefreshLayout;
+
     private List<MatchModel> MatchModels;
     private BaseRecyclerAdapter baseRecyclerAdapter;
     @Nullable
@@ -102,6 +110,18 @@ public class MatchManagerFragment extends Fragment implements MatchContract {
         recyclerView.setAdapter(baseRecyclerAdapter);
 
         matchPresenter = new MatchPresenter(getContext(),this);
+        getData();
+
+        smartRefreshLayout.setRefreshHeader(new MaterialHeader(getContext()));
+        smartRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                getData();
+            }
+        });
+    }
+
+    private void getData(){
         if (match_status!=null){
             if (match_status.equals("0")){
                 matchPresenter.getAllMatch(RequestService.getBaseParams(getContext()));
@@ -142,6 +162,7 @@ public class MatchManagerFragment extends Fragment implements MatchContract {
 
     @Override
     public void getAllMatchResult(boolean isSuccess, Object object) {
+        smartRefreshLayout.finishRefresh();
         if (isSuccess&&object!=null){
             ResultModel resultModel = (ResultModel)object;
             if (resultModel!=null&&resultModel.getData()!=null){
@@ -153,6 +174,7 @@ public class MatchManagerFragment extends Fragment implements MatchContract {
 
     @Override
     public void getMatchByStatusResult(boolean isSuccess, Object object) {
+        smartRefreshLayout.finishRefresh();
         if (isSuccess&&object!=null){
             ResultModel resultModel = (ResultModel)object;
             if (resultModel!=null&&resultModel.getData()!=null){
@@ -194,6 +216,16 @@ public class MatchManagerFragment extends Fragment implements MatchContract {
 
     @Override
     public void getMatchByRefereeIdResult(boolean isSuccess, Object object) {
+
+    }
+
+    @Override
+    public void excuteResult(boolean isSuccess, Object object) {
+
+    }
+
+    @Override
+    public void deleteMatchResult(boolean isSuccess, Object object) {
 
     }
 

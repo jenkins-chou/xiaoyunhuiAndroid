@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.github.library.BaseRecyclerAdapter;
@@ -24,11 +25,18 @@ import com.jenking.xiaoyunhui.activity.ScoreShowActivity;
 import com.jenking.xiaoyunhui.api.BaseAPI;
 import com.jenking.xiaoyunhui.api.RequestService;
 import com.jenking.xiaoyunhui.contacts.MatchContract;
+import com.jenking.xiaoyunhui.dialog.CommonBottomListDialog;
+import com.jenking.xiaoyunhui.dialog.CommonTipsDialog;
 import com.jenking.xiaoyunhui.models.base.MatchModel;
 import com.jenking.xiaoyunhui.models.base.ResultModel;
 import com.jenking.xiaoyunhui.presenters.MatchPresenter;
 import com.jenking.xiaoyunhui.tools.Const;
 import com.jenking.xiaoyunhui.tools.StringUtil;
+import com.scwang.smartrefresh.header.MaterialHeader;
+import com.scwang.smartrefresh.header.TaurusHeader;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -42,20 +50,25 @@ import butterknife.Unbinder;
 
 public class MatchProcessManagerFragment extends Fragment implements MatchContract {
     private Unbinder unbinder;
-
     private String match_status;
-
     private MatchPresenter matchPresenter;
-
     private Map<String,Boolean> selectList;//match选择列表
+
+    private List<String> statusList;
+    private String sqlStr;
+    private String selectMatchStatus;
+
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
+    @BindView(R.id.smartRefreshLayout)
+    SmartRefreshLayout smartRefreshLayout;
+
     private List<MatchModel> MatchModels;
     private BaseRecyclerAdapter baseRecyclerAdapter;
 
     @OnClick(R.id.footer)
     void footer(){
-        List<String> matchIds = new ArrayList<>();
+        final List<String> matchIds = new ArrayList<>();
         if (MatchModels!=null){
             for (int i = 0;i<MatchModels.size();i++){
                 Log.e("match_id",MatchModels.get(i).getMatch_id());
@@ -65,13 +78,76 @@ public class MatchProcessManagerFragment extends Fragment implements MatchContra
                     matchIds.add(MatchModels.get(i).getMatch_id());
                 }
             }
-
-            Log.e("matchIds",matchIds.toString());
         }
-        if (selectList!=null){
-            Log.e("selectList",selectList.toString());
+
+        if (matchIds.size()<=0){
+            CommonTipsDialog.showTip(getContext(),"温馨提示","你还没有选择任何比赛呢",false);
+        }else{
+
+            CommonBottomListDialog commonBottomListDialog = new CommonBottomListDialog(getContext(),"选择状态",statusList,"",true) {
+                @Override
+                protected void setOnItemClickListener(String value) {
+                    selectMatchStatus = getMatchStatusCode(value);
+                    if (selectMatchStatus.equals(match_status)){
+                        Toast.makeText(getContext(), "当前已经是"+value+"状态", Toast.LENGTH_SHORT).show();
+                    }else{
+                        String sql = "update matchs set match_status = '"+selectMatchStatus+"' where match_id in (";
+                        for(int i =0;i<matchIds.size();i++){
+                            if (i==matchIds.size()-1){
+                                sql += matchIds.get(i)+")";
+                            }else{
+                                sql += matchIds.get(i)+",";
+                            }
+                        }
+                        sqlStr = sql;
+                        Log.e("match_sql",sql);
+
+                        confirmAndSubmit();
+                    }
+
+                }
+            };
+            commonBottomListDialog.show();
         }
     }
+
+    private void confirmAndSubmit(){
+        CommonTipsDialog.create(getContext(),"温馨提示","确认提交吗",false)
+                .setOnClickListener(new CommonTipsDialog.OnClickListener() {
+                    @Override
+                    public void cancel() {
+
+                    }
+
+                    @Override
+                    public void confirm() {
+                        Map<String,String> params = RequestService.getBaseParams(getContext());
+                        params.put("sql",sqlStr);
+                        matchPresenter.excute(params);
+                    }
+                }).show();
+    }
+
+    private String getMatchStatusCode(String statusDetail){
+        String result = "";
+        switch (statusDetail){
+            case "报名中":
+                result = "1";
+                break;
+            case "比赛中":
+                result = "2";
+                break;
+            case "比赛完毕":
+                result = "3";
+                break;
+            case "公布成绩":
+                result = "4";
+                break;
+        }
+        return result;
+    }
+
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -83,12 +159,17 @@ public class MatchProcessManagerFragment extends Fragment implements MatchContra
     private void initData(){
         MatchModels = new ArrayList<>();
         selectList = new HashMap<>();
+        statusList = new ArrayList<>();
+        statusList.add("报名中");
+        statusList.add("比赛中");
+        statusList.add("比赛完毕");
+        statusList.add("公布成绩");
         baseRecyclerAdapter = new BaseRecyclerAdapter<MatchModel>(getContext(),MatchModels,R.layout.fragment_match_process_manager_item) {
             @Override
             protected void convert(BaseViewHolder helper, MatchModel item) {
                 helper.setText(R.id.match_name,item.getMatch_title());
                 helper.setText(R.id.match_status,getStatusStr(item.getMatch_status()));
-                helper.setText(R.id.match_create_time,"创建时间"+ StringUtil.getStrTime(item.getMatch_create_time(),"yyyy-MM-dd HH:mm:ss"));
+                helper.setText(R.id.match_create_time,"创建时间"+ StringUtil.getStrTime(item.getMatch_create_time(),"yyyy-MM-dd"));
                 ImageView match_img = helper.getView(R.id.match_img);
                 if (getContext()!=null){
                     Glide.with(getContext()).load(BaseAPI.base_url+item.getMatch_img()).into(match_img);
@@ -127,6 +208,18 @@ public class MatchProcessManagerFragment extends Fragment implements MatchContra
         recyclerView.setAdapter(baseRecyclerAdapter);
 
         matchPresenter = new MatchPresenter(getContext(),this);
+        getData();
+
+        smartRefreshLayout.setRefreshHeader(new MaterialHeader(getContext()));
+        smartRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                getData();
+            }
+        });
+    }
+
+    private void getData(){
         if (match_status!=null){
             if (match_status.equals("0")){
                 matchPresenter.getAllMatch(RequestService.getBaseParams(getContext()));
@@ -171,6 +264,7 @@ public class MatchProcessManagerFragment extends Fragment implements MatchContra
 
     @Override
     public void getAllMatchResult(boolean isSuccess, Object object) {
+        smartRefreshLayout.finishRefresh();
         if (isSuccess&&object!=null){
             ResultModel resultModel = (ResultModel)object;
             if (resultModel!=null&&resultModel.getData()!=null){
@@ -182,6 +276,7 @@ public class MatchProcessManagerFragment extends Fragment implements MatchContra
 
     @Override
     public void getMatchByStatusResult(boolean isSuccess, Object object) {
+        smartRefreshLayout.finishRefresh();
         if (isSuccess&&object!=null){
             ResultModel resultModel = (ResultModel)object;
             if (resultModel!=null&&resultModel.getData()!=null){
@@ -223,6 +318,21 @@ public class MatchProcessManagerFragment extends Fragment implements MatchContra
 
     @Override
     public void getMatchByRefereeIdResult(boolean isSuccess, Object object) {
+
+    }
+
+    @Override
+    public void excuteResult(boolean isSuccess, Object object) {
+        if (isSuccess&&object!=null){
+            ResultModel resultModel = (ResultModel)object;
+            if (resultModel!=null&&resultModel.getStatus()!=null&&resultModel.getStatus().equals("200")){
+                Toast.makeText(getContext(), "操作成功,请刷新数据", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
+    @Override
+    public void deleteMatchResult(boolean isSuccess, Object object) {
 
     }
 

@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -22,6 +23,7 @@ import com.jenking.xiaoyunhui.api.RequestService;
 import com.jenking.xiaoyunhui.contacts.MatchContract;
 import com.jenking.xiaoyunhui.customui.CommonLoading;
 import com.jenking.xiaoyunhui.customui.CommonScrollView;
+import com.jenking.xiaoyunhui.dialog.CommonBottomListDialog;
 import com.jenking.xiaoyunhui.dialog.CommonTipsDialog;
 import com.jenking.xiaoyunhui.models.base.MatchDetailModel;
 import com.jenking.xiaoyunhui.models.base.MatchModel;
@@ -86,13 +88,22 @@ public class MatchDetailActivity extends BaseActivity implements MatchContract {
     @BindView(R.id.footer)
     TextView footer;
     @BindView(R.id.footer2)
-    TextView footer2;
+    LinearLayout footer2;
 
     @BindView(R.id.loading)
     CommonLoading loading;
 
+    @BindView(R.id.header)
+    RelativeLayout header;
+
+
+    @BindView(R.id.scrollView)
+    CommonScrollView scrollView;
+
     private boolean loadFinishOne = false;
     private boolean loadFinishTwo = false;
+
+    private List<String> statusList;
 
     @OnClick(R.id.back)
     void back(){
@@ -116,12 +127,16 @@ public class MatchDetailActivity extends BaseActivity implements MatchContract {
                 if (AccountTool.getLoginUser(context).getUser_type().equals("3")){
                     CommonTipsDialog.showTip(context,"温馨提示","管理员不能报名",false);
                 }else{
-                    Map<String,String> params = RequestService.getBaseParams(context);
-                    params.put("match_id",match_id);
-                    params.put("user_id",AccountTool.getLoginUser(context).getUser_id());
-                    params.put("user_match_status","1");//报名中,跟随match_status
-                    matchPresenter.addUserMatch(params);
-                    setLoadingEnable(true);
+                    if (matchDetailModel.getMatch_status().equals("1")){
+                        Map<String,String> params = RequestService.getBaseParams(context);
+                        params.put("match_id",match_id);
+                        params.put("user_id",AccountTool.getLoginUser(context).getUser_id());
+                        params.put("user_match_status","1");//报名中,跟随match_status
+                        matchPresenter.addUserMatch(params);
+                        setLoadingEnable(true);
+                    }else{
+                        CommonTipsDialog.showTip(this,"温馨提示","当前比赛已经过了报名时间",false);
+                    }
                 }
             }else{
                 CommonTipsDialog.showTip(context,"温馨提示","请返回登录后重试",false);
@@ -132,10 +147,70 @@ public class MatchDetailActivity extends BaseActivity implements MatchContract {
 
     }
 
-    @BindView(R.id.header)
-    RelativeLayout header;
-    @BindView(R.id.scrollView)
-    CommonScrollView scrollView;
+    //删除
+    @OnClick(R.id.delete_match)
+    void delete_match(){
+        CommonTipsDialog.create(this,"温馨提示","确认要删除该比赛吗",false)
+                .setOnClickListener(new CommonTipsDialog.OnClickListener() {
+                    @Override
+                    public void cancel() {
+
+                    }
+
+                    @Override
+                    public void confirm() {
+                        Map<String,String> params = RequestService.getBaseParams(MatchDetailActivity.this);
+                        params.put("match_id",match_id);
+                        matchPresenter.deleteMatch(params);
+                        setLoadingEnable(true);
+                    }
+                }).show();
+    }
+
+    //修改
+    @OnClick(R.id.update_match)
+    void update_match(){
+
+    }
+
+    //更换状态
+    @OnClick(R.id.modify_match_status)
+    void modify_match_status(){
+        final Map<String,String> params = RequestService.getBaseParams(this);
+
+        CommonBottomListDialog commonBottomListDialog = new CommonBottomListDialog(this,"选择状态",statusList,"",true) {
+            @Override
+            protected void setOnItemClickListener(String value) {
+                String match_status = getMatchStatusCode(value);
+                String sql = "update matchs set match_status = '"+match_status+"' where match_id = "+match_id;
+                params.put("sql",sql);
+                matchPresenter.excute(params);
+                setLoadingEnable(true);
+            }
+        };
+        commonBottomListDialog.show();
+
+
+    }
+
+    private String getMatchStatusCode(String statusDetail){
+        String result = "";
+        switch (statusDetail){
+            case "报名中":
+                result = "1";
+                break;
+            case "比赛中":
+                result = "2";
+                break;
+            case "比赛完毕":
+                result = "3";
+                break;
+            case "公布成绩":
+                result = "4";
+                break;
+        }
+        return result;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -182,6 +257,16 @@ public class MatchDetailActivity extends BaseActivity implements MatchContract {
         match_id = getIntent()!=null?getIntent().getStringExtra("match_id"):"";
         matchPresenter = new MatchPresenter(context,this);
 
+        statusList = new ArrayList<>();
+        statusList.add("报名中");
+        statusList.add("比赛中");
+        statusList.add("比赛完毕");
+        statusList.add("公布成绩");
+
+        getData();
+    }
+
+    private void getData(){
         Map<String,String> params = RequestService.getBaseParams(context);
         params.put("match_id",match_id);
         matchPresenter.getMatchById(params);
@@ -294,6 +379,24 @@ public class MatchDetailActivity extends BaseActivity implements MatchContract {
     @Override
     public void getMatchByRefereeIdResult(boolean isSuccess, Object object) {
 
+    }
+
+    @Override
+    public void excuteResult(boolean isSuccess, Object object) {
+        setLoadingEnable(false);
+        if (checkResultModel(isSuccess,object)){
+            Toast.makeText(this, "操作成功，正在刷新数据", Toast.LENGTH_SHORT).show();
+            getData();
+        }
+    }
+
+    @Override
+    public void deleteMatchResult(boolean isSuccess, Object object) {
+        setLoadingEnable(false);
+        if (checkResultModel(isSuccess,object)){
+            Toast.makeText(this, "删除成功,请返回刷新数据", Toast.LENGTH_SHORT).show();
+            finish();
+        }
     }
 
     private void refreshUserMatch(){

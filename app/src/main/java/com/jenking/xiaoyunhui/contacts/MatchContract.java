@@ -11,4 +11,6 @@ public interface MatchContract extends BaseCallBack{
     void getUserMatchByMatchIdResult(boolean isSuccess, Object object);//
     void getMatchByUserIdResult(boolean isSuccess, Object object);//
     void getMatchByRefereeIdResult(boolean isSuccess, Object object);//
+    void excuteResult(boolean isSuccess, Object object);//
+    void deleteMatchResult(boolean isSuccess, Object object);//
 }

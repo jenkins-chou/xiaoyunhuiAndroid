@@ -8,6 +8,7 @@ import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,6 +29,7 @@ import com.jenking.xiaoyunhui.models.base.UserModel;
 import com.jenking.xiaoyunhui.presenters.TeamPresenter;
 import com.jenking.xiaoyunhui.presenters.UserTeamPresenter;
 import com.jenking.xiaoyunhui.tools.AccountTool;
+import com.jenking.xiaoyunhui.tools.Const;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -95,6 +97,9 @@ public class TeamDetailActivity extends BaseActivity implements TeamContract,Use
     @BindView(R.id.apply_recyclerView)
     RecyclerView apply_recyclerView;
 
+    @BindView(R.id.apply_bar)
+    LinearLayout apply_bar;
+
     @OnClick(R.id.back)
     void back(){
         finish();
@@ -149,14 +154,17 @@ public class TeamDetailActivity extends BaseActivity implements TeamContract,Use
                     case TeamTypeLeader:
                         apply_join.setVisibility(View.GONE);
                         modify_info.setVisibility(View.VISIBLE);
+                        apply_bar.setVisibility(View.VISIBLE);
                         break;
                     case TeamTypeJoined:
                         apply_join.setVisibility(View.GONE);
                         modify_info.setVisibility(View.GONE);
+                        apply_bar.setVisibility(View.GONE);
                         break;
                     case TeamTypeNotJoin:
                         apply_join.setVisibility(View.VISIBLE);
                         modify_info.setVisibility(View.GONE);
+                        apply_bar.setVisibility(View.GONE);
                         break;
                 }
             }
@@ -239,6 +247,25 @@ public class TeamDetailActivity extends BaseActivity implements TeamContract,Use
         applyAdapter.openLoadAnimation(false);
         apply_recyclerView.setLayoutManager(new StaggeredGridLayoutManager(1,1));
         apply_recyclerView.setAdapter(applyAdapter);
+    }
+
+    @Override
+    public void initView() {
+        super.initView();
+        if (AccountTool.isLogin(this)){
+            switch (AccountTool.getUserType(this)){
+                case Const.User_type_manager:
+                    apply_join.setVisibility(View.GONE);
+                    break;
+                case Const.User_type_referee:
+                    apply_join.setVisibility(View.GONE);
+                    break;
+                case Const.User_type_normal:
+                    break;
+            }
+        }else{
+            apply_join.setVisibility(View.GONE);
+        }
     }
 
     private void showMemberInfo(String user_id){

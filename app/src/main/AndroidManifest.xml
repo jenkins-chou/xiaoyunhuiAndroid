@@ -87,7 +87,8 @@
         <activity android:name=".activity.TeamCreateActivity" />
         <activity android:name=".activity.TeamAllActivity" />
         <activity android:name=".activity.TeamMemberDetailActivity" />
-        <activity android:name=".activity.MatchProcessManagerActivity"></activity>
+        <activity android:name=".activity.MatchProcessManagerActivity" />
+        <activity android:name=".activity.ScoreManagerActivity"></activity>
     </application>
 
 </manifest>
