@@ -178,6 +178,11 @@ public class MineTeamFragment extends Fragment implements TeamContract{
 
     }
 
+    @Override
+    public void searchAllTeamExceptUserIdResult(boolean isSuccess, Object object) {
+
+    }
+
     private void checkDatas(){
         if (teamModels==null||teamModels.size()<=0){
             tips_text.setVisibility(View.VISIBLE);

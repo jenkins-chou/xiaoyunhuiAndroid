@@ -139,6 +139,11 @@ public interface ApiService {
     @POST("userMatch/addUserMatch")
     Observable<ResultModel> addUserMatch(@FieldMap Map<String, String> body);
 
+    //删除比赛报名信息
+    @FormUrlEncoded
+    @POST("userMatch/deleteUserMatch2")
+    Observable<ResultModel> deleteUserMatch(@FieldMap Map<String, String> body);
+
     //根据比赛id获取报名的名单
     @FormUrlEncoded
     @POST("userMatch/getUserMatchByMatchId")
@@ -226,6 +231,11 @@ public interface ApiService {
     @FormUrlEncoded
     @POST("team/getTeamListExceptUserId")
     Observable<ResultModel<TeamModel>> getTeamListExceptUserId(@FieldMap Map<String, String> body);
+
+    @FormUrlEncoded
+    @POST("team/searchTeamListExceptUserId")
+    Observable<ResultModel<TeamModel>> searchTeamListExceptUserId(@FieldMap Map<String, String> body);
+
 
 
 

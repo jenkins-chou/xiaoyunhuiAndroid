@@ -86,7 +86,9 @@ public class MatchDetailActivity extends BaseActivity implements MatchContract {
     TextView match_detail;
 
     @BindView(R.id.footer)
-    TextView footer;
+    TextView footer;//立即报名按钮
+    @BindView(R.id.unapply_match)
+    TextView unapply_match;//撤销报名按钮
     @BindView(R.id.footer2)
     LinearLayout footer2;
 
@@ -124,18 +126,44 @@ public class MatchDetailActivity extends BaseActivity implements MatchContract {
                 return;
             }
             if (AccountTool.isLogin(context)){
-                if (AccountTool.getLoginUser(context).getUser_type().equals("3")){
-                    CommonTipsDialog.showTip(context,"温馨提示","管理员不能报名",false);
+                if (AccountTool.getLoginUser(context).getUser_type().equals("3")||AccountTool.getLoginUser(context).getUser_type().equals("2")){
+                    CommonTipsDialog.showTip(context,"温馨提示","管理员/裁判员不能报名",false);
                 }else{
-                    if (matchDetailModel.getMatch_status().equals("1")){
-                        Map<String,String> params = RequestService.getBaseParams(context);
-                        params.put("match_id",match_id);
-                        params.put("user_id",AccountTool.getLoginUser(context).getUser_id());
-                        params.put("user_match_status","1");//报名中,跟随match_status
-                        matchPresenter.addUserMatch(params);
-                        setLoadingEnable(true);
+                    if (!AccountTool.isCompleteUserInfo(context)){
+                        CommonTipsDialog.create(context,"温馨提示","请到【我的】-【右上方设置】-【修改个人资料】中完善个人信息后重新报名",false)
+                                .setOnClickListener(new CommonTipsDialog.OnClickListener() {
+                                    @Override
+                                    public void cancel() {
+
+                                    }
+
+                                    @Override
+                                    public void confirm() {
+                                        finish();
+                                    }
+                                }).show();
                     }else{
-                        CommonTipsDialog.showTip(this,"温馨提示","当前比赛已经过了报名时间",false);
+                        if (matchDetailModel.getMatch_status().equals("1")){
+                            CommonTipsDialog.create(context,"温馨提示","确定要报名该比赛吗",false)
+                                    .setOnClickListener(new CommonTipsDialog.OnClickListener() {
+                                        @Override
+                                        public void cancel() {
+
+                                        }
+
+                                        @Override
+                                        public void confirm() {
+                                            Map<String,String> params = RequestService.getBaseParams(context);
+                                            params.put("match_id",match_id);
+                                            params.put("user_id",AccountTool.getLoginUser(context).getUser_id());
+                                            params.put("user_match_status","1");//报名中,跟随match_status
+                                            matchPresenter.addUserMatch(params);
+                                            setLoadingEnable(true);
+                                        }
+                                    }).show();
+                        }else{
+                            CommonTipsDialog.showTip(this,"温馨提示","当前比赛已经过了报名时间",false);
+                        }
                     }
                 }
             }else{
@@ -147,7 +175,36 @@ public class MatchDetailActivity extends BaseActivity implements MatchContract {
 
     }
 
-    //删除
+    //撤销报名
+    @OnClick(R.id.unapply_match)
+    void unapply_match(){
+        if (loadFinishTwo&&loadFinishOne&&matchDetailModel!=null){
+                if (matchDetailModel.getMatch_status()!=null&&matchDetailModel.getMatch_status().equals("1")){
+                    CommonTipsDialog.create(this,"温馨提示","确定要撤销该比赛的报名吗?",false)
+                            .setOnClickListener(new CommonTipsDialog.OnClickListener() {
+                                @Override
+                                public void cancel() {
+
+                                }
+
+                                @Override
+                                public void confirm() {
+                                    Map<String,String> params = RequestService.getBaseParams(context);
+                                    params.put("match_id",match_id);
+                                    params.put("user_id",AccountTool.getLoginUser(context).getUser_id());
+                                    matchPresenter.deleteUserMatch(params);
+                                    setLoadingEnable(true);
+                                }
+                            }).show();
+                }else{
+                    Toast.makeText(this, "当前比赛不能撤销报名", Toast.LENGTH_SHORT).show();
+                }
+        }else {
+            Toast.makeText(this, "未加载完成", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    //删除比赛
     @OnClick(R.id.delete_match)
     void delete_match(){
         CommonTipsDialog.create(this,"温馨提示","确认要删除该比赛吗",false)
@@ -240,6 +297,12 @@ public class MatchDetailActivity extends BaseActivity implements MatchContract {
         if (AccountTool.isLogin(context)){
             if (!AccountTool.getLoginUser(context).getUser_type().equals("1")){
                 footer.setVisibility(View.GONE);
+            }else{
+                //我参加的比赛
+                if (getIntent()!=null&&getIntent().getStringExtra("mineJoinMatch")!=null&&getIntent().getStringExtra("mineJoinMatch").equals("true")){
+                    footer.setVisibility(View.GONE);
+                    unapply_match.setVisibility(View.VISIBLE);
+                }
             }
             if (AccountTool.getLoginUser(context).getUser_type().equals("3")){
                 footer2.setVisibility(View.VISIBLE);
@@ -349,6 +412,7 @@ public class MatchDetailActivity extends BaseActivity implements MatchContract {
             if (resultModel!=null&&resultModel.getStatus()!=null){
                 switch (resultModel.getStatus()){
                     case "200":
+                        getData();
                         Toast.makeText(context, "报名成功", Toast.LENGTH_SHORT).show();
                         break;
                     case "201":
@@ -356,6 +420,15 @@ public class MatchDetailActivity extends BaseActivity implements MatchContract {
                         break;
                 }
             }
+        }
+    }
+
+    @Override
+    public void deleteUserMatchResult(boolean isSuccess, Object object) {
+        setLoadingEnable(false);
+        if (checkResultModel(isSuccess,object)){
+            Toast.makeText(context, "撤销成功，请返回刷新数据", Toast.LENGTH_SHORT).show();
+            finish();
         }
     }
 

@@ -40,6 +40,22 @@ public class AccountTool {
         return userModel;
     }
 
+
+    public static boolean isCompleteUserInfo(Context context){
+        boolean result = false;
+        if (context==null)return false;
+        if (!isLogin(context))return false;
+        UserModel userModel = new Gson().fromJson((String) SPUtils.get(context,SPUtils.FILE_USER,SPUtils.user_object,""),UserModel.class);
+        if (userModel!=null){
+            if (StringUtil.isNotEmpty(userModel.getUser_realname())
+                    &&StringUtil.isNotEmpty(userModel.getUser_class())
+                    &&StringUtil.isNotEmpty(userModel.getUser_school())){
+                result = true;
+            }
+        }
+        return result;
+    }
+
     //退出登录
     public final static void logout(Context context){
         if (context==null)return;

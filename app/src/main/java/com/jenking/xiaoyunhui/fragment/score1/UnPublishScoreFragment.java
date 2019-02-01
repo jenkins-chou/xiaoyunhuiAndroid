@@ -1,6 +1,7 @@
 package com.jenking.xiaoyunhui.fragment.score1;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -15,7 +16,9 @@ import android.widget.TextView;
 
 import com.github.library.BaseRecyclerAdapter;
 import com.github.library.BaseViewHolder;
+import com.github.library.listener.OnRecyclerItemClickListener;
 import com.jenking.xiaoyunhui.R;
+import com.jenking.xiaoyunhui.activity.ScoreShowActivity;
 import com.jenking.xiaoyunhui.adapter.score1.PublishAdapter;
 import com.jenking.xiaoyunhui.api.RequestService;
 import com.jenking.xiaoyunhui.contacts.ScoreContract;
@@ -76,6 +79,16 @@ public class UnPublishScoreFragment extends Fragment implements ScoreContract {
                 helper.setText(R.id.match_address,item.getMatch_address());
             }
         };
+        publishAdapter.setOnRecyclerItemClickListener(new OnRecyclerItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                if (datas.get(position)!=null){
+                    Intent intent = new Intent(context, ScoreShowActivity.class);datas.get(position);
+                    intent.putExtra("match_id",datas.get(position).getMatch_id());
+                    startActivity(intent);
+                }
+            }
+        });
         publishAdapter.openLoadAnimation(false);
         recyclerView.setLayoutManager(new StaggeredGridLayoutManager(1,1));
         recyclerView.setAdapter(publishAdapter);

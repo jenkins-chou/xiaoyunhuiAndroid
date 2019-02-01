@@ -108,16 +108,21 @@ public class TeamDetailActivity extends BaseActivity implements TeamContract,Use
     @OnClick(R.id.apply_join)
     void setApply_join(){
         if (AccountTool.isLogin(this)){
-            if (userTeamPresenter!=null){
-                if (teamModel!=null){
-                    Map<String,String> params = RequestService.getBaseParams(this);
-                    params.put("team_id",teamModel.getTeam_id());
-                    params.put("user_id",AccountTool.getLoginUser(this).getUser_id());
-                    params.put("user_team_status","1");
-                    userTeamPresenter.applyJoinTeam(params);
-                    setLoadingEnable(true);
+            if (AccountTool.getUserType(this).equals("1")){
+                if (userTeamPresenter!=null){
+                    if (teamModel!=null){
+                        Map<String,String> params = RequestService.getBaseParams(this);
+                        params.put("team_id",teamModel.getTeam_id());
+                        params.put("user_id",AccountTool.getLoginUser(this).getUser_id());
+                        params.put("user_team_status","1");
+                        userTeamPresenter.applyJoinTeam(params);
+                        setLoadingEnable(true);
+                    }
                 }
+            }else{
+                CommonTipsDialog.showTip(this,"温馨提示","管理员/裁判不能申请加入任何团队",false);
             }
+
 
         }else {
             CommonTipsDialog.showTip(this,"温馨提示","请登录后重试",false);
@@ -343,6 +348,11 @@ public class TeamDetailActivity extends BaseActivity implements TeamContract,Use
     }
 
     @Override
+    public void searchAllTeamExceptUserIdResult(boolean isSuccess, Object object) {
+
+    }
+
+    @Override
     public void getTeamDetailResult(boolean isSuccess, Object object) {
         if (checkResultModel(isSuccess,object)){
             ResultModel resultModel = (ResultModel)object;
@@ -453,6 +463,7 @@ public class TeamDetailActivity extends BaseActivity implements TeamContract,Use
     @Override
     public void updateUserTeamResult(boolean isSuccess, Object object) {
         if (checkResultModel(isSuccess,object)){
+            getData();
             Toast.makeText(this, "操作成功", Toast.LENGTH_SHORT).show();
         }
         setLoadingEnable(false);

@@ -4,6 +4,7 @@ import android.app.DownloadManager;
 import android.content.Intent;
 import android.os.Build;
 import android.service.autofill.FieldClassification;
+import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -26,6 +27,10 @@ import com.jenking.xiaoyunhui.models.base.ResultModel;
 import com.jenking.xiaoyunhui.presenters.MatchPresenter;
 import com.jenking.xiaoyunhui.tools.AccountTool;
 import com.jenking.xiaoyunhui.tools.StringUtil;
+import com.scwang.smartrefresh.header.TaurusHeader;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,6 +52,8 @@ public class MineMatchActivity extends BaseActivity implements MatchContract{
     private BaseRecyclerAdapter baseRecyclerAdapter;
     private MatchPresenter matchPresenter;
 
+    @BindView(R.id.smartRefreshLayout)
+    SmartRefreshLayout smartRefreshLayout;
     @OnClick(R.id.back)
     void back(){
         finish();
@@ -82,6 +89,7 @@ public class MineMatchActivity extends BaseActivity implements MatchContract{
             public void onItemClick(View view, int position) {
                 Intent intent = new Intent(context,MatchDetailActivity.class);
                 intent.putExtra("match_id",datas.get(position).getMatch_id());
+                intent.putExtra("mineJoinMatch","true");
                 startActivity(intent);
             }
         });
@@ -90,6 +98,19 @@ public class MineMatchActivity extends BaseActivity implements MatchContract{
         recyclerView.setAdapter(baseRecyclerAdapter);
 
         matchPresenter = new MatchPresenter(context,this);
+
+        smartRefreshLayout.setRefreshHeader(new TaurusHeader(context));
+        smartRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                getData();
+            }
+        });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         getData();
     }
 
@@ -133,6 +154,11 @@ public class MineMatchActivity extends BaseActivity implements MatchContract{
     }
 
     @Override
+    public void deleteUserMatchResult(boolean isSuccess, Object object) {
+
+    }
+
+    @Override
     public void getUserMatchByMatchIdResult(boolean isSuccess, Object object) {
 
     }
@@ -140,6 +166,9 @@ public class MineMatchActivity extends BaseActivity implements MatchContract{
     @Override
     public void getMatchByUserIdResult(boolean isSuccess, Object object) {
         setLoadingEnable(false);
+        if (smartRefreshLayout!=null){
+            smartRefreshLayout.finishRefresh();
+        }
         if (isSuccess&&object!=null){
             ResultModel resultModel = (ResultModel)object;
             if (StringUtil.isEquals(resultModel.getStatus(),"200")){

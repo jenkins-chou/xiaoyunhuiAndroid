@@ -213,6 +213,11 @@ public class ScoreShowActivity extends BaseActivity implements MatchContract,Use
     }
 
     @Override
+    public void deleteUserMatchResult(boolean isSuccess, Object object) {
+
+    }
+
+    @Override
     public void getUserMatchByMatchIdResult(boolean isSuccess, Object object) {
 
     }

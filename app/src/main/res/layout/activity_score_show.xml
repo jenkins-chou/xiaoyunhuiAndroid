@@ -178,7 +178,7 @@
 
                 <TextView
                     android:id="@+id/empty_show"
-                    android:text="暂无参赛人员"
+                    android:text="暂无成绩"
                     android:textStyle="bold"
                     android:visibility="gone"
                     android:layout_marginBottom="15dp"

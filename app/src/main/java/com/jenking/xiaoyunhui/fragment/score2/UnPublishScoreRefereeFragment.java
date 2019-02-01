@@ -214,6 +214,11 @@ public class UnPublishScoreRefereeFragment extends Fragment implements MatchCont
 
     }
 
+    @Override
+    public void deleteUserMatchResult(boolean isSuccess, Object object) {
+
+    }
+
     private void filter(List<MatchModel> source){
         if (source==null){
             return;

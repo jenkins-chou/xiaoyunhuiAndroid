@@ -262,6 +262,11 @@ public class IndexFragment extends Fragment implements MatchContract,UserMatchCo
     }
 
     @Override
+    public void deleteUserMatchResult(boolean isSuccess, Object object) {
+
+    }
+
+    @Override
     public void getUserMatchByMatchIdResult(boolean isSuccess, Object object) {
 
     }

@@ -349,6 +349,17 @@
             android:padding="15dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/unapply_match"
+            android:alpha="0.7"
+            android:background="@color/colorAccent"
+            android:textColor="@color/white"
+            android:text="撤销报名"
+            android:visibility="gone"
+            android:gravity="center"
+            android:padding="15dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
         <LinearLayout
             android:orientation="horizontal"
             android:id="@+id/footer2"

@@ -151,6 +151,11 @@ public class PublishScoreRefereeFragment extends Fragment implements MatchContra
     }
 
     @Override
+    public void deleteUserMatchResult(boolean isSuccess, Object object) {
+
+    }
+
+    @Override
     public void getUserMatchByMatchIdResult(boolean isSuccess, Object object) {
 
     }

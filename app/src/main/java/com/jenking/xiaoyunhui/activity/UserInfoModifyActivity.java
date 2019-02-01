@@ -166,7 +166,7 @@ public class UserInfoModifyActivity extends BaseActivity implements UserContract
                 selectHealth = date.getTime()/1000+"";
                 input_health.setText(StringUtil.getStrTime(date.getTime()/1000+"","yyyy年MM月dd日"));
             }
-        }).setTitleText("选择比赛时间")
+        }).setTitleText("选择时间")
                 .setType(new boolean[]{true,true,true,false,false,false})
                 .build();
         pvTime.show();
