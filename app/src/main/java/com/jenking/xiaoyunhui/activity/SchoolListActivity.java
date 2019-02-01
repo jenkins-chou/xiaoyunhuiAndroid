@@ -29,6 +29,8 @@ import butterknife.BindView;
 import butterknife.OnClick;
 
 public class SchoolListActivity extends BaseActivity implements SchoolContract {
+
+    private String isFromManager;
     public final static int SelectSchoolResutlCode = 23000;
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
