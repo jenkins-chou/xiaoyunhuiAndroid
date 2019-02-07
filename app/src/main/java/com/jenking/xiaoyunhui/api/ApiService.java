@@ -152,7 +152,7 @@ public interface ApiService {
     //根据比赛id获取报名的名单
     @FormUrlEncoded
     @POST("userMatch/getUserMatchDetailByMatchId")
-    Observable<ResultModel<UserModel>> getUserMatchDetailByMatchId(@FieldMap Map<String, String> body);
+    Observable<ResultModel<UserMatchModel>> getUserMatchDetailByMatchId(@FieldMap Map<String, String> body);
 
     //根据user_id获取比赛信息
     @FormUrlEncoded

@@ -32,6 +32,7 @@ import com.jenking.xiaoyunhui.dialog.CommonBottomListDialog;
 import com.jenking.xiaoyunhui.dialog.CommonTipsDialog;
 import com.jenking.xiaoyunhui.models.base.MatchDetailModel;
 import com.jenking.xiaoyunhui.models.base.ResultModel;
+import com.jenking.xiaoyunhui.models.base.UserMatchModel;
 import com.jenking.xiaoyunhui.models.base.UserModel;
 import com.jenking.xiaoyunhui.presenters.MatchPresenter;
 import com.jenking.xiaoyunhui.presenters.ScorePresenter;
@@ -53,7 +54,7 @@ public class ScoreOperateActivity extends BaseActivity implements MatchContract,
     private String match_id;
     private BaseRecyclerAdapter baseRecyclerAdapter;
 
-    private List<UserModel> userModels;
+    private List<UserMatchModel> userModels;
     private MatchPresenter matchPresenter;//用于获取比赛详情
     private UserMatchPresenter userMatchPresenter;
     private ScorePresenter scorePresenter;
@@ -188,9 +189,9 @@ public class ScoreOperateActivity extends BaseActivity implements MatchContract,
     public void initData(){
         userModels = new ArrayList<>();
         scoresMap = new HashMap<>();
-        baseRecyclerAdapter = new BaseRecyclerAdapter<UserModel>(this,userModels,R.layout.activity_score_operate_item) {
+        baseRecyclerAdapter = new BaseRecyclerAdapter<UserMatchModel>(this,userModels,R.layout.activity_score_operate_item) {
             @Override
-            protected void convert(com.github.library.BaseViewHolder helper, final UserModel item) {
+            protected void convert(com.github.library.BaseViewHolder helper, final UserMatchModel item) {
                 ImageView imageView = helper.getView(R.id.item_avatar);
 
                 RequestOptions requestOptions = new RequestOptions();

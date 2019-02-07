@@ -224,17 +224,18 @@ public class MatchDetailActivity extends BaseActivity implements MatchContract {
                 }).show();
     }
 
-    //修改
-    @OnClick(R.id.update_match)
-    void update_match(){
-
+    //名单管理
+    @OnClick(R.id.name_list)
+    void name_list(){
+        Intent intent = new Intent(this,MatchNameListActivity.class);
+        intent.putExtra("match_id",match_id);
+        startActivity(intent);
     }
 
     //更换状态
     @OnClick(R.id.modify_match_status)
     void modify_match_status(){
         final Map<String,String> params = RequestService.getBaseParams(this);
-
         CommonBottomListDialog commonBottomListDialog = new CommonBottomListDialog(this,"选择状态",statusList,"",true) {
             @Override
             protected void setOnItemClickListener(String value) {
@@ -319,13 +320,11 @@ public class MatchDetailActivity extends BaseActivity implements MatchContract {
         unbinder = ButterKnife.bind(this);
         match_id = getIntent()!=null?getIntent().getStringExtra("match_id"):"";
         matchPresenter = new MatchPresenter(context,this);
-
         statusList = new ArrayList<>();
         statusList.add("报名中");
         statusList.add("比赛中");
         statusList.add("比赛完毕");
         statusList.add("公布成绩");
-
         getData();
     }
 

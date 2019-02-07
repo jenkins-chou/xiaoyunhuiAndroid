@@ -1,12 +1,17 @@
 package com.jenking.xiaoyunhui.models.base;
 
-public class UserMatchModel {
+public class UserMatchModel extends UserModel{
     private String user_match_id;
-    private String user_id;
     private String match_id;
     private String user_match_status;
     private String score_id;
     private String user_match_del;
+    private String user_group;
+    private String user_order;
+
+    //扩展字段
+    private String school_name;
+    private String class_name;
 
     public String getUser_match_id() {
         return user_match_id;
@@ -56,15 +61,50 @@ public class UserMatchModel {
         this.user_match_del = user_match_del;
     }
 
+    public String getUser_group() {
+        return user_group;
+    }
+
+    public void setUser_group(String user_group) {
+        this.user_group = user_group;
+    }
+
+    public String getUser_order() {
+        return user_order;
+    }
+
+    public void setUser_order(String user_order) {
+        this.user_order = user_order;
+    }
+
+    public String getSchool_name() {
+        return school_name;
+    }
+
+    public void setSchool_name(String school_name) {
+        this.school_name = school_name;
+    }
+
+    public String getClass_name() {
+        return class_name;
+    }
+
+    public void setClass_name(String class_name) {
+        this.class_name = class_name;
+    }
+
     @Override
     public String toString() {
         return "UserMatchModel{" +
                 "user_match_id='" + user_match_id + '\'' +
-                ", user_id='" + user_id + '\'' +
                 ", match_id='" + match_id + '\'' +
                 ", user_match_status='" + user_match_status + '\'' +
                 ", score_id='" + score_id + '\'' +
                 ", user_match_del='" + user_match_del + '\'' +
+                ", user_group='" + user_group + '\'' +
+                ", user_order='" + user_order + '\'' +
+                ", school_name='" + school_name + '\'' +
+                ", class_name='" + class_name + '\'' +
                 '}';
     }
 }
