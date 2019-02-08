@@ -402,6 +402,11 @@ public class ScoreOperateActivity extends BaseActivity implements MatchContract,
     }
 
     @Override
+    public void updateUserMatchsResult(boolean isSuccess, Object object) {
+
+    }
+
+    @Override
     public void getScoreListByUserIdResult(boolean isSuccess, Object object) {
         
     }

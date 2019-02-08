@@ -159,6 +159,11 @@ public interface ApiService {
     @POST("userMatch/getUserMatchByUserId")
     Observable<ResultModel<UserMatchModel>> getUserMatchByUserId(@FieldMap Map<String, String> body);
 
+    //updateUserMatchs
+    @FormUrlEncoded
+    @POST("userMatch/updateUserMatchs")
+    Observable<ResultModel> updateUserMatchs(@FieldMap Map<String, String> body);
+
     @FormUrlEncoded
     @POST("match/getmatchByType")
     Observable<ResultModel<MatchModel>> getmatchByType(@FieldMap Map<String, String> body);

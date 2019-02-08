@@ -335,4 +335,9 @@ public class IndexFragment extends Fragment implements MatchContract,UserMatchCo
             }
         }
     }
+
+    @Override
+    public void updateUserMatchsResult(boolean isSuccess, Object object) {
+
+    }
 }
