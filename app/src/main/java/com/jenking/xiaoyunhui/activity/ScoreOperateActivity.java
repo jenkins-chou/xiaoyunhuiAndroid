@@ -65,7 +65,6 @@ public class ScoreOperateActivity extends BaseActivity implements MatchContract,
 
     private String selectScoreUnit;
 
-
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
 

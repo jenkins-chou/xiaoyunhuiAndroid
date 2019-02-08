@@ -34,7 +34,7 @@
             android:entries="@array/group_type_alias"
             android:textSize="14sp"
             android:layout_width="100dp"
-            android:layout_height="wrap_content" />
+            android:layout_height="30dp" />
         <EditText
             android:id="@+id/order"
             android:hint="请输入编号"

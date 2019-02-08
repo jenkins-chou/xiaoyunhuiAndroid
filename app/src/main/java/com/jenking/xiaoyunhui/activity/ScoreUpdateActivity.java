@@ -30,12 +30,10 @@ import com.jenking.xiaoyunhui.dialog.CommonBottomListDialog;
 import com.jenking.xiaoyunhui.dialog.CommonTipsDialog;
 import com.jenking.xiaoyunhui.models.base.MatchDetailModel;
 import com.jenking.xiaoyunhui.models.base.ResultModel;
-import com.jenking.xiaoyunhui.models.base.ScoreDetailModel;
-import com.jenking.xiaoyunhui.models.base.UserModel;
+import com.jenking.xiaoyunhui.models.base.UserMatchModel;
 import com.jenking.xiaoyunhui.presenters.MatchPresenter;
 import com.jenking.xiaoyunhui.presenters.ScorePresenter;
 import com.jenking.xiaoyunhui.presenters.UserMatchPresenter;
-import com.jenking.xiaoyunhui.tools.AccountTool;
 import com.jenking.xiaoyunhui.tools.Const;
 import com.jenking.xiaoyunhui.tools.StringUtil;
 
@@ -47,16 +45,21 @@ import java.util.Map;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-public class ScoreShowActivity extends BaseActivity implements MatchContract,UserMatchContract,ScoreContract {
+public class ScoreUpdateActivity extends BaseActivity  implements MatchContract,UserMatchContract,ScoreContract {
+
     private String match_id;
     private BaseRecyclerAdapter baseRecyclerAdapter;
 
-    private List<ScoreDetailModel> scoreDetailModels;
+    private List<UserMatchModel> userModels;
     private MatchPresenter matchPresenter;//用于获取比赛详情
+    private UserMatchPresenter userMatchPresenter;
     private ScorePresenter scorePresenter;
 
     private MatchDetailModel matchDetailModel;
 
+    private Map<String,String> scoresMap;
+
+    private String selectScoreUnit;
 
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
@@ -80,6 +83,9 @@ public class ScoreShowActivity extends BaseActivity implements MatchContract,Use
     @BindView(R.id.empty_show)
     TextView empty_show;
 
+    @BindView(R.id.score_unit)
+    TextView score_unit;//单位
+
     @BindView(R.id.match_status)
     TextView match_status;
 
@@ -88,66 +94,131 @@ public class ScoreShowActivity extends BaseActivity implements MatchContract,Use
         finish();
     }
 
-    @BindView(R.id.modify_score)
-    TextView modify_score;
-
-    @OnClick(R.id.modify_score)
-    void modify_score(){
-        Intent intent = new Intent(this,ScoreOperateActivity.class);
-        intent.putExtra("match_id",match_id);
-        startActivity(intent);
+    @OnClick(R.id.score_unit)
+    void score_unit(){
+        List<String> scoreUnitS = new ArrayList<>();
+        scoreUnitS.add("秒");
+        scoreUnitS.add("厘米");
+        scoreUnitS.add("米");
+        scoreUnitS.add("分数");
+        scoreUnitS.add("公斤");
+        CommonBottomListDialog commonBottomListDialog = new CommonBottomListDialog(this,"请选择单位",scoreUnitS,"",false) {
+            @Override
+            protected void setOnItemClickListener(String value) {
+                selectScoreUnit = value;
+                score_unit.setText(selectScoreUnit);
+            }
+        };
+        commonBottomListDialog.show();
     }
 
+    @OnClick(R.id.submit)
+    void submit(){
+//        if (matchDetailModel==null||
+//                matchDetailModel.getMatch_status()==null||
+//                !matchDetailModel.getMatch_status().equals(Const.Match_type_three)){
+//            CommonTipsDialog.showTip(this,"温馨提示","当前比赛不能提交成绩",false);
+//        }else
+        if (match_id==null||match_id.equals("")){
+            CommonTipsDialog.showTip(this,"温馨提示","页面初始化失败",false);
+//            return;
+        }else if (userModels==null||userModels.size()<=0){
+            CommonTipsDialog.showTip(this,"温馨提示","暂时无人员报名",false);
+        }else if (selectScoreUnit==null||selectScoreUnit.equals("")){
+            CommonTipsDialog.showTip(this,"温馨提示","请选择成绩单位",false);
+        }
+        else{
+            for (int i = 0;i<userModels.size();i++){
+                String value = scoresMap.get(userModels.get(i).getUser_id());
+                if (value==null||value.equals("")){
+                    Toast.makeText(this, "请确认填写全部成绩", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+            }
+            String sql = "insert into score(user_id,match_id,referee_id,score_value,score_create_time,score_publish_time,score_del,score_unit) values ";
+            for (int j = 0;j<userModels.size();j++){
+                if (j==userModels.size()-1){
+                    String partSql = "('"
+                            +userModels.get(j).getUser_id()+"','"
+                            +match_id+"','"
+                            +matchDetailModel.getMatch_referee_id()+"','"
+                            +scoresMap.get(userModels.get(j).getUser_id())+"','"
+                            +StringUtil.getTime()+"','"
+                            +StringUtil.getTime()+"','"
+                            +"normal','"
+                            +selectScoreUnit+"');";
+                    sql += partSql;
+                }else{
+                    String partSql = "('"
+                            +userModels.get(j).getUser_id()+"','"
+                            +match_id+"','"
+                            +matchDetailModel.getMatch_referee_id()+"','"
+                            +scoresMap.get(userModels.get(j).getUser_id())+"','"
+                            +StringUtil.getTime()+"','"
+                            +StringUtil.getTime()+"','"
+                            +"normal','"
+                            +selectScoreUnit+"'),";
+                    sql += partSql;
+                }
+                Log.e("partSql",sql);
+            }
+
+            if (scorePresenter!=null){
+                Map<String,String> params = RequestService.getBaseParams(this);
+                params.put("sql",sql);
+                params.put("match_id",match_id);
+                scorePresenter.addScores(params);
+            }
+        }
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_score_show);
+        setContentView(R.layout.activity_score_update);
     }
+
 
     @Override
     public void initData(){
-        scoreDetailModels = new ArrayList<>();
-        baseRecyclerAdapter = new BaseRecyclerAdapter<ScoreDetailModel>(this,scoreDetailModels,R.layout.activity_score_show_item) {
+        userModels = new ArrayList<>();
+        scoresMap = new HashMap<>();
+        baseRecyclerAdapter = new BaseRecyclerAdapter<UserMatchModel>(this,userModels,R.layout.activity_score_operate_item) {
             @Override
-            protected void convert(com.github.library.BaseViewHolder helper, final ScoreDetailModel item) {
+            protected void convert(com.github.library.BaseViewHolder helper, final UserMatchModel item) {
                 ImageView imageView = helper.getView(R.id.item_avatar);
                 RequestOptions requestOptions = new RequestOptions();
                 requestOptions.placeholder(R.mipmap.avatar2);
                 requestOptions.error(R.mipmap.avatar2);
-                Glide.with(ScoreShowActivity.this).load(BaseAPI.base_url+item.getUser_avatar()).apply(requestOptions).into(imageView);
+                Glide.with(ScoreUpdateActivity.this).load(BaseAPI.base_url+item.getUser_avatar()).apply(requestOptions).into(imageView);
                 helper.setText(R.id.item_name,item.getUser_name());
 
-                helper.setText(R.id.score_value,item.getScore_value());
-                helper.setText(R.id.score_unit,item.getScore_unit());
+                final EditText editText = helper.getView(R.id.item_edittext);
+                editText.addTextChangedListener(new TextWatcher() {
+                    @Override
+                    public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
-                TextView score_update = helper.getView(R.id.score_update);
-                if (AccountTool.isLogin(ScoreShowActivity.this)) {
-                    if (AccountTool.getUserType(ScoreShowActivity.this).equals(Const.User_type_referee)) {
-                        score_update.setVisibility(View.VISIBLE);
-                    }else{
-                        score_update.setVisibility(View.GONE);
                     }
-                }else{
-                    score_update.setVisibility(View.GONE);
-                }
+
+                    @Override
+                    public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                    }
+
+                    @Override
+                    public void afterTextChanged(Editable editable) {
+                        scoresMap.put(item.user_id,editable.toString());
+//                        Log.d("user_id : "+item.user_id, "afterTextChanged: "+editable.toString());
+                    }
+                });
             }
         };
         baseRecyclerAdapter.openLoadAnimation(false);
         recyclerView.setLayoutManager(new StaggeredGridLayoutManager(1,1));
         recyclerView.setAdapter(baseRecyclerAdapter);
         matchPresenter = new MatchPresenter(context,this);
+        userMatchPresenter = new UserMatchPresenter(context,this);
         scorePresenter = new ScorePresenter(context,this);
 
-    }
-
-    @Override
-    public void initView() {
-        super.initView();
-        if (AccountTool.isLogin(this)) {
-            if (AccountTool.getUserType(this).equals(Const.User_type_referee)) {
-                modify_score.setVisibility(View.GONE);
-            }
-        }
     }
 
     @Override
@@ -164,7 +235,7 @@ public class ScoreShowActivity extends BaseActivity implements MatchContract,Use
             Map<String,String> params = RequestService.getBaseParams(context);
             params.put("match_id",match_id);
             matchPresenter.getMatchById(params);
-            scorePresenter.getScoreListByMatchId(params);
+            userMatchPresenter.getUserMatchDetailByMatchId(params);
             setLoadingEnable(true);
         }
     }
@@ -286,7 +357,7 @@ public class ScoreShowActivity extends BaseActivity implements MatchContract,Use
 
     void setLoadingEnable(boolean enable){
         if (loading!=null){
-            loading.setVisibility(enable? View.VISIBLE:View.GONE);
+            loading.setVisibility(enable?View.VISIBLE:View.GONE);
         }
     }
 
@@ -297,11 +368,19 @@ public class ScoreShowActivity extends BaseActivity implements MatchContract,Use
 
     @Override
     public void getUserMatchDetailByMatchIdResult(boolean isSuccess, Object object) {
-
+        if (checkResultModel(isSuccess,object)){
+            ResultModel resultModel = (ResultModel)object;
+            if (resultModel!=null&&resultModel.getData()!=null){
+                userModels = resultModel.getData();
+                Log.e("getUserMatchDetail",""+userModels.toString());
+                baseRecyclerAdapter.setData(userModels);
+            }
+        }
+        refreshUser();
     }
 
     private void refreshUser(){
-        if (scoreDetailModels==null||scoreDetailModels.size()<=0){
+        if (userModels==null||userModels.size()<=0){
             empty_show.setVisibility(View.VISIBLE);
         }else{
             empty_show.setVisibility(View.GONE);
@@ -326,15 +405,7 @@ public class ScoreShowActivity extends BaseActivity implements MatchContract,Use
 
     @Override
     public void getScoreListByMatchIdResult(boolean isSuccess, Object object) {
-        if (checkResultModel(isSuccess,object)){
-            ResultModel resultModel = (ResultModel)object;
-            if (resultModel!=null&&resultModel.getData()!=null){
-                scoreDetailModels = resultModel.getData();
-                Log.e("getUserMatchDetail",""+scoreDetailModels.toString());
-                baseRecyclerAdapter.setData(scoreDetailModels);
-            }
-        }
-        refreshUser();
+
     }
 
     @Override

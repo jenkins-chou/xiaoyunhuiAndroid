@@ -93,7 +93,8 @@
         <activity android:name=".activity.TeamNormalCountActivity" />
         <activity android:name=".activity.TeamNormalManagerActivity" />
         <activity android:name=".activity.SchoolManagerActivity" />
-        <activity android:name=".activity.MatchNameListActivity"></activity>
+        <activity android:name=".activity.MatchNameListActivity" />
+        <activity android:name=".activity.ScoreUpdateActivity"></activity>
     </application>
 
 </manifest>

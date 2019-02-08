@@ -91,6 +91,8 @@ public class MatchDetailActivity extends BaseActivity implements MatchContract {
     TextView unapply_match;//撤销报名按钮
     @BindView(R.id.footer2)
     LinearLayout footer2;
+    @BindView(R.id.footer3)
+    TextView footer3;//裁判员查看报名名单
 
     @BindView(R.id.loading)
     CommonLoading loading;
@@ -174,6 +176,14 @@ public class MatchDetailActivity extends BaseActivity implements MatchContract {
         }
 
     }
+
+    @OnClick(R.id.footer3)
+    void footer3(){
+        Intent intent = new Intent(this,MatchNameListActivity.class);
+        intent.putExtra("match_id",match_id);
+        startActivity(intent);
+    }
+
 
     //撤销报名
     @OnClick(R.id.unapply_match)
@@ -310,8 +320,16 @@ public class MatchDetailActivity extends BaseActivity implements MatchContract {
             }else{
                 footer2.setVisibility(View.GONE);
             }
+
+            if (AccountTool.getLoginUser(context).getUser_type().equals("2")){
+                footer3.setVisibility(View.VISIBLE);
+            }else{
+                footer3.setVisibility(View.GONE);
+            }
         }else{
+            footer.setVisibility(View.GONE);
             footer2.setVisibility(View.GONE);
+            footer3.setVisibility(View.GONE);
         }
     }
 

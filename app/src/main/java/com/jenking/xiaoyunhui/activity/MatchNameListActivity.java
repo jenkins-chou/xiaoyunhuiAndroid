@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -24,6 +25,8 @@ import com.jenking.xiaoyunhui.dialog.CommonTipsDialog;
 import com.jenking.xiaoyunhui.models.base.ResultModel;
 import com.jenking.xiaoyunhui.models.base.UserMatchModel;
 import com.jenking.xiaoyunhui.presenters.UserMatchPresenter;
+import com.jenking.xiaoyunhui.tools.AccountTool;
+import com.jenking.xiaoyunhui.tools.Const;
 import com.jenking.xiaoyunhui.tools.StringUtil;
 
 import java.util.ArrayList;
@@ -38,17 +41,17 @@ import butterknife.OnClick;
  */
 public class MatchNameListActivity extends BaseActivity implements UserMatchContract {
 
-    @BindView(R.id.match_name)
-    TextView match_name;
-    @BindView(R.id.match_time)
-    TextView match_time;
-
     @BindView(R.id.recyclerview)
     RecyclerView recyclerView;
+
+    @BindView(R.id.footer)
+    LinearLayout footer;
 
     private List<UserMatchModel> datas;
     private BaseRecyclerAdapter baseRecyclerAdapter;
     private UserMatchPresenter userMatchPresenter;
+
+
 
     private String match_id;
 
@@ -166,6 +169,16 @@ public class MatchNameListActivity extends BaseActivity implements UserMatchCont
                     }
                 });
 
+                if (AccountTool.isLogin(MatchNameListActivity.this)) {
+                    if (AccountTool.getUserType(MatchNameListActivity.this).equals(Const.User_type_manager)) {
+                        groupSpinner.setEnabled(true);
+                    }else{
+                        groupSpinner.setEnabled(false);
+                    }
+                }else{
+                    groupSpinner.setEnabled(false);
+                }
+
 
             }
         };
@@ -188,6 +201,16 @@ public class MatchNameListActivity extends BaseActivity implements UserMatchCont
     @Override
     public void initView() {
         super.initView();
+
+        if (AccountTool.isLogin(this)){
+            if (AccountTool.getUserType(this).equals(Const.User_type_manager)){
+                footer.setVisibility(View.VISIBLE);
+            }else{
+                footer.setVisibility(View.GONE);
+            }
+        }else {
+            footer.setVisibility(View.GONE);
+        }
     }
 
     @Override

@@ -29,27 +29,14 @@
                     android:layout_height="25dp"
                     android:layout_margin="10dp"
                     android:src="@mipmap/back_white" />
-
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginTop="10dp"
-                    android:text="成绩公布"
+                    android:text="比赛详情"
+                    android:textSize="16sp"
                     android:textColor="@color/white"
-                    android:textSize="16sp" />
-
-                <TextView
-                    android:id="@+id/modify_score"
-                    android:visibility="gone"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
                     android:layout_marginTop="10dp"
-                    android:layout_marginRight="10dp"
-                    android:text="修改成绩"
-                    android:textColor="@color/colorAccent"
-                    android:textSize="16sp" />
+                    android:layout_centerHorizontal="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
                 <LinearLayout
                     android:layout_margin="10dp"
                     android:layout_alignParentLeft="true"
@@ -177,21 +164,20 @@
                         android:layout_alignParentLeft="true"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
-
                     <TextView
                         android:id="@+id/score_unit"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_margin="15dp"
-                        android:text="成绩"
                         android:textColor="@color/main_color"
-                        android:textStyle="bold" />
+                        android:text="点击选择成绩单位"
+                        android:textStyle="bold"
+                        android:layout_margin="15dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
                 </RelativeLayout>
 
                 <TextView
                     android:id="@+id/empty_show"
-                    android:text="暂无成绩"
+                    android:text="暂无参赛人员"
                     android:textStyle="bold"
                     android:visibility="gone"
                     android:layout_marginBottom="15dp"
@@ -206,6 +192,19 @@
 
                 </android.support.v7.widget.RecyclerView>
             </LinearLayout>
+
+
+
+            <TextView
+                android:id="@+id/submit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@color/main_color"
+                android:gravity="center"
+                android:padding="15dp"
+                android:text="保存并公布"
+                android:textColor="@color/white" />
         </LinearLayout>
     </ScrollView>
 
