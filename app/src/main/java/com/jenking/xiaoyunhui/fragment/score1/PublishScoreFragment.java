@@ -153,6 +153,11 @@ public class PublishScoreFragment extends Fragment implements ScoreContract {
 
     }
 
+    @Override
+    public void updateScoreResult(boolean isSuccess, Object object) {
+
+    }
+
     private void refershView(){
         if (datas==null||datas.size()<=0){
             empty_show.setVisibility(View.VISIBLE);

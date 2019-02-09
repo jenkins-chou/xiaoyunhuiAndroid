@@ -86,7 +86,7 @@
                         android:layout_width="100dp"
                         android:layout_height="40dp" />
                     <TextView
-                        android:text="编号"
+                        android:text="编号/分道"
                         android:textColor="@color/baseFontColor"
                         android:textStyle="bold"
                         android:id="@+id/order"

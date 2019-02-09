@@ -94,7 +94,11 @@
         <activity android:name=".activity.TeamNormalManagerActivity" />
         <activity android:name=".activity.SchoolManagerActivity" />
         <activity android:name=".activity.MatchNameListActivity" />
-        <activity android:name=".activity.ScoreUpdateActivity"></activity>
+        <activity android:name=".activity.ScoreUpdateActivity" />
+        <activity android:name=".activity.MatchScheduleActivity" />
+        <activity android:name=".activity.ClassManagerActivity" />
+        <activity android:name=".activity.ClassModifyActivity" />
+        <activity android:name=".activity.SchoolUpdateActivity"></activity>
     </application>
 
 </manifest>

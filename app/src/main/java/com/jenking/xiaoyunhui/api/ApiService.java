@@ -178,6 +178,14 @@ public interface ApiService {
     Observable<ResultModel<SchoolModel>> addSchool(@FieldMap Map<String, String> body);
 
     @FormUrlEncoded
+    @POST("school/updateSchool")
+    Observable<ResultModel> updateSchool(@FieldMap Map<String, String> body);
+
+    @FormUrlEncoded
+    @POST("school/deleteSchool")
+    Observable<ResultModel> deleteSchool(@FieldMap Map<String, String> body);
+
+    @FormUrlEncoded
     @POST("school/getSchool")
     Observable<ResultModel<SchoolModel>> getSchool(@FieldMap Map<String, String> body);
 
@@ -203,6 +211,10 @@ public interface ApiService {
     @POST("score/addScores")
     Observable<ResultModel<ScoreModel>> addScores(@FieldMap Map<String, String> body);
 
+    @FormUrlEncoded
+    @POST("score/updateScore")
+    Observable<ResultModel> updateScore(@FieldMap Map<String, String> body);
+
 
     @FormUrlEncoded
     @POST("class/getAllClass")
@@ -215,6 +227,14 @@ public interface ApiService {
     @FormUrlEncoded
     @POST("class/getClass")
     Observable<ResultModel<ClassModel>> getClassById(@FieldMap Map<String, String> body);
+
+    @FormUrlEncoded
+    @POST("class/updateclass")
+    Observable<ResultModel<ClassModel>> updateclass(@FieldMap Map<String, String> body);
+
+    @FormUrlEncoded
+    @POST("class/deleteclass")
+    Observable<ResultModel<ClassModel>> deleteclass(@FieldMap Map<String, String> body);
 
 
     @FormUrlEncoded

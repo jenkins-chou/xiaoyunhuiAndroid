@@ -24,6 +24,7 @@ import com.github.library.listener.OnRecyclerItemClickListener;
 import com.jenking.xiaoyunhui.R;
 import com.jenking.xiaoyunhui.activity.LoginActivity;
 import com.jenking.xiaoyunhui.activity.MatchDetailActivity;
+import com.jenking.xiaoyunhui.activity.MatchScheduleActivity;
 import com.jenking.xiaoyunhui.activity.MineMatchActivity;
 import com.jenking.xiaoyunhui.activity.RefereeMatchActivity;
 import com.jenking.xiaoyunhui.api.BaseAPI;
@@ -60,6 +61,7 @@ public class IndexFragment extends Fragment implements MatchContract,UserMatchCo
 
     private LinearLayout mineMatch;//我的比赛项目
     private LinearLayout refereeMatch;//裁判员负责的项目
+    private TextView match_schedule;//赛程表
 
     private MatchPresenter matchPresenter;
     private UserMatchPresenter userMatchPresenter;
@@ -165,6 +167,15 @@ public class IndexFragment extends Fragment implements MatchContract,UserMatchCo
             }
         });
 
+        match_schedule = headerView.findViewById(R.id.match_schedule);
+        match_schedule.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context,MatchScheduleActivity.class);
+                startActivity(intent);
+            }
+        });
+
         getData();
 
     }
@@ -198,22 +209,27 @@ public class IndexFragment extends Fragment implements MatchContract,UserMatchCo
     private void refreshHeader(View headerView){
         LinearLayout usertype_one;
         LinearLayout usertype_two;
+        LinearLayout usertype_three;
         if (headerView!=null){
             usertype_one = headerView.findViewById(R.id.usertype_one);
             usertype_two = headerView.findViewById(R.id.usertype_two);
+            usertype_three = headerView.findViewById(R.id.usertype_three);
             if (AccountTool.isLogin(context)){
                 switch (AccountTool.getLoginUser(context).getUser_type()){
                     case "1":
                         usertype_one.setVisibility(View.VISIBLE);
                         usertype_two.setVisibility(View.GONE);
+                        usertype_three.setVisibility(View.GONE);
                         break;
                     case "2":
                         usertype_one.setVisibility(View.GONE);
                         usertype_two.setVisibility(View.VISIBLE);
+                        usertype_three.setVisibility(View.GONE);
                         break;
                     case "3":
                         usertype_one.setVisibility(View.GONE);
                         usertype_two.setVisibility(View.GONE);
+                        usertype_three.setVisibility(View.VISIBLE);
                         break;
                     default:break;//视作未登录
                 }

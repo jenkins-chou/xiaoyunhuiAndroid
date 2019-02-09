@@ -22,37 +22,17 @@
             android:layout_height="25dp" />
         <TextView
             android:textColor="#666666"
-            android:text="修改单项成绩"
+            android:text="赛程表"
             android:textSize="18sp"
             android:layout_centerInParent="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
     </RelativeLayout><!--header-->
-
-    <LinearLayout
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerview"
         android:layout_marginTop="10dp"
-        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
 
-        <EditText
-            android:id="@+id/input_score"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="number"
-            android:background="@drawable/activity_add_class_edittext"
-            android:hint="请输入成绩"
-            android:padding="10dp" />
-
-        <TextView
-            android:id="@+id/submit_score"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:background="@color/main_color"
-            android:gravity="center"
-            android:padding="10dp"
-            android:text="提交"
-            android:textColor="@color/white" />
-    </LinearLayout>
+    </android.support.v7.widget.RecyclerView>
 </LinearLayout>

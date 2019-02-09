@@ -19,6 +19,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.github.library.BaseRecyclerAdapter;
+import com.google.gson.Gson;
 import com.jenking.xiaoyunhui.R;
 import com.jenking.xiaoyunhui.api.BaseAPI;
 import com.jenking.xiaoyunhui.api.RequestService;
@@ -56,7 +57,6 @@ public class ScoreShowActivity extends BaseActivity implements MatchContract,Use
     private ScorePresenter scorePresenter;
 
     private MatchDetailModel matchDetailModel;
-
 
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
@@ -130,6 +130,16 @@ public class ScoreShowActivity extends BaseActivity implements MatchContract,Use
                 }else{
                     score_update.setVisibility(View.GONE);
                 }
+
+                score_update.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        String json = new Gson().toJson(item);
+                        Intent intent = new Intent(ScoreShowActivity.this,ScoreUpdateActivity.class);
+                        intent.putExtra("data",json);
+                        startActivity(intent);
+                    }
+                });
             }
         };
         baseRecyclerAdapter.openLoadAnimation(false);
@@ -160,7 +170,6 @@ public class ScoreShowActivity extends BaseActivity implements MatchContract,Use
         Intent intent = getIntent();
         if (intent!=null){
             match_id = intent.getStringExtra("match_id");
-
             Map<String,String> params = RequestService.getBaseParams(context);
             params.put("match_id",match_id);
             matchPresenter.getMatchById(params);
@@ -227,8 +236,6 @@ public class ScoreShowActivity extends BaseActivity implements MatchContract,Use
                     match_status.setText("已公布成绩");
                     break;
             }
-
-
         }else {
             //TODO 显示错误信息
         }
@@ -353,5 +360,10 @@ public class ScoreShowActivity extends BaseActivity implements MatchContract,Use
             Toast.makeText(this, "发布成功", Toast.LENGTH_SHORT).show();
             finish();
         }
+    }
+
+    @Override
+    public void updateScoreResult(boolean isSuccess, Object object) {
+
     }
 }

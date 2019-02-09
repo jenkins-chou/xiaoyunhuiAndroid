@@ -12,10 +12,13 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.google.gson.Gson;
 import com.jenking.xiaoyunhui.R;
+import com.jenking.xiaoyunhui.api.BaseAPI;
 import com.jenking.xiaoyunhui.api.RequestService;
 import com.jenking.xiaoyunhui.contacts.SchoolContract;
 import com.jenking.xiaoyunhui.customui.CommonLoading;
+import com.jenking.xiaoyunhui.models.base.SchoolModel;
 import com.jenking.xiaoyunhui.presenters.SchoolPresenter;
 import com.jenking.xiaoyunhui.tools.AccountTool;
 import com.jenking.xiaoyunhui.tools.StringUtil;
@@ -36,7 +39,7 @@ import java.util.Map;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-public class SchoolAddActivity extends BaseActivity implements SchoolContract {
+public class SchoolUpdateActivity extends BaseActivity implements SchoolContract {
 
     private SchoolPresenter schoolPresenter;
     private String selectSchoolImagePath;
@@ -46,6 +49,8 @@ public class SchoolAddActivity extends BaseActivity implements SchoolContract {
     private String school_address;
     private String school_abstract;
     private String school_detail;
+
+    private SchoolModel schoolModel;
     @BindView(R.id.school_logo)
     ImageView school_logo;
     @BindView(R.id.input_school_name)
@@ -68,7 +73,7 @@ public class SchoolAddActivity extends BaseActivity implements SchoolContract {
     @OnClick({R.id.school_logo, R.id.select_logo_text})
     void select_logo() {
         // 进入相册 以下是例子：用不到的api可以不写
-        PictureSelector.create(SchoolAddActivity.this)
+        PictureSelector.create(SchoolUpdateActivity.this)
                 .openGallery(PictureMimeType.ofImage())//全部.PictureMimeType.ofAll()、图片.ofImage()、视频.ofVideo()、音频.ofAudio()
 //                .theme()//主题样式(不设置为默认样式) 也可参考demo values/styles下 例如：R.style.picture.white.style
                 .maxSelectNum(1)// 最大图片选择数量 int
@@ -118,9 +123,10 @@ public class SchoolAddActivity extends BaseActivity implements SchoolContract {
         school_abstract = input_school_abstract.getText().toString();
         school_detail = input_school_detail.getText().toString();
 
-        if (!StringUtil.isNotEmpty(selectSchoolImagePath)){
-            Toast.makeText(context, "请选择校徽图片", Toast.LENGTH_SHORT).show();
-        }else if (!StringUtil.isNotEmpty(school_name)){
+//        if (!StringUtil.isNotEmpty(selectSchoolImagePath)){
+//            Toast.makeText(context, "请选择校徽图片", Toast.LENGTH_SHORT).show();
+//        }else
+            if (!StringUtil.isNotEmpty(school_name)){
             Toast.makeText(context, "请输入学校名称", Toast.LENGTH_SHORT).show();
         }else if (!StringUtil.isNotEmpty(school_address)){
             Toast.makeText(context, "请输入学校地址", Toast.LENGTH_SHORT).show();
@@ -129,21 +135,43 @@ public class SchoolAddActivity extends BaseActivity implements SchoolContract {
         }else if (!StringUtil.isNotEmpty(school_detail)){
             Toast.makeText(context, "请输入学校详细介绍", Toast.LENGTH_SHORT).show();
         }else{
+
             setLoadingEnable(true);
-            uploadFile(selectSchoolImagePath);
+            if (StringUtil.isNotEmpty(selectSchoolImagePath)){
+                uploadFile(selectSchoolImagePath);
+            }else{
+                submitData();
+            }
         }
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_school_add);
+        setContentView(R.layout.activity_school_update);
     }
 
     @Override
     public void initData() {
         super.initData();
         schoolPresenter = new SchoolPresenter(context,this);
+        Intent intent = getIntent();
+        if (intent!=null){
+            String schoolModelJson = intent.getStringExtra("data");
+            if (StringUtil.isNotEmpty(schoolModelJson)){
+                schoolModel = new Gson().fromJson(schoolModelJson,SchoolModel.class);
+                if (schoolModel!=null){
+                    RequestOptions requestOptions = new RequestOptions();
+                    requestOptions.circleCrop();
+                    Glide.with(this).load(BaseAPI.base_url+schoolModel.getSchool_logo()).apply(requestOptions).into(school_logo);
+
+                    input_school_name.setText(schoolModel.getSchool_name());
+                    input_school_address.setText(schoolModel.getSchool_address());
+                    input_school_abstract.setText(schoolModel.getSchool_abstract());
+                    input_school_detail.setText(schoolModel.getSchool_detail());
+                }
+            }
+        }
     }
 
     @Override
@@ -227,6 +255,9 @@ public class SchoolAddActivity extends BaseActivity implements SchoolContract {
                     public void onSuccess(String result) {
                         Log.e("onSuccess",""+result);
                         schoolImageUrl = result;
+                        if (schoolModel!=null){
+                            schoolModel.setSchool_logo(schoolImageUrl);
+                        }
                         submitData();
                     }
 
@@ -262,7 +293,8 @@ public class SchoolAddActivity extends BaseActivity implements SchoolContract {
 
     void submitData(){
         Map<String,String> params = RequestService.getBaseParams(context);
-        params.put("school_logo",schoolImageUrl);
+        params.put("school_id",schoolModel.getSchool_id());
+        params.put("school_logo",schoolModel.getSchool_logo());
         params.put("school_name",school_name);
         params.put("school_create_time",StringUtil.getTime());
         params.put("school_address",school_address);
@@ -270,11 +302,9 @@ public class SchoolAddActivity extends BaseActivity implements SchoolContract {
         params.put("school_abstract",school_abstract);
         params.put("school_detail",school_detail);
         params.put("school_remark","");
-
         Log.e("submitData",params.toString());
-
         if (schoolPresenter!=null){
-            schoolPresenter.addSchool(params);
+            schoolPresenter.updateSchool(params);
         }
     }
 
@@ -305,7 +335,10 @@ public class SchoolAddActivity extends BaseActivity implements SchoolContract {
 
     @Override
     public void updateSchoolResult(boolean isSuccess, Object object) {
-
+        if (checkResultModel(isSuccess,object)){
+            Toast.makeText(this, "修改成功", Toast.LENGTH_SHORT).show();
+            finish();
+        }
     }
 
     @Override

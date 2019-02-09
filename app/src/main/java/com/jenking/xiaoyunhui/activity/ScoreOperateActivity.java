@@ -432,4 +432,9 @@ public class ScoreOperateActivity extends BaseActivity implements MatchContract,
             finish();
         }
     }
+
+    @Override
+    public void updateScoreResult(boolean isSuccess, Object object) {
+
+    }
 }

@@ -5,6 +5,7 @@ public class ClassModel {
     private String class_name;
     private String class_create_time;
     private String school_id;
+    private String school_name;
 
     public String getClass_id() {
         return class_id;
@@ -38,6 +39,14 @@ public class ClassModel {
         this.school_id = school_id;
     }
 
+    public String getSchool_name() {
+        return school_name;
+    }
+
+    public void setSchool_name(String school_name) {
+        this.school_name = school_name;
+    }
+
     @Override
     public String toString() {
         return "ClassModel{" +
@@ -45,6 +54,7 @@ public class ClassModel {
                 ", class_name='" + class_name + '\'' +
                 ", class_create_time='" + class_create_time + '\'' +
                 ", school_id='" + school_id + '\'' +
+                ", school_name='" + school_name + '\'' +
                 '}';
     }
 }
