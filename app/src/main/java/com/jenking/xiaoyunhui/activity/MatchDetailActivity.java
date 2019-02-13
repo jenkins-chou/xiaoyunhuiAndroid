@@ -294,24 +294,33 @@ public class MatchDetailActivity extends BaseActivity implements MatchContract {
             }
         });
 
-        if (AccountTool.isLogin(context)){
-            if (!AccountTool.getLoginUser(context).getUser_type().equals("1")){
-                footer.setVisibility(View.GONE);
-            }else{
-                //我参加的比赛
-                if (getIntent()!=null&&getIntent().getStringExtra("mineJoinMatch")!=null&&getIntent().getStringExtra("mineJoinMatch").equals("true")){
+
+        Intent intent = getIntent();
+        if (intent!=null&&StringUtil.isNotEmpty(intent.getStringExtra("justShowDetail"))){
+            footer.setVisibility(View.GONE);
+            footer2.setVisibility(View.GONE);
+            unapply_match.setVisibility(View.GONE);
+        }else{
+            if (AccountTool.isLogin(context)){
+                if (!AccountTool.getLoginUser(context).getUser_type().equals("1")){
                     footer.setVisibility(View.GONE);
-                    unapply_match.setVisibility(View.VISIBLE);
+                }else{
+                    //我参加的比赛
+                    if (getIntent()!=null&&getIntent().getStringExtra("mineJoinMatch")!=null&&getIntent().getStringExtra("mineJoinMatch").equals("true")){
+                        footer.setVisibility(View.GONE);
+                        unapply_match.setVisibility(View.VISIBLE);
+                    }
                 }
-            }
-            if (AccountTool.getLoginUser(context).getUser_type().equals("3")){
-                footer2.setVisibility(View.VISIBLE);
+                if (AccountTool.getLoginUser(context).getUser_type().equals("3")){
+                    footer2.setVisibility(View.VISIBLE);
+                }else{
+                    footer2.setVisibility(View.GONE);
+                }
             }else{
                 footer2.setVisibility(View.GONE);
             }
-        }else{
-            footer2.setVisibility(View.GONE);
         }
+
     }
 
     public void initData(){
