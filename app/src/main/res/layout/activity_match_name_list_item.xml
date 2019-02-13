@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <LinearLayout
+        android:background="@color/white"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_marginLeft="10dp"
+            android:id="@+id/realname"
+            android:gravity="center_vertical"
+            android:paddingLeft="5sp"
+            android:layout_width="100dp"
+            android:layout_height="40dp" />
+        <TextView
+            android:id="@+id/class_name"
+            android:gravity="center_vertical"
+            android:paddingLeft="5sp"
+            android:layout_width="100dp"
+            android:layout_height="40dp" />
+        <TextView
+            android:id="@+id/school_name"
+            android:gravity="center_vertical"
+            android:paddingLeft="5sp"
+            android:layout_width="100dp"
+            android:layout_height="40dp" />
+        <Spinner
+            android:id="@+id/group_type_spinner"
+            android:inputType="number"
+            android:layout_marginLeft="10dp"
+            android:entries="@array/group_type_alias"
+            android:textSize="14sp"
+            android:layout_width="100dp"
+            android:layout_height="30dp" />
+        <EditText
+            android:id="@+id/order"
+            android:hint="请输入编号"
+            android:enabled="false"
+            android:background="@drawable/activity_userinfo_edittext"
+            android:textColor="@color/colorAccent"
+            android:gravity="center_vertical"
+            android:paddingLeft="5sp"
+            android:layout_width="100dp"
+            android:layout_height="40dp" />
+    </LinearLayout>
+    <View
+        android:background="@color/baseLayoutColor"
+        android:layout_width="match_parent"
+        android:layout_height="1px"/>
+</LinearLayout>

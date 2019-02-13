@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
@@ -237,6 +238,16 @@ public class TeamMemberDetailActivity extends BaseActivity implements UserContra
     }
 
     @Override
+    public void modifyClassResult(boolean isSuccess, Object object) {
+
+    }
+
+    @Override
+    public void deleteClassResult(boolean isSuccess, Object object) {
+
+    }
+
+    @Override
     public void getAllSchoolResult(boolean isSuccess, Object object) {
 
     }
@@ -261,7 +272,12 @@ public class TeamMemberDetailActivity extends BaseActivity implements UserContra
     }
 
     @Override
+
     public void getAllMatchResult(boolean isSuccess, Object object) {
+
+    }
+
+    public void updateSchoolResult(boolean isSuccess, Object object) {
 
     }
 
@@ -324,5 +340,7 @@ public class TeamMemberDetailActivity extends BaseActivity implements UserContra
     @Override
     public void deleteMatchResult(boolean isSuccess, Object object) {
 
+    }
+    public void deleteSchoolResult(boolean isSuccess, Object object) {
     }
 }

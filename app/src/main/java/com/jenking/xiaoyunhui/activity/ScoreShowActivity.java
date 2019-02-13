@@ -19,6 +19,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.github.library.BaseRecyclerAdapter;
+import com.google.gson.Gson;
 import com.jenking.xiaoyunhui.R;
 import com.jenking.xiaoyunhui.api.BaseAPI;
 import com.jenking.xiaoyunhui.api.RequestService;
@@ -35,6 +36,7 @@ import com.jenking.xiaoyunhui.models.base.UserModel;
 import com.jenking.xiaoyunhui.presenters.MatchPresenter;
 import com.jenking.xiaoyunhui.presenters.ScorePresenter;
 import com.jenking.xiaoyunhui.presenters.UserMatchPresenter;
+import com.jenking.xiaoyunhui.tools.AccountTool;
 import com.jenking.xiaoyunhui.tools.Const;
 import com.jenking.xiaoyunhui.tools.StringUtil;
 
@@ -55,7 +57,6 @@ public class ScoreShowActivity extends BaseActivity implements MatchContract,Use
     private ScorePresenter scorePresenter;
 
     private MatchDetailModel matchDetailModel;
-
 
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
@@ -87,6 +88,16 @@ public class ScoreShowActivity extends BaseActivity implements MatchContract,Use
         finish();
     }
 
+    @BindView(R.id.modify_score)
+    TextView modify_score;
+
+    @OnClick(R.id.modify_score)
+    void modify_score(){
+        Intent intent = new Intent(this,ScoreOperateActivity.class);
+        intent.putExtra("match_id",match_id);
+        startActivity(intent);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -108,6 +119,27 @@ public class ScoreShowActivity extends BaseActivity implements MatchContract,Use
 
                 helper.setText(R.id.score_value,item.getScore_value());
                 helper.setText(R.id.score_unit,item.getScore_unit());
+
+                TextView score_update = helper.getView(R.id.score_update);
+                if (AccountTool.isLogin(ScoreShowActivity.this)) {
+                    if (AccountTool.getUserType(ScoreShowActivity.this).equals(Const.User_type_referee)) {
+                        score_update.setVisibility(View.VISIBLE);
+                    }else{
+                        score_update.setVisibility(View.GONE);
+                    }
+                }else{
+                    score_update.setVisibility(View.GONE);
+                }
+
+                score_update.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        String json = new Gson().toJson(item);
+                        Intent intent = new Intent(ScoreShowActivity.this,ScoreUpdateActivity.class);
+                        intent.putExtra("data",json);
+                        startActivity(intent);
+                    }
+                });
             }
         };
         baseRecyclerAdapter.openLoadAnimation(false);
@@ -116,6 +148,16 @@ public class ScoreShowActivity extends BaseActivity implements MatchContract,Use
         matchPresenter = new MatchPresenter(context,this);
         scorePresenter = new ScorePresenter(context,this);
 
+    }
+
+    @Override
+    public void initView() {
+        super.initView();
+        if (AccountTool.isLogin(this)) {
+            if (AccountTool.getUserType(this).equals(Const.User_type_referee)) {
+                modify_score.setVisibility(View.GONE);
+            }
+        }
     }
 
     @Override
@@ -128,7 +170,6 @@ public class ScoreShowActivity extends BaseActivity implements MatchContract,Use
         Intent intent = getIntent();
         if (intent!=null){
             match_id = intent.getStringExtra("match_id");
-
             Map<String,String> params = RequestService.getBaseParams(context);
             params.put("match_id",match_id);
             matchPresenter.getMatchById(params);
@@ -195,8 +236,6 @@ public class ScoreShowActivity extends BaseActivity implements MatchContract,Use
                     match_status.setText("已公布成绩");
                     break;
             }
-
-
         }else {
             //TODO 显示错误信息
         }
@@ -283,6 +322,11 @@ public class ScoreShowActivity extends BaseActivity implements MatchContract,Use
     }
 
     @Override
+    public void updateUserMatchsResult(boolean isSuccess, Object object) {
+
+    }
+
+    @Override
     public void getScoreListByUserIdResult(boolean isSuccess, Object object) {
 
     }
@@ -316,5 +360,10 @@ public class ScoreShowActivity extends BaseActivity implements MatchContract,Use
             Toast.makeText(this, "发布成功", Toast.LENGTH_SHORT).show();
             finish();
         }
+    }
+
+    @Override
+    public void updateScoreResult(boolean isSuccess, Object object) {
+
     }
 }

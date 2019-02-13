@@ -200,6 +200,11 @@ public class MainFragment2 extends Fragment implements ScoreContract{
     }
 
     @Override
+    public void updateScoreResult(boolean isSuccess, Object object) {
+
+    }
+
+    @Override
     public void success(Object object) {
 
     }

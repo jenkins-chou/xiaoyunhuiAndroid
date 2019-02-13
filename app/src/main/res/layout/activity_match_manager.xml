@@ -38,7 +38,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="15dp"
-                android:text="比赛进程"
+                android:text="赛程管理"
                 android:textColor="@color/main_color" />
         </RelativeLayout>
         <com.flyco.tablayout.SlidingTabLayout

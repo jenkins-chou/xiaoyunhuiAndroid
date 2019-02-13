@@ -91,6 +91,8 @@ public class MatchDetailActivity extends BaseActivity implements MatchContract {
     TextView unapply_match;//撤销报名按钮
     @BindView(R.id.footer2)
     LinearLayout footer2;
+    @BindView(R.id.footer3)
+    TextView footer3;//裁判员查看报名名单
 
     @BindView(R.id.loading)
     CommonLoading loading;
@@ -175,6 +177,14 @@ public class MatchDetailActivity extends BaseActivity implements MatchContract {
 
     }
 
+    @OnClick(R.id.footer3)
+    void footer3(){
+        Intent intent = new Intent(this,MatchNameListActivity.class);
+        intent.putExtra("match_id",match_id);
+        startActivity(intent);
+    }
+
+
     //撤销报名
     @OnClick(R.id.unapply_match)
     void unapply_match(){
@@ -224,17 +234,18 @@ public class MatchDetailActivity extends BaseActivity implements MatchContract {
                 }).show();
     }
 
-    //修改
-    @OnClick(R.id.update_match)
-    void update_match(){
-
+    //名单管理
+    @OnClick(R.id.name_list)
+    void name_list(){
+        Intent intent = new Intent(this,MatchNameListActivity.class);
+        intent.putExtra("match_id",match_id);
+        startActivity(intent);
     }
 
     //更换状态
     @OnClick(R.id.modify_match_status)
     void modify_match_status(){
         final Map<String,String> params = RequestService.getBaseParams(this);
-
         CommonBottomListDialog commonBottomListDialog = new CommonBottomListDialog(this,"选择状态",statusList,"",true) {
             @Override
             protected void setOnItemClickListener(String value) {
@@ -299,7 +310,7 @@ public class MatchDetailActivity extends BaseActivity implements MatchContract {
         if (intent!=null&&StringUtil.isNotEmpty(intent.getStringExtra("justShowDetail"))){
             footer.setVisibility(View.GONE);
             footer2.setVisibility(View.GONE);
-            unapply_match.setVisibility(View.GONE);
+            footer3.setVisibility(View.GONE);
         }else{
             if (AccountTool.isLogin(context)){
                 if (!AccountTool.getLoginUser(context).getUser_type().equals("1")){
@@ -319,6 +330,11 @@ public class MatchDetailActivity extends BaseActivity implements MatchContract {
             }else{
                 footer2.setVisibility(View.GONE);
             }
+            if (AccountTool.getLoginUser(context).getUser_type().equals("2")){
+                footer3.setVisibility(View.VISIBLE);
+            }else{
+                footer3.setVisibility(View.GONE);
+            }
         }
 
     }
@@ -328,13 +344,11 @@ public class MatchDetailActivity extends BaseActivity implements MatchContract {
         unbinder = ButterKnife.bind(this);
         match_id = getIntent()!=null?getIntent().getStringExtra("match_id"):"";
         matchPresenter = new MatchPresenter(context,this);
-
         statusList = new ArrayList<>();
         statusList.add("报名中");
         statusList.add("比赛中");
         statusList.add("比赛完毕");
         statusList.add("公布成绩");
-
         getData();
     }
 

@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.github.library.BaseRecyclerAdapter;
 import com.github.library.BaseViewHolder;
@@ -15,6 +16,7 @@ import com.github.library.listener.OnRecyclerItemClickListener;
 import com.jenking.xiaoyunhui.R;
 import com.jenking.xiaoyunhui.api.RequestService;
 import com.jenking.xiaoyunhui.contacts.ClassContract;
+import com.jenking.xiaoyunhui.dialog.CommonTipsDialog;
 import com.jenking.xiaoyunhui.models.base.ClassModel;
 import com.jenking.xiaoyunhui.models.base.ResultModel;
 import com.jenking.xiaoyunhui.presenters.ClassPresenter;
@@ -27,6 +29,7 @@ import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -67,8 +70,32 @@ public class ClassListActivity extends BaseActivity implements ClassContract {
         classModels = new ArrayList<>();
         baseRecyclerAdapter = new BaseRecyclerAdapter<ClassModel>(context,classModels,R.layout.activity_class_list_item) {
             @Override
-            protected void convert(BaseViewHolder helper, ClassModel item) {
+            protected void convert(BaseViewHolder helper, final ClassModel item) {
                 helper.setText(R.id.class_name,item.getClass_name());
+
+                TextView modify = helper.getView(R.id.modify);
+                TextView delete = helper.getView(R.id.delete);
+
+                if (AccountTool.isLogin(ClassListActivity.this)) {
+                    if (AccountTool.getUserType(ClassListActivity.this).equals(Const.User_type_manager)) {
+                        modify.setVisibility(View.VISIBLE);
+                        delete.setVisibility(View.VISIBLE);
+                    }
+                }
+                modify.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        modify(item);
+                    }
+                });
+
+                delete.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        delete(item);
+                    }
+                });
+
             }
         };
         baseRecyclerAdapter.setOnRecyclerItemClickListener(new OnRecyclerItemClickListener() {
@@ -96,13 +123,39 @@ public class ClassListActivity extends BaseActivity implements ClassContract {
             }
         });
         classPresenter = new ClassPresenter(context,this);
-
     }
 
     private void getData(){
         if (classPresenter!=null){
             classPresenter.getAllClass(RequestService.getBaseParams(context));
         }
+    }
+
+    private void modify(final ClassModel classModel){
+        if (classModel==null)return;
+            Intent intent = new Intent(this,ClassModifyActivity.class);
+            intent.putExtra("class_id",classModel.getClass_id());
+            startActivity(intent);
+    }
+
+    private void delete(final ClassModel classModel){
+        if (classModel==null)return;
+        CommonTipsDialog.create(this,"温馨提示","确定要删除吗?",false)
+                .setOnClickListener(new CommonTipsDialog.OnClickListener() {
+                    @Override
+                    public void cancel() {
+
+                    }
+
+                    @Override
+                    public void confirm() {
+                        if (classPresenter!=null){
+                            Map<String,String> params = RequestService.getBaseParams(ClassListActivity.this);
+                            params.put("class_id",classModel.getClass_id());
+                            classPresenter.deleteClass(params);
+                        }
+                    }
+                }).show();
     }
 
     @Override
@@ -151,6 +204,19 @@ public class ClassListActivity extends BaseActivity implements ClassContract {
     @Override
     public void addClassResult(boolean isSuccess, Object object) {
 
+    }
+
+    @Override
+    public void modifyClassResult(boolean isSuccess, Object object) {
+
+    }
+
+    @Override
+    public void deleteClassResult(boolean isSuccess, Object object) {
+        if (checkResultModel(isSuccess,object)){
+            Toast.makeText(this, "删除成功", Toast.LENGTH_SHORT).show();
+            getData();
+        }
     }
 
     @Override

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/baseLayoutColor"
+    tools:context=".activity.MessageActivity">
+    <RelativeLayout
+        android:id="@+id/header"
+        android:layout_alignParentTop="true"
+        android:background="#ffffff"
+        android:layout_width="match_parent"
+        android:layout_height="48dp">
+        <ImageView
+            android:id="@+id/back"
+            android:layout_marginLeft="10dp"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/back_black"
+            android:layout_width="25dp"
+            android:layout_height="25dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="修改班级"
+            android:textColor="#666666"
+            android:textSize="18sp" />
+    </RelativeLayout><!--header-->
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_below="@+id/header"
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <EditText
+            android:id="@+id/input_class_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/activity_add_class_edittext"
+            android:hint="输入班级名"
+            android:padding="15dp"
+            android:singleLine="true"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/select_school"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:textSize="17sp"
+            android:textColor="@color/main_color"
+            android:background="@color/white"
+            android:padding="15dp"
+            android:text="选择学校" />
+
+        <TextView
+            android:id="@+id/submit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
+            android:background="@color/main_color"
+            android:gravity="center"
+            android:padding="15dp"
+            android:text="提交"
+            android:textColor="@color/white" />
+    </LinearLayout>
+</RelativeLayout>

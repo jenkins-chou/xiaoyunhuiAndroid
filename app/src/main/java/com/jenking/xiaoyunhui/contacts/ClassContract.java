@@ -4,4 +4,6 @@ public interface ClassContract extends BaseCallBack{
     void getClassResult(boolean isSuccess, Object object);//获取单个班级的信息
     void getAllClassResult(boolean isSuccess, Object object);//
     void addClassResult(boolean isSuccess, Object object);//
+    void modifyClassResult(boolean isSuccess, Object object);//
+    void deleteClassResult(boolean isSuccess, Object object);//
 }

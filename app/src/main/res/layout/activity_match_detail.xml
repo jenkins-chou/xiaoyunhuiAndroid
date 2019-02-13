@@ -379,13 +379,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
             <TextView
-                android:id="@+id/update_match"
+                android:id="@+id/name_list"
                 android:layout_marginTop="1dp"
                 android:alpha="0.7"
-                android:visibility="gone"
                 android:background="@color/main_color"
                 android:textColor="@color/white"
-                android:text="修改"
+                android:text="名单管理"
                 android:gravity="center"
                 android:padding="15dp"
                 android:layout_weight="1"
@@ -404,6 +403,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
         </LinearLayout>
+        <TextView
+            android:id="@+id/footer3"
+            android:alpha="0.7"
+            android:background="@color/main_color"
+            android:textColor="@color/white"
+            android:text="查看报名名单"
+            android:gravity="center"
+            android:padding="15dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
     </LinearLayout>
 
     <com.jenking.xiaoyunhui.customui.CommonLoading

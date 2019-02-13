@@ -29,14 +29,27 @@
                     android:layout_height="25dp"
                     android:layout_margin="10dp"
                     android:src="@mipmap/back_white" />
+
                 <TextView
-                    android:text="比赛详情"
-                    android:textSize="16sp"
-                    android:textColor="@color/white"
-                    android:layout_marginTop="10dp"
-                    android:layout_centerHorizontal="true"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="10dp"
+                    android:text="成绩公布"
+                    android:textColor="@color/white"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/modify_score"
+                    android:visibility="gone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="10dp"
+                    android:text="修改成绩"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="16sp" />
                 <LinearLayout
                     android:layout_margin="10dp"
                     android:layout_alignParentLeft="true"

@@ -152,12 +152,17 @@ public interface ApiService {
     //根据比赛id获取报名的名单
     @FormUrlEncoded
     @POST("userMatch/getUserMatchDetailByMatchId")
-    Observable<ResultModel<UserModel>> getUserMatchDetailByMatchId(@FieldMap Map<String, String> body);
+    Observable<ResultModel<UserMatchModel>> getUserMatchDetailByMatchId(@FieldMap Map<String, String> body);
 
     //根据user_id获取比赛信息
     @FormUrlEncoded
     @POST("userMatch/getUserMatchByUserId")
     Observable<ResultModel<UserMatchModel>> getUserMatchByUserId(@FieldMap Map<String, String> body);
+
+    //updateUserMatchs
+    @FormUrlEncoded
+    @POST("userMatch/updateUserMatchs")
+    Observable<ResultModel> updateUserMatchs(@FieldMap Map<String, String> body);
 
     @FormUrlEncoded
     @POST("match/getmatchByType")
@@ -171,6 +176,14 @@ public interface ApiService {
     @FormUrlEncoded
     @POST("school/addSchool")
     Observable<ResultModel<SchoolModel>> addSchool(@FieldMap Map<String, String> body);
+
+    @FormUrlEncoded
+    @POST("school/updateSchool")
+    Observable<ResultModel> updateSchool(@FieldMap Map<String, String> body);
+
+    @FormUrlEncoded
+    @POST("school/deleteSchool")
+    Observable<ResultModel> deleteSchool(@FieldMap Map<String, String> body);
 
     @FormUrlEncoded
     @POST("school/getSchool")
@@ -198,6 +211,10 @@ public interface ApiService {
     @POST("score/addScores")
     Observable<ResultModel<ScoreModel>> addScores(@FieldMap Map<String, String> body);
 
+    @FormUrlEncoded
+    @POST("score/updateScore")
+    Observable<ResultModel> updateScore(@FieldMap Map<String, String> body);
+
 
     @FormUrlEncoded
     @POST("class/getAllClass")
@@ -210,6 +227,14 @@ public interface ApiService {
     @FormUrlEncoded
     @POST("class/getClass")
     Observable<ResultModel<ClassModel>> getClassById(@FieldMap Map<String, String> body);
+
+    @FormUrlEncoded
+    @POST("class/updateclass")
+    Observable<ResultModel<ClassModel>> updateclass(@FieldMap Map<String, String> body);
+
+    @FormUrlEncoded
+    @POST("class/deleteclass")
+    Observable<ResultModel<ClassModel>> deleteclass(@FieldMap Map<String, String> body);
 
 
     @FormUrlEncoded

@@ -37,7 +37,6 @@
             android:id="@+id/score_value"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/activity_userinfo_edittext"
             android:gravity="right"
             android:hint=""
             android:padding="5dp"
@@ -47,11 +46,22 @@
             android:id="@+id/score_unit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/activity_userinfo_edittext"
             android:gravity="right"
             android:hint=""
             android:padding="5dp"
             android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/score_update"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:text="修改"
+            android:layout_marginLeft="10dp"
+            android:padding="5dp"
+            android:textSize="14sp"
+            android:textColor="@color/main_color"
             android:textStyle="bold" />
     </LinearLayout>
 

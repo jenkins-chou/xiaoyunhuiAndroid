@@ -118,6 +118,11 @@ public class ScoreRankingListActivity extends BaseActivity implements ScoreContr
     }
 
     @Override
+    public void updateScoreResult(boolean isSuccess, Object object) {
+
+    }
+
+    @Override
     public void success(Object object) {
 
     }

@@ -4,12 +4,43 @@
     android:background="@color/white"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
-    <TextView
-        android:id="@+id/class_name"
-        android:textSize="16sp"
-        android:layout_margin="15dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/class_name"
+            android:textSize="16sp"
+            android:layout_margin="15dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <LinearLayout
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/modify"
+                android:text="修改"
+                android:gravity="center"
+                android:visibility="gone"
+                android:background="@color/main_color"
+                android:textColor="@color/white"
+                android:layout_width="80dp"
+                android:layout_height="40dp" />
+            <TextView
+                android:id="@+id/delete"
+                android:text="删除"
+                android:gravity="center"
+                android:visibility="gone"
+                android:background="@color/colorAccent"
+                android:textColor="@color/white"
+                android:layout_width="80dp"
+                android:layout_height="40dp" />
+        </LinearLayout>
+    </RelativeLayout>
     <View
         android:background="@color/baseLayoutColor"
         android:layout_width="match_parent"

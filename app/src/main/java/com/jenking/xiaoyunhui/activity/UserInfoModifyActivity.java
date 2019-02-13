@@ -462,4 +462,14 @@ public class UserInfoModifyActivity extends BaseActivity implements UserContract
     public void addSchoolResult(boolean isSuccess, Object object) {
 
     }
+
+    @Override
+    public void updateSchoolResult(boolean isSuccess, Object object) {
+
+    }
+
+    @Override
+    public void deleteSchoolResult(boolean isSuccess, Object object) {
+
+    }
 }

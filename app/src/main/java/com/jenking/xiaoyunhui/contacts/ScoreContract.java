@@ -6,4 +6,5 @@ public interface ScoreContract extends BaseCallBack{
     void getScorePublishListByUserIdResult(boolean isSuccess, Object object);//
     void getAllScoreList(boolean isSuccess, Object object);//
     void addScoresResult(boolean isSuccess, Object object);//批量添加成绩
+    void updateScoreResult(boolean isSuccess, Object object);//修改单项成绩
 }
