@@ -118,14 +118,13 @@ public class ScoreOperateActivity extends BaseActivity implements MatchContract,
 
     @OnClick(R.id.submit)
     void submit(){
-//        if (matchDetailModel==null||
-//                matchDetailModel.getMatch_status()==null||
-//                !matchDetailModel.getMatch_status().equals(Const.Match_type_three)){
-//            CommonTipsDialog.showTip(this,"温馨提示","当前比赛不能提交成绩",false);
-//        }else
+        if (matchDetailModel==null||
+                matchDetailModel.getMatch_status()==null||
+                !matchDetailModel.getMatch_status().equals(Const.Match_type_three)){
+            CommonTipsDialog.showTip(this,"温馨提示","当前比赛不能提交成绩",false);
+        }else
             if (match_id==null||match_id.equals("")){
             CommonTipsDialog.showTip(this,"温馨提示","页面初始化失败",false);
-//            return;
         }else if (userModels==null||userModels.size()<=0){
             CommonTipsDialog.showTip(this,"温馨提示","暂时无人员报名",false);
         }else if (selectScoreUnit==null||selectScoreUnit.equals("")){

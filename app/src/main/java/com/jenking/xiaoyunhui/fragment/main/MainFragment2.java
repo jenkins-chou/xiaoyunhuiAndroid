@@ -179,7 +179,7 @@ public class MainFragment2 extends Fragment implements ScoreContract{
                 if (resultModel.getData()!=null){
                     if (resultModel.getData().size()>3){
                         scoreDetailModels.clear();
-                        for (int i=0;i<resultModel.getData().size();i++){
+                        for (int i=0;i<3;i++){
                             scoreDetailModels.add((ScoreDetailModel) resultModel.getData().get(i));
                         }
                         baseRecyclerAdapter.setData(scoreDetailModels);
