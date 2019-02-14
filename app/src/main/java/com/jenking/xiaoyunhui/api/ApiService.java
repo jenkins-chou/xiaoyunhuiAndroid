@@ -37,6 +37,11 @@ public interface ApiService {
     @POST("user/login")
     Observable<ResultModel> template(@FieldMap Map<String, String> body);
 
+    //模板接口
+    @FormUrlEncoded
+    @POST("error/addError")
+    Observable<ResultModel> addError(@FieldMap Map<String, String> body);
+
     //登录接口
     @FormUrlEncoded
     @POST("user/login")

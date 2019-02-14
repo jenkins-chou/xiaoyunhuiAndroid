@@ -38,7 +38,6 @@ import butterknife.Unbinder;
 
 public class MainFragment1 extends Fragment implements MatchTypeContract {
     private Unbinder unbinder;
-
     private MatchTypePresenter matchTypePresenter;
     //https://github.com/H07000223/FlycoTabLayout/blob/master/README_CN.md
     @BindView(R.id.slidingTabLayout)
@@ -60,6 +59,8 @@ public class MainFragment1 extends Fragment implements MatchTypeContract {
 
     @OnClick(R.id.search_button)
     void search_button(){
+//        ResultModel resultModel = null;
+//        Log.e("",resultModel.toString());
         Intent intent = new Intent(getContext(),MatchSearchActivity.class);
         startActivity(intent);
     }
