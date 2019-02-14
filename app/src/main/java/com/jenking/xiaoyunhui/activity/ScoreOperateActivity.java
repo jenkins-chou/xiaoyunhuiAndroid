@@ -213,7 +213,7 @@ public class ScoreOperateActivity extends BaseActivity implements MatchContract,
 
                     @Override
                     public void afterTextChanged(Editable editable) {
-                        scoresMap.put(item.user_id,editable.toString());
+                        scoresMap.put(item.user_id,editable.toString()+"");
 //                        Log.d("user_id : "+item.user_id, "afterTextChanged: "+editable.toString());
                     }
                 });
