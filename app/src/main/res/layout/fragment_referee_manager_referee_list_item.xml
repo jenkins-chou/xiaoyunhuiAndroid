@@ -45,6 +45,7 @@
             android:layout_height="60dp">
 
             <TextView
+                android:visibility="gone"
                 android:id="@+id/item_show"
                 android:layout_width="80dp"
                 android:layout_height="60dp"

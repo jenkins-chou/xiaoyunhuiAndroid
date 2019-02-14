@@ -33,20 +33,36 @@
                 android:src="@mipmap/search_black" />
         </RelativeLayout>
 
-        <com.flyco.tablayout.SlidingTabLayout
-            android:id="@+id/slidingTabLayout"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="45dp"
-            android:background="#ffffff"
-            android:paddingLeft="5dp"
-            android:paddingRight="5dp"
-            tl:tl_divider_color="#EBA571"
-            tl:tl_indicator_color="@color/main_color"
-            tl:tl_textSelectColor="@color/white"
-            tl:tl_textUnselectColor="@color/baseFontColor2"
-            tl:tl_indicator_margin_left="2dp"
-            tl:tl_indicator_margin_right="2dp"
-            tl:tl_indicator_style="BLOCK"/>
+            android:layout_height="wrap_content">
+            <com.flyco.tablayout.SlidingTabLayout
+                android:id="@+id/slidingTabLayout"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:background="#ffffff"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                tl:tl_divider_color="#EBA571"
+                android:layout_toLeftOf="@+id/match_schedule"
+                tl:tl_indicator_color="@color/main_color"
+                tl:tl_textSelectColor="@color/white"
+                tl:tl_textUnselectColor="@color/baseFontColor2"
+                tl:tl_indicator_margin_left="2dp"
+                tl:tl_indicator_margin_right="2dp"
+                tl:tl_indicator_style="BLOCK"/>
+            <TextView
+                android:textColor="@color/main_color"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:id="@+id/match_schedule"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:text="赛程表"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
+
     </LinearLayout>
     <RelativeLayout
         android:layout_below="@+id/header"

@@ -179,6 +179,7 @@
         android:visibility="visible">
 
         <LinearLayout
+            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
@@ -246,26 +247,37 @@
         </LinearLayout>
     </LinearLayout>
 
-    <LinearLayout
-        android:gravity="right"
+    <RelativeLayout
+        android:visibility="gone"
         android:id="@+id/usertype_three"
+        android:background="@drawable/bg_round_shape"
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
         android:layout_marginBottom="15dp"
-        android:orientation="vertical"
+        android:padding="5dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <TextView
+            android:layout_marginLeft="10dp"
             android:id="@+id/match_schedule"
-            android:layout_width="100dp"
+            android:layout_width="wrap_content"
             android:layout_height="30dp"
-            android:background="@drawable/fragment_index_headerview_manager_bar1"
             android:gravity="center"
             android:text="查看赛程表"
-            android:textColor="@color/white"
+            android:textColor="@color/baseFontColor"
             android:textSize="14sp" />
-    </LinearLayout>
+
+        <TextView
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:gravity="center"
+            android:text="详情"
+            android:textColor="@color/main_color"
+            android:textSize="14sp" />
+    </RelativeLayout>
 
 
 </LinearLayout>

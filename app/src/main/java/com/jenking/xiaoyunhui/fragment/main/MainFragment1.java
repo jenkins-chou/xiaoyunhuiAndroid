@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.flyco.tablayout.SlidingTabLayout;
 import com.jenking.xiaoyunhui.R;
 import com.jenking.xiaoyunhui.activity.MatchManagerActivity;
+import com.jenking.xiaoyunhui.activity.MatchScheduleActivity;
 import com.jenking.xiaoyunhui.activity.MatchSearchActivity;
 import com.jenking.xiaoyunhui.api.RequestService;
 import com.jenking.xiaoyunhui.contacts.MatchTypeContract;
@@ -66,6 +67,12 @@ public class MainFragment1 extends Fragment implements MatchTypeContract {
     @OnClick({R.id.manager_in,R.id.manager_in_text})
     void manager_in(){
         Intent intent = new Intent(getContext(),MatchManagerActivity.class);
+        startActivity(intent);
+    }
+
+    @OnClick(R.id.match_schedule)
+    void match_schedule(){
+        Intent intent = new Intent(getContext(),MatchScheduleActivity.class);
         startActivity(intent);
     }
     

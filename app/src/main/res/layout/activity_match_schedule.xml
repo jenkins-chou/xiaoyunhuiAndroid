@@ -28,11 +28,68 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
     </RelativeLayout><!--header-->
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recyclerview"
-        android:layout_marginTop="10dp"
+    <HorizontalScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:background="@color/white"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_width="match_parent" android:layout_height="wrap_content">
+                <TextView
+                    android:text="比赛名称"
+                    android:textStyle="bold"
+                    android:id="@+id/match_name"
+                    android:layout_margin="10dp"
+                    android:layout_width="100dp"
+                    android:maxLength="6"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:text="状态"
+                    android:textStyle="bold"
+                    android:id="@+id/match_tag"
+                    android:gravity="center"
+                    android:layout_width="50dp"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:text="比赛时间"
+                    android:textStyle="bold"
+                    android:id="@+id/match_time"
+                    android:layout_margin="10dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:text="比赛地址"
+                    android:maxLength="10"
+                    android:textStyle="bold"
+                    android:id="@+id/match_address"
+                    android:layout_margin="10dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:text="操作"
+                    android:textStyle="bold"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="10dp"
+                    android:textColor="@color/main_color"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recyclerview"
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-    </android.support.v7.widget.RecyclerView>
+            </android.support.v7.widget.RecyclerView>
+        </LinearLayout>
+
+    </HorizontalScrollView>
+
 </LinearLayout>

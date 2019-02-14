@@ -12,6 +12,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
@@ -21,9 +23,11 @@ import com.jenking.xiaoyunhui.R;
 import com.jenking.xiaoyunhui.api.BaseAPI;
 import com.jenking.xiaoyunhui.api.RequestService;
 import com.jenking.xiaoyunhui.contacts.RefereeContract;
+import com.jenking.xiaoyunhui.dialog.CommonTipsDialog;
 import com.jenking.xiaoyunhui.models.base.RefereeModel;
 import com.jenking.xiaoyunhui.models.base.ResultModel;
 import com.jenking.xiaoyunhui.presenters.RefereePresenter;
+import com.jenking.xiaoyunhui.tools.AccountTool;
 import com.jenking.xiaoyunhui.tools.StringUtil;
 import com.scwang.smartrefresh.header.TaurusHeader;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -50,6 +54,8 @@ public class RefereeListFragment extends Fragment implements RefereeContract {
     @BindView(R.id.smartRefreshLayout)
     SmartRefreshLayout smartRefreshLayout;
 
+    private int passPosition = 0;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -71,6 +77,15 @@ public class RefereeListFragment extends Fragment implements RefereeContract {
                 RequestOptions requestOptions = new RequestOptions();
                 requestOptions.error(R.mipmap.avatar1);
                 Glide.with(context).load(BaseAPI.base_url+item.getUser_avatar()).apply(requestOptions).into(item_image);
+
+                TextView item_delete = helper.getView(R.id.item_delete);
+                item_delete.setTag(item.getReferee_id());
+                item_delete.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        showConfirmDialog((String) view.getTag());
+                    }
+                });
             }
         };
         baseRecyclerAdapter.openLoadAnimation(false);
@@ -86,6 +101,48 @@ public class RefereeListFragment extends Fragment implements RefereeContract {
         Map<String,String> params = RequestService.getBaseParams(context);
         params.put("referee_status","2");
         refereePresenter.getAllRefereeByStatus(params);
+    }
+
+    void showConfirmDialog(final String referee_id){
+        CommonTipsDialog.create(context,"温馨提示","确认要注销该裁判员吗？",false)
+                .setOnClickListener(new CommonTipsDialog.OnClickListener() {
+                    @Override
+                    public void cancel() {
+
+                    }
+
+                    @Override
+                    public void confirm() {
+                        updateRefereeApply(referee_id);
+                    }
+                }).show();;
+    }
+
+    void updateRefereeApply(String referee_id){
+        RefereeModel refereeModel = getRefereeItem(referee_id);
+        if (refereeModel!=null){
+            Map<String,String> params = RequestService.getBaseParams(context);
+            params.put("user_id",refereeModel.getUser_id());
+            params.put("referee_id",refereeModel.getReferee_id());
+            params.put("referee_status","1");
+            params.put("referee_del","delete");
+            params.put("referee_manager", AccountTool.getLoginUser(context).getUser_id());
+            refereePresenter.updateReferee(params);
+        }
+    }
+
+    RefereeModel getRefereeItem(String referee_id){
+        if (referee_id==null)return null;
+        RefereeModel refereeModel = null;
+        if (refereeModels!=null){
+            for (int i = 0;i<refereeModels.size();i++){
+                if (referee_id.equals(refereeModels.get(i).referee_id)){
+                    passPosition = i;
+                    refereeModel = refereeModels.get(i);
+                }
+            }
+        }
+        return refereeModel;
     }
 
     void initSmartRefreshLayout(){
@@ -119,7 +176,18 @@ public class RefereeListFragment extends Fragment implements RefereeContract {
 
     @Override
     public void updateRefereeResult(boolean isSuccess, Object object) {
-
+        if (isSuccess&&object!=null){
+            ResultModel resultModel = (ResultModel)object;
+            if (resultModel!=null&&resultModel.getStatus()!=null){
+                switch (resultModel.getStatus()){
+                    case "200":
+                        refereeModels.remove(passPosition);
+                        baseRecyclerAdapter.setData(refereeModels);
+                        Toast.makeText(context, "操作成功,请刷新", Toast.LENGTH_SHORT).show();
+                        break;
+                }
+            }
+        }
     }
 
     @Override

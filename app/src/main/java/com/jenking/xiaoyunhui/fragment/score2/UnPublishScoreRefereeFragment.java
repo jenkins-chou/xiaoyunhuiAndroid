@@ -49,7 +49,6 @@ public class UnPublishScoreRefereeFragment extends Fragment implements MatchCont
 
     private MatchPresenter matchPresenter;
 
-
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
     @BindView(R.id.empty_show)

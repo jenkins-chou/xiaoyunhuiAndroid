@@ -384,7 +384,7 @@
                 android:alpha="0.7"
                 android:background="@color/main_color"
                 android:textColor="@color/white"
-                android:text="名单管理"
+                android:text="比赛秩序表"
                 android:gravity="center"
                 android:padding="15dp"
                 android:layout_weight="1"

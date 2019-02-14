@@ -37,8 +37,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import javax.xml.transform.Result;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -84,7 +82,16 @@ public class RefereeApplyListFragment extends Fragment implements RefereeContrac
                 item_pass.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        showConfirmDialog((String) view.getTag());
+                        showPassConfirmDialog((String) view.getTag());
+                    }
+                });
+
+                TextView item_delete = helper.getView(R.id.item_delete);
+                item_delete.setTag(item.getReferee_id());
+                item_delete.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        showUnPassConfirmDialog((String) view.getTag());
                     }
                 });
             }
@@ -115,7 +122,7 @@ public class RefereeApplyListFragment extends Fragment implements RefereeContrac
         });
     }
 
-    void showConfirmDialog(final String referee_id){
+    void showPassConfirmDialog(final String referee_id){
         CommonTipsDialog.create(context,"温馨提示","确认要通过该申请吗？",false)
                 .setOnClickListener(new CommonTipsDialog.OnClickListener() {
                     @Override
@@ -125,18 +132,46 @@ public class RefereeApplyListFragment extends Fragment implements RefereeContrac
 
                     @Override
                     public void confirm() {
-                        updateRefereeApply(referee_id);
+                        passRefereeApply(referee_id);
+                    }
+                }).show();
+    }
+
+    void showUnPassConfirmDialog(final String referee_id){
+        CommonTipsDialog.create(context,"温馨提示","确认要忽略该申请吗？",false)
+                .setOnClickListener(new CommonTipsDialog.OnClickListener() {
+                    @Override
+                    public void cancel() {
+
+                    }
+
+                    @Override
+                    public void confirm() {
+                        unpassRefereeApply(referee_id);
                     }
                 }).show();;
     }
 
-    void updateRefereeApply(String referee_id){
+    void passRefereeApply(String referee_id){
         RefereeModel refereeModel = getRefereeItem(referee_id);
         if (refereeModel!=null){
             Map<String,String> params = RequestService.getBaseParams(context);
             params.put("user_id",refereeModel.getUser_id());
             params.put("referee_id",refereeModel.getReferee_id());
             params.put("referee_status","2");
+            params.put("referee_manager", AccountTool.getLoginUser(context).getUser_id());
+            refereePresenter.updateReferee(params);
+        }
+    }
+
+    void unpassRefereeApply(String referee_id){
+        RefereeModel refereeModel = getRefereeItem(referee_id);
+        if (refereeModel!=null){
+            Map<String,String> params = RequestService.getBaseParams(context);
+            params.put("user_id",refereeModel.getUser_id());
+            params.put("referee_id",refereeModel.getReferee_id());
+            params.put("referee_status","1");
+            params.put("referee_del","delete");
             params.put("referee_manager", AccountTool.getLoginUser(context).getUser_id());
             refereePresenter.updateReferee(params);
         }

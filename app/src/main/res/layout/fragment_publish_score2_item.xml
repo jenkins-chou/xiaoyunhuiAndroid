@@ -128,7 +128,7 @@
             android:layout_marginTop="10dp"
             android:background="@color/main_color"
             android:gravity="center"
-            android:text="去公布"
+            android:text=""
             android:textColor="#ffffff" />
 
     </LinearLayout>

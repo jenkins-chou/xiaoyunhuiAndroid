@@ -45,10 +45,11 @@
             android:layout_width="wrap_content"
             android:layout_height="60dp">
             <TextView
+                android:id="@+id/item_delete"
                 android:gravity="center"
-                android:text="查看"
+                android:text="忽略"
                 android:textColor="@color/white"
-                android:background="@color/main_color"
+                android:background="@color/colorAccent"
                 android:textSize="12sp"
                 android:layout_width="80dp"
                 android:layout_height="60dp" />

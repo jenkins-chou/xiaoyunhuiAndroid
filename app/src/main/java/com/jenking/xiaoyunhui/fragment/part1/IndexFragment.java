@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -62,6 +63,7 @@ public class IndexFragment extends Fragment implements MatchContract,UserMatchCo
     private LinearLayout mineMatch;//我的比赛项目
     private LinearLayout refereeMatch;//裁判员负责的项目
     private TextView match_schedule;//赛程表
+    private RelativeLayout usertype_three;
 
     private MatchPresenter matchPresenter;
     private UserMatchPresenter userMatchPresenter;
@@ -167,17 +169,15 @@ public class IndexFragment extends Fragment implements MatchContract,UserMatchCo
             }
         });
 
-        match_schedule = headerView.findViewById(R.id.match_schedule);
-        match_schedule.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(context,MatchScheduleActivity.class);
-                startActivity(intent);
-            }
-        });
-
+//        match_schedule = headerView.findViewById(R.id.match_schedule);
+//        match_schedule.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(context,MatchScheduleActivity.class);
+//                startActivity(intent);
+//            }
+//        });
         getData();
-
     }
 
     private String getMatchStatusTag(String match_status){
@@ -209,7 +209,7 @@ public class IndexFragment extends Fragment implements MatchContract,UserMatchCo
     private void refreshHeader(View headerView){
         LinearLayout usertype_one;
         LinearLayout usertype_two;
-        LinearLayout usertype_three;
+        RelativeLayout usertype_three;
         if (headerView!=null){
             usertype_one = headerView.findViewById(R.id.usertype_one);
             usertype_two = headerView.findViewById(R.id.usertype_two);
@@ -219,17 +219,17 @@ public class IndexFragment extends Fragment implements MatchContract,UserMatchCo
                     case "1":
                         usertype_one.setVisibility(View.VISIBLE);
                         usertype_two.setVisibility(View.GONE);
-                        usertype_three.setVisibility(View.GONE);
+//                        usertype_three.setVisibility(View.GONE);
                         break;
                     case "2":
                         usertype_one.setVisibility(View.GONE);
                         usertype_two.setVisibility(View.VISIBLE);
-                        usertype_three.setVisibility(View.GONE);
+//                        usertype_three.setVisibility(View.GONE);
                         break;
                     case "3":
                         usertype_one.setVisibility(View.GONE);
                         usertype_two.setVisibility(View.GONE);
-                        usertype_three.setVisibility(View.VISIBLE);
+//                        usertype_three.setVisibility(View.VISIBLE);
                         break;
                     default:break;//视作未登录
                 }

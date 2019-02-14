@@ -21,6 +21,7 @@ import com.bumptech.glide.request.RequestOptions;
 import com.github.library.BaseRecyclerAdapter;
 import com.github.library.BaseViewHolder;
 import com.jenking.xiaoyunhui.R;
+import com.jenking.xiaoyunhui.activity.ScoreManagerActivity;
 import com.jenking.xiaoyunhui.activity.ScoreRankingListActivity;
 import com.jenking.xiaoyunhui.activity.ScoreRefereeActivity;
 import com.jenking.xiaoyunhui.activity.ScoreSearchActivity;
@@ -72,6 +73,12 @@ public class MainFragment2 extends Fragment implements ScoreContract{
     @OnClick(R.id.score_referee)
     void scoreReferee(){
         Intent intent = new Intent(getContext(),ScoreRefereeActivity.class);
+        startActivity(intent);
+    }
+
+    @OnClick(R.id.score_manager)
+    void score_manager(){
+        Intent intent = new Intent(getContext(),ScoreManagerActivity.class);
         startActivity(intent);
     }
 

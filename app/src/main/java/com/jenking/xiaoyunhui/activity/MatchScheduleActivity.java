@@ -1,12 +1,15 @@
 package com.jenking.xiaoyunhui.activity;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.view.View;
 
 import com.github.library.BaseRecyclerAdapter;
 import com.github.library.BaseViewHolder;
+import com.github.library.listener.OnRecyclerItemClickListener;
 import com.jenking.xiaoyunhui.R;
 import com.jenking.xiaoyunhui.api.RequestService;
 import com.jenking.xiaoyunhui.contacts.MatchContract;
@@ -54,9 +57,20 @@ public class MatchScheduleActivity extends BaseActivity implements MatchContract
             protected void convert(BaseViewHolder helper, MatchModel item) {
                 helper.setText(R.id.match_name,item.getMatch_title());
                 helper.setText(R.id.match_tag,getMatchStatusTag(item.getMatch_status()));
-                helper.setText(R.id.match_time,"比赛时间:"+StringUtil.getStrTime(item.getMatch_time(),"yyyy-MM-dd HH:mm"));
+                helper.setText(R.id.match_time,""+StringUtil.getStrTime(item.getMatch_time(),"yyyy-MM-dd HH:mm"));
+                helper.setText(R.id.match_address,item.getMatch_address());
             }
         };
+
+        baseRecyclerAdapter.setOnRecyclerItemClickListener(new OnRecyclerItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                Intent intent = new Intent(context,MatchDetailActivity.class);
+                intent.putExtra("match_id",modelList.get(position).getMatch_id());
+                intent.putExtra("justShowDetail","true");
+                startActivity(intent);
+            }
+        });
 
         baseRecyclerAdapter.openLoadAnimation(false);
         recyclerView.setLayoutManager(new StaggeredGridLayoutManager(1,1));
