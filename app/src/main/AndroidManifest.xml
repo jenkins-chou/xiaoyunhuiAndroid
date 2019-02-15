@@ -50,7 +50,8 @@
         <activity android:name=".activity.MatchManagerActivity" />
         <activity android:name=".activity.ScoreStudentActivity" />
         <activity android:name=".activity.ScoreRefereeActivity" />
-        <activity android:name=".activity.ScoreOperateActivity" />
+        <activity android:name=".activity.ScoreOperateActivity"
+            android:windowSoftInputMode="adjustPan"/>
         <activity android:name=".activity.MineMatchActivity" />
         <activity android:name=".activity.TeamDetailActivity" />
         <activity android:name=".activity.SignInActivity">
