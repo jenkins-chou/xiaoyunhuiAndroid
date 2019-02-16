@@ -54,6 +54,7 @@ public class MatchNameListActivity extends BaseActivity implements UserMatchCont
 
 
     private String match_id;
+    private String match_status;
 
     String Letters[] = new String[]{"A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"};
 
@@ -90,6 +91,10 @@ public class MatchNameListActivity extends BaseActivity implements UserMatchCont
 
     @OnClick(R.id.save)
     void save(){
+        if (!StringUtil.isEquals(match_status,"1")){
+            CommonTipsDialog.showTip(this,"温馨提示","当前比赛已经过了报名期，故不能更改报名名单",false);
+            return;
+        }
         if (datas!=null&&datas.size()>0){
             String sql = "replace into user_match (user_match_id,user_id,match_id,user_match_del,user_match_status,score_id,user_group,user_order) values";
             for (int i = 0;i<datas.size();i++){
@@ -170,7 +175,8 @@ public class MatchNameListActivity extends BaseActivity implements UserMatchCont
                 });
 
                 if (AccountTool.isLogin(MatchNameListActivity.this)) {
-                    if (AccountTool.getUserType(MatchNameListActivity.this).equals(Const.User_type_manager)) {
+                    if (AccountTool.getUserType(MatchNameListActivity.this).equals(Const.User_type_manager)
+                            ||AccountTool.getUserType(MatchNameListActivity.this).equals(Const.User_type_referee)) {
                         groupSpinner.setEnabled(true);
                     }else{
                         groupSpinner.setEnabled(false);
@@ -193,6 +199,7 @@ public class MatchNameListActivity extends BaseActivity implements UserMatchCont
         Intent intent = getIntent();
         if (intent!=null){
             match_id = intent.getStringExtra("match_id");
+            match_status = intent.getStringExtra("match_status");
             params.put("match_id",match_id);
         }
         userMatchPresenter.getUserMatchDetailByMatchId(params);
@@ -203,7 +210,8 @@ public class MatchNameListActivity extends BaseActivity implements UserMatchCont
         super.initView();
 
         if (AccountTool.isLogin(this)){
-            if (AccountTool.getUserType(this).equals(Const.User_type_manager)){
+            if (AccountTool.getUserType(this).equals(Const.User_type_manager)
+                    ||AccountTool.getUserType(this).equals(Const.User_type_referee)){
                 footer.setVisibility(View.VISIBLE);
             }else{
                 footer.setVisibility(View.GONE);

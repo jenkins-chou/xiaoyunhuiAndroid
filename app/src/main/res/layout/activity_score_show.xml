@@ -7,6 +7,7 @@
     android:background="@color/baseLayoutColor"
     tools:context=".activity.MatchDetailActivity">
     <ScrollView
+        android:layout_above="@+id/footer"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <LinearLayout
@@ -208,6 +209,17 @@
             </LinearLayout>
         </LinearLayout>
     </ScrollView>
+
+    <TextView
+        android:id="@+id/footer"
+        android:layout_alignParentBottom="true"
+        android:textColor="@color/white"
+        android:padding="12dp"
+        android:gravity="center"
+        android:text="生成成绩excel表格"
+        android:background="@color/main_color"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
     <com.jenking.xiaoyunhui.customui.CommonLoading
         android:id="@+id/loading"

@@ -123,6 +123,11 @@ public class ScoreRankingListActivity extends BaseActivity implements ScoreContr
     }
 
     @Override
+    public void getAllScoreIntegral(boolean isSuccess, Object object) {
+
+    }
+
+    @Override
     public void success(Object object) {
 
     }

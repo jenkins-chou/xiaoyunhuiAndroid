@@ -44,6 +44,21 @@
             android:hint="请输入成绩"
             android:padding="10dp" />
 
+        <EditText
+            android:id="@+id/input_integral"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:background="@drawable/activity_add_class_edittext"
+            android:hint="请输入得分"
+            android:padding="10dp" />
+        <TextView
+            android:id="@+id/score_unit"
+            android:text="成绩单位"
+            android:layout_margin="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
         <TextView
             android:id="@+id/submit_score"
             android:layout_width="match_parent"

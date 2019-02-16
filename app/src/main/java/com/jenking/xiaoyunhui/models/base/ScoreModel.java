@@ -12,6 +12,7 @@ public class ScoreModel {
     public String score_publish_time;
     public String score_del;
     public String score_unit;
+    public String score_integral;
 
     public String match_title;
 
@@ -103,6 +104,14 @@ public class ScoreModel {
         this.score_unit = score_unit;
     }
 
+    public String getScore_integral() {
+        return score_integral;
+    }
+
+    public void setScore_integral(String score_integral) {
+        this.score_integral = score_integral;
+    }
+
     public String getMatch_title() {
         return match_title;
     }
@@ -125,6 +134,7 @@ public class ScoreModel {
                 ", score_publish_time='" + score_publish_time + '\'' +
                 ", score_del='" + score_del + '\'' +
                 ", score_unit='" + score_unit + '\'' +
+                ", score_integral='" + score_integral + '\'' +
                 ", match_title='" + match_title + '\'' +
                 '}';
     }

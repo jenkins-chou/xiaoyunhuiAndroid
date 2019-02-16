@@ -55,6 +55,13 @@ public class ScoreUpdateActivity extends BaseActivity implements ScoreContract{
     @BindView(R.id.input_score)
     EditText input_score;
 
+    @BindView(R.id.input_integral)
+    EditText input_integral;
+
+    @BindView(R.id.score_unit)
+    TextView score_unit;
+
+
     @OnClick(R.id.back)
     void back(){
         finish();
@@ -63,11 +70,13 @@ public class ScoreUpdateActivity extends BaseActivity implements ScoreContract{
     @OnClick(R.id.submit_score)
     void submit_score(){
         String input_score_str = input_score.getText().toString();
-        if (StringUtil.isNotEmpty(input_score_str)){
+        String input_integral_str = input_integral.getText().toString();
+        if (StringUtil.isNotEmpty(input_score_str)&&StringUtil.isNotEmpty(input_integral_str)){
             if (scoreDetailModel!=null&&StringUtil.isNotEmpty(scoreDetailModel.getScore_id())&&scorePresenter!=null){
                 Map<String,String> params = RequestService.getBaseParams(this);
                 params.put("score_id",scoreDetailModel.getScore_id());
                 params.put("score_value",input_score_str);
+                params.put("score_integral",input_integral_str);
                 Log.e("params",params.toString());
                 scorePresenter.updateScore(params);
             }else{
@@ -93,6 +102,11 @@ public class ScoreUpdateActivity extends BaseActivity implements ScoreContract{
             String json = intent.getStringExtra("data");
             if (json!=null&&!json.equals("")){
                 scoreDetailModel = new Gson().fromJson(json,ScoreDetailModel.class);
+                if (scoreDetailModel!=null){
+                    input_score.setText(scoreDetailModel.getScore_value());
+                    input_integral.setText(scoreDetailModel.getScore_integral());
+                    score_unit.setText("成绩单位:"+scoreDetailModel.getScore_unit());
+                }
             }
         }
         scorePresenter = new ScorePresenter(this,this);
@@ -129,6 +143,11 @@ public class ScoreUpdateActivity extends BaseActivity implements ScoreContract{
             Toast.makeText(this, "修改成功", Toast.LENGTH_SHORT).show();
             finish();
         }
+    }
+
+    @Override
+    public void getAllScoreIntegral(boolean isSuccess, Object object) {
+
     }
 
     @Override

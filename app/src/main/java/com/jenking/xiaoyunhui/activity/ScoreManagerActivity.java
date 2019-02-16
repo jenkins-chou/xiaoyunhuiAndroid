@@ -1,14 +1,21 @@
 package com.jenking.xiaoyunhui.activity;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Build;
+import android.os.Environment;
 import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.github.library.BaseRecyclerAdapter;
 import com.github.library.BaseViewHolder;
@@ -16,18 +23,24 @@ import com.github.library.listener.OnRecyclerItemClickListener;
 import com.jenking.xiaoyunhui.R;
 import com.jenking.xiaoyunhui.api.RequestService;
 import com.jenking.xiaoyunhui.contacts.MatchContract;
+import com.jenking.xiaoyunhui.contacts.ScoreContract;
 import com.jenking.xiaoyunhui.dialog.CommonTipsDialog;
 import com.jenking.xiaoyunhui.models.base.MatchModel;
 import com.jenking.xiaoyunhui.models.base.ResultModel;
+import com.jenking.xiaoyunhui.models.main.scoreForExcel.AllScoreIntegral;
+import com.jenking.xiaoyunhui.models.main.scoreForExcel.ScoreExcelModel;
 import com.jenking.xiaoyunhui.presenters.MatchPresenter;
+import com.jenking.xiaoyunhui.presenters.ScorePresenter;
 import com.jenking.xiaoyunhui.tools.AccountTool;
 import com.jenking.xiaoyunhui.tools.Const;
+import com.jenking.xiaoyunhui.tools.ExcelTools;
 import com.jenking.xiaoyunhui.tools.StringUtil;
 import com.scwang.smartrefresh.header.TaurusHeader;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -36,7 +49,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 
-public class ScoreManagerActivity extends BaseActivity implements MatchContract {
+public class ScoreManagerActivity extends BaseActivity implements MatchContract,ScoreContract {
 
     @OnClick(R.id.back)
     void back(){
@@ -49,6 +62,7 @@ public class ScoreManagerActivity extends BaseActivity implements MatchContract 
     private List<MatchModel> datas;
 
     private MatchPresenter matchPresenter;
+    private ScorePresenter scorePresenter;
 
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
@@ -57,6 +71,28 @@ public class ScoreManagerActivity extends BaseActivity implements MatchContract 
     @BindView(R.id.smartRefreshLayout)
     SmartRefreshLayout smartRefreshLayout;
 
+    private static String[] PERMISSIONS_STORAGE = {
+            Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE};
+
+    private int REQUEST_PERMISSION_CODE = 1001;
+
+
+    @OnClick(R.id.output_score)
+    void output_score(){
+
+        if (scorePresenter!=null){
+            if (Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP) {
+                if (ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions(this, PERMISSIONS_STORAGE, REQUEST_PERMISSION_CODE);
+                }else{
+                    scorePresenter.getAllScoreIntegral(RequestService.getBaseParams(this));
+                }
+            }else{
+                scorePresenter.getAllScoreIntegral(RequestService.getBaseParams(this));
+            }
+        }
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -132,6 +168,7 @@ public class ScoreManagerActivity extends BaseActivity implements MatchContract 
         });
 
         matchPresenter = new MatchPresenter(context,this);
+        scorePresenter = new ScorePresenter(context,this);
         getData();
     }
 
@@ -194,6 +231,16 @@ public class ScoreManagerActivity extends BaseActivity implements MatchContract 
             empty_show.setVisibility(View.VISIBLE);
         }else{
             empty_show.setVisibility(View.GONE);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode==REQUEST_PERMISSION_CODE){
+            if (grantResults[0]==PackageManager.PERMISSION_GRANTED){
+                Toast.makeText(this, "获取权限成功，请重新保存", Toast.LENGTH_LONG).show();
+            }
         }
     }
 
@@ -261,5 +308,69 @@ public class ScoreManagerActivity extends BaseActivity implements MatchContract 
     @Override
     public void failed(Object object) {
 
+    }
+
+    @Override
+    public void getScoreListByUserIdResult(boolean isSuccess, Object object) {
+
+    }
+
+    @Override
+    public void getScoreListByMatchIdResult(boolean isSuccess, Object object) {
+
+    }
+
+    @Override
+    public void getScorePublishListByUserIdResult(boolean isSuccess, Object object) {
+
+    }
+
+    @Override
+    public void getAllScoreList(boolean isSuccess, Object object) {
+
+    }
+
+    @Override
+    public void addScoresResult(boolean isSuccess, Object object) {
+
+    }
+
+    @Override
+    public void updateScoreResult(boolean isSuccess, Object object) {
+
+    }
+
+    @Override
+    public void getAllScoreIntegral(boolean isSuccess, Object object) {
+        if (checkResultModel(isSuccess,object)){
+//            Toast.makeText(this, "获取成功", Toast.LENGTH_SHORT).show();
+            Log.e("result",object.toString());
+
+            List<AllScoreIntegral> list = new ArrayList<>();
+            ResultModel resultModel = (ResultModel)object;
+            if (resultModel!=null){
+                list = resultModel.getData();
+                if (list!=null){
+                    saveExcel(list);
+                }
+            }
+        }else {
+            Toast.makeText(this, "系统无数据", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    void saveExcel(List datas){
+            String path = Environment.getExternalStorageDirectory().getPath()+"/校运会";
+            File file = new File(path);
+            //文件夹是否已经存在
+            if (!file.exists()) {
+                file.mkdirs();
+            }
+            String[] title = {"比赛名称", "比赛时间", "比赛地点", "团队名称", "参赛者名称","参赛者成绩","成绩单位","得分"};
+            String fileName = file.toString() + "/" + "全部成绩.xls";
+            ExcelTools.initExcel(fileName, title);
+            ExcelTools.writeObjListToExcel(datas, fileName, this);
+            CommonTipsDialog.showTip(this,"温馨提示","导出excel成功\n文件位置：文件根目录/校运会/全部成绩.xls",false);
+//            Toast.makeText(this, "导出Excel成功", Toast.LENGTH_LONG).show();
     }
 }

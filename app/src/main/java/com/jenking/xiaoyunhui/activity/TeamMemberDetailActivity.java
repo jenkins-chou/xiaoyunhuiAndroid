@@ -91,19 +91,29 @@ public class TeamMemberDetailActivity extends BaseActivity implements UserContra
 
 
         datas = new ArrayList<>();
-        baseRecyclerAdapter = new BaseRecyclerAdapter<MatchModel>(context,datas,R.layout.activity_mine_match_item) {
+        baseRecyclerAdapter = new BaseRecyclerAdapter<MatchModel>(context,datas,R.layout.activity_team_member_detail_match_item) {
 
             @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
             @Override
-            protected void convert(BaseViewHolder helper, MatchModel item) {
+            protected void convert(BaseViewHolder helper, final MatchModel item) {
                 helper.setText(R.id.item_title,item.getMatch_title());
                 helper.setText(R.id.item_address,"比赛地点:"+item.getMatch_address());
-                helper.setText(R.id.item_time,"比赛时间:"+ StringUtil.getStrTime(item.getMatch_time(),"yyyy年MM月dd日 HH时mm分ss秒"));
+                helper.setText(R.id.item_time,"比赛时间:"+ StringUtil.getStrTime(item.getMatch_time(),"yyyy年MM月dd日"));
 
                 ImageView item_image = helper.getView(R.id.item_img);
                 if (!isDestroyed()){
                     Glide.with(context).load(BaseAPI.base_url+item.getMatch_img()).into(item_image);
                 }
+
+                TextView see_score = helper.getView(R.id.see_score);
+                see_score.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(context,ScoreShowActivity.class);
+                        intent.putExtra("match_id",item.getMatch_id());
+                        startActivity(intent);
+                    }
+                });
 
             }
         };

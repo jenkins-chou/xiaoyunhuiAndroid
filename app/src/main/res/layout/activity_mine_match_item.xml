@@ -65,20 +65,26 @@
                 android:textColor="@color/baseFontColor"
                 android:textSize="13sp"
                 android:textStyle="bold" />
-            <TextView
-                android:background="@drawable/fragment_part1_template_item_button"
+            <LinearLayout
                 android:layout_alignParentRight="true"
-                android:text="查看详情"
-                android:textSize="12sp"
-                android:textColor="@color/white"
-                android:paddingRight="10dp"
-                android:paddingLeft="10dp"
-                android:paddingTop="3dp"
-                android:paddingBottom="3dp"
-                android:layout_marginBottom="15dp"
-                android:layout_marginRight="15dp"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/see_score"
+                    android:background="@drawable/fragment_part1_template_item_button"
+                    android:text="查看详情"
+                    android:textSize="12sp"
+                    android:textColor="@color/white"
+                    android:paddingRight="10dp"
+                    android:paddingLeft="10dp"
+                    android:paddingTop="3dp"
+                    android:paddingBottom="3dp"
+                    android:layout_marginBottom="15dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
         </RelativeLayout>
     </LinearLayout>
 

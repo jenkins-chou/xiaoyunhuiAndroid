@@ -11,6 +11,7 @@ import com.jenking.xiaoyunhui.models.base.MatchModel;
 import com.jenking.xiaoyunhui.models.base.ResultModel;
 import com.jenking.xiaoyunhui.models.base.ScoreDetailModel;
 import com.jenking.xiaoyunhui.models.base.ScoreModel;
+import com.jenking.xiaoyunhui.models.main.scoreForExcel.AllScoreIntegral;
 
 import java.util.Map;
 
@@ -244,6 +245,43 @@ public class ScorePresenter {
                         e.printStackTrace();
                         ScoreContract scoreContract = (ScoreContract)view;
                         scoreContract.updateScoreResult(false,e);
+                        //view.failed(e);
+                    }
+                    @Override
+                    public void onComplete() {
+                    }
+                });
+    }
+
+    ///获取所有成绩用于打印
+    public void getAllScoreIntegral(Map<String,String> params){
+        if (params==null)return;
+        Log.e("开始请求","p-->"+params.toString());
+        new ApiUtil(context)
+                .getServer(ApiService.class)
+                //记得更改请求接口数据
+                .getAllScoreIntegral(params)
+                .subscribeOn(Schedulers.io())//后台处理线程
+                .observeOn(AndroidSchedulers.mainThread())//指定回调发生的线程
+                .subscribe(new Observer<ResultModel<AllScoreIntegral>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                        System.out.print(d);
+                    }
+
+                    @Override
+                    public void onNext(ResultModel<AllScoreIntegral> resultModel) {
+                        //更新视图
+                        ScoreContract scoreContract = (ScoreContract)view;
+                        scoreContract.getAllScoreIntegral(true,resultModel);
+                        //view.success(resultModel);
+                    }
+                    @Override
+                    public void onError(Throwable e) {
+                        System.out.print("----error");
+                        e.printStackTrace();
+                        ScoreContract scoreContract = (ScoreContract)view;
+                        scoreContract.getAllScoreIntegral(false,e);
                         //view.failed(e);
                     }
                     @Override

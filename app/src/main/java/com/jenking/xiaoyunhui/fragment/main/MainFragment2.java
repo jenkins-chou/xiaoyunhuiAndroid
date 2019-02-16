@@ -212,6 +212,11 @@ public class MainFragment2 extends Fragment implements ScoreContract{
     }
 
     @Override
+    public void getAllScoreIntegral(boolean isSuccess, Object object) {
+
+    }
+
+    @Override
     public void success(Object object) {
 
     }

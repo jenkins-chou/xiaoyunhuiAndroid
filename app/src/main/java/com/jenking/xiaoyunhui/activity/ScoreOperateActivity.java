@@ -62,6 +62,7 @@ public class ScoreOperateActivity extends BaseActivity implements MatchContract,
     private MatchDetailModel matchDetailModel;
 
     private Map<String,String> scoresMap;
+    private Map<String,String> scoreIntegralMap;
 
     private String selectScoreUnit;
 
@@ -132,13 +133,19 @@ public class ScoreOperateActivity extends BaseActivity implements MatchContract,
         }
         else{
             for (int i = 0;i<userModels.size();i++){
-                String value = scoresMap.get(userModels.get(i).getUser_id());
-                if (value==null||value.equals("")){
+                String scoreValue = scoresMap.get(userModels.get(i).getUser_id());
+                String scoreIntegral = scoreIntegralMap.get(userModels.get(i).getUser_id());
+                if (scoreValue==null||scoreValue.equals("")){
                     Toast.makeText(this, "请确认填写全部成绩", Toast.LENGTH_SHORT).show();
                     return;
+                }else{
+                    if (scoreIntegral==null||scoreIntegral.equals("")){
+                        Toast.makeText(this, "请确认填写全部得分", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
                 }
             }
-            String sql = "insert into score(user_id,match_id,referee_id,score_value,score_create_time,score_publish_time,score_del,score_unit) values ";
+            String sql = "insert into score(user_id,match_id,referee_id,score_value,score_create_time,score_publish_time,score_del,score_unit,score_integral) values ";
             for (int j = 0;j<userModels.size();j++){
                 if (j==userModels.size()-1){
                     String partSql = "('"
@@ -149,7 +156,8 @@ public class ScoreOperateActivity extends BaseActivity implements MatchContract,
                             +StringUtil.getTime()+"','"
                             +StringUtil.getTime()+"','"
                             +"normal','"
-                            +selectScoreUnit+"');";
+                            +selectScoreUnit+"',"
+                            +scoreIntegralMap.get(userModels.get(j).getUser_id())+");";
                     sql += partSql;
                 }else{
                     String partSql = "('"
@@ -160,7 +168,8 @@ public class ScoreOperateActivity extends BaseActivity implements MatchContract,
                             +StringUtil.getTime()+"','"
                             +StringUtil.getTime()+"','"
                             +"normal','"
-                            +selectScoreUnit+"'),";
+                            +selectScoreUnit+"',"
+                            +scoreIntegralMap.get(userModels.get(j).getUser_id())+"),";
                     sql += partSql;
                 }
                 Log.e("partSql",sql);
@@ -187,6 +196,7 @@ public class ScoreOperateActivity extends BaseActivity implements MatchContract,
     public void initData(){
         userModels = new ArrayList<>();
         scoresMap = new HashMap<>();
+        scoreIntegralMap = new HashMap<>();
         baseRecyclerAdapter = new BaseRecyclerAdapter<UserMatchModel>(this,userModels,R.layout.activity_score_operate_item) {
             @Override
             protected void convert(com.github.library.BaseViewHolder helper, final UserMatchModel item) {
@@ -214,6 +224,24 @@ public class ScoreOperateActivity extends BaseActivity implements MatchContract,
                     public void afterTextChanged(Editable editable) {
                         scoresMap.put(item.user_id,editable.toString()+"");
 //                        Log.d("user_id : "+item.user_id, "afterTextChanged: "+editable.toString());
+                    }
+                });
+
+                final EditText editText_integral = helper.getView(R.id.item_integral);
+                editText_integral.addTextChangedListener(new TextWatcher() {
+                    @Override
+                    public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                    }
+
+                    @Override
+                    public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                    }
+
+                    @Override
+                    public void afterTextChanged(Editable editable) {
+                        scoreIntegralMap.put(item.user_id,editable.toString()+"");
                     }
                 });
             }
@@ -434,6 +462,11 @@ public class ScoreOperateActivity extends BaseActivity implements MatchContract,
 
     @Override
     public void updateScoreResult(boolean isSuccess, Object object) {
+
+    }
+
+    @Override
+    public void getAllScoreIntegral(boolean isSuccess, Object object) {
 
     }
 }

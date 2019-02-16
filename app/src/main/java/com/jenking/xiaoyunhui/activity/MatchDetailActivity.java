@@ -181,6 +181,9 @@ public class MatchDetailActivity extends BaseActivity implements MatchContract {
     void footer3(){
         Intent intent = new Intent(this,MatchNameListActivity.class);
         intent.putExtra("match_id",match_id);
+        if (matchDetailModel!=null){
+            intent.putExtra("match_status",matchDetailModel.getMatch_status());
+        }
         startActivity(intent);
     }
 

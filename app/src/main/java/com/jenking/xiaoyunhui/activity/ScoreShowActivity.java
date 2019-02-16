@@ -1,8 +1,13 @@
 package com.jenking.xiaoyunhui.activity;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Build;
+import android.os.Environment;
+import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
@@ -30,16 +35,20 @@ import com.jenking.xiaoyunhui.customui.CommonLoading;
 import com.jenking.xiaoyunhui.dialog.CommonBottomListDialog;
 import com.jenking.xiaoyunhui.dialog.CommonTipsDialog;
 import com.jenking.xiaoyunhui.models.base.MatchDetailModel;
+import com.jenking.xiaoyunhui.models.base.ProjectBean;
 import com.jenking.xiaoyunhui.models.base.ResultModel;
 import com.jenking.xiaoyunhui.models.base.ScoreDetailModel;
 import com.jenking.xiaoyunhui.models.base.UserModel;
+import com.jenking.xiaoyunhui.models.main.scoreForExcel.ScoreExcelModel;
 import com.jenking.xiaoyunhui.presenters.MatchPresenter;
 import com.jenking.xiaoyunhui.presenters.ScorePresenter;
 import com.jenking.xiaoyunhui.presenters.UserMatchPresenter;
 import com.jenking.xiaoyunhui.tools.AccountTool;
 import com.jenking.xiaoyunhui.tools.Const;
+import com.jenking.xiaoyunhui.tools.ExcelTools;
 import com.jenking.xiaoyunhui.tools.StringUtil;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -91,6 +100,7 @@ public class ScoreShowActivity extends BaseActivity implements MatchContract,Use
     @BindView(R.id.modify_score)
     TextView modify_score;
 
+
     @OnClick(R.id.modify_score)
     void modify_score(){
         Intent intent = new Intent(this,ScoreOperateActivity.class);
@@ -98,10 +108,75 @@ public class ScoreShowActivity extends BaseActivity implements MatchContract,Use
         startActivity(intent);
     }
 
+
+    @OnClick(R.id.footer)
+    void footer(){
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP) {
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(this, PERMISSIONS_STORAGE, REQUEST_PERMISSION_CODE);
+            }else{
+                saveExcel();
+            }
+        }else{
+            saveExcel();
+        }
+    }
+
+    void saveExcel(){
+        List<ScoreExcelModel> list = new ArrayList<>();
+        if (matchDetailModel!=null&&scoreDetailModels!=null){
+            for (int i = 0;i<scoreDetailModels.size();i++){
+                ScoreExcelModel scoreExcelModel = new ScoreExcelModel();
+                scoreExcelModel.setMatch_title(matchDetailModel.getMatch_title());
+                scoreExcelModel.setMatch_time(StringUtil.getStrTime(matchDetailModel.getMatch_time(),"yyyy-MM-dd HH:mm:ss"));
+                scoreExcelModel.setMatch_address(matchDetailModel.getMatch_address());
+                scoreExcelModel.setMatch_abstract(matchDetailModel.getMatch_abstract());
+                scoreExcelModel.setMatch_detail(matchDetailModel.getMatch_detail());
+                scoreExcelModel.setUser_name(scoreDetailModels.get(i).getUser_name());
+                scoreExcelModel.setScore_value(scoreDetailModels.get(i).getScore_value());
+                scoreExcelModel.setScore_unit(scoreDetailModels.get(i).getScore_unit());
+                scoreExcelModel.setScore_integral(scoreDetailModels.get(i).getScore_integral());
+                list.add(scoreExcelModel);
+            }
+
+            String path = Environment.getExternalStorageDirectory().getPath()+"/校运会";
+            File file = new File(path);
+            //文件夹是否已经存在
+            if (!file.exists()) {
+                file.mkdirs();
+            }
+
+            String[] title = {"比赛名称", "比赛时间", "比赛地点", "比赛简介", "比赛说明","参赛者","参赛者成绩","成绩单位","得分"};
+            String fileName = file.toString() + "/" + matchDetailModel.getMatch_title()+".xls";
+            ExcelTools.initExcel(fileName, title);
+            ExcelTools.writeObjListToExcel(list, fileName, this);
+            CommonTipsDialog.showTip(this,"温馨提示","导出excel成功\n文件位置：文件根目录/校运会/比赛名称.xls",false);
+//            Toast.makeText(this, "导出Excel成功", Toast.LENGTH_LONG).show();
+        }else{
+            Log.e("matchDetailModel","null");
+        }
+    }
+
+    private static String[] PERMISSIONS_STORAGE = {
+            Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE};
+
+    private int REQUEST_PERMISSION_CODE = 1001;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_score_show);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode==REQUEST_PERMISSION_CODE){
+            if (grantResults[0]==PackageManager.PERMISSION_GRANTED){
+                saveExcel();
+            }
+        }
     }
 
     @Override
@@ -117,7 +192,8 @@ public class ScoreShowActivity extends BaseActivity implements MatchContract,Use
                 Glide.with(ScoreShowActivity.this).load(BaseAPI.base_url+item.getUser_avatar()).apply(requestOptions).into(imageView);
                 helper.setText(R.id.item_name,item.getUser_name());
 
-                helper.setText(R.id.score_value,item.getScore_value());
+                helper.setText(R.id.score_integral,"得分:"+item.getScore_integral());
+                helper.setText(R.id.score_value,"成绩:"+item.getScore_value());
                 helper.setText(R.id.score_unit,item.getScore_unit());
 
                 TextView score_update = helper.getView(R.id.score_update);
@@ -147,7 +223,6 @@ public class ScoreShowActivity extends BaseActivity implements MatchContract,Use
         recyclerView.setAdapter(baseRecyclerAdapter);
         matchPresenter = new MatchPresenter(context,this);
         scorePresenter = new ScorePresenter(context,this);
-
     }
 
     @Override
@@ -364,6 +439,11 @@ public class ScoreShowActivity extends BaseActivity implements MatchContract,Use
 
     @Override
     public void updateScoreResult(boolean isSuccess, Object object) {
+
+    }
+
+    @Override
+    public void getAllScoreIntegral(boolean isSuccess, Object object) {
 
     }
 }

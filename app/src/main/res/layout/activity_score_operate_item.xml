@@ -26,19 +26,38 @@
         android:layout_centerVertical="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
-
-    <EditText
-        android:id="@+id/item_edittext"
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
+    <LinearLayout
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
         android:layout_marginRight="15dp"
-        android:background="@drawable/activity_userinfo_edittext"
-        android:gravity="right"
-        android:hint="请输入成绩"
-        android:padding="5dp"
-        android:textSize="18sp"
-        android:textStyle="bold" />
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <EditText
+            android:id="@+id/item_integral"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="5dp"
+            android:inputType="number"
+            android:background="@drawable/activity_userinfo_edittext"
+            android:gravity="right"
+            android:hint="得分"
+            android:maxLength="2"
+            android:padding="5dp"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+        <EditText
+            android:id="@+id/item_edittext"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:maxLength="3"
+            android:background="@drawable/activity_userinfo_edittext"
+            android:gravity="right"
+            android:hint="请输入成绩"
+            android:padding="5dp"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
 </RelativeLayout>
 </LinearLayout>

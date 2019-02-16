@@ -7,4 +7,6 @@ public interface ScoreContract extends BaseCallBack{
     void getAllScoreList(boolean isSuccess, Object object);//
     void addScoresResult(boolean isSuccess, Object object);//批量添加成绩
     void updateScoreResult(boolean isSuccess, Object object);//修改单项成绩
+
+    void getAllScoreIntegral(boolean isSuccess, Object object);//获取所有成绩用于打印
 }

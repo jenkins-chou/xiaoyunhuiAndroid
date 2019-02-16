@@ -13,6 +13,7 @@ import com.jenking.xiaoyunhui.models.base.TeamDetailModel;
 import com.jenking.xiaoyunhui.models.base.TeamModel;
 import com.jenking.xiaoyunhui.models.base.UserMatchModel;
 import com.jenking.xiaoyunhui.models.base.UserModel;
+import com.jenking.xiaoyunhui.models.main.scoreForExcel.AllScoreIntegral;
 
 import java.util.Map;
 
@@ -219,6 +220,10 @@ public interface ApiService {
     @FormUrlEncoded
     @POST("score/updateScore")
     Observable<ResultModel> updateScore(@FieldMap Map<String, String> body);
+
+    @FormUrlEncoded
+    @POST("score/getAllScoreIntegral")
+    Observable<ResultModel<AllScoreIntegral>> getAllScoreIntegral(@FieldMap Map<String, String> body);
 
 
     @FormUrlEncoded
