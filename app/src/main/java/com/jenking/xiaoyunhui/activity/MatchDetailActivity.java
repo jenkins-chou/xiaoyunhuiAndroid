@@ -330,16 +330,18 @@ public class MatchDetailActivity extends BaseActivity implements MatchContract {
                 }else{
                     footer2.setVisibility(View.GONE);
                 }
+
+                if (AccountTool.getLoginUser(context).getUser_type().equals("2")) {
+                    footer3.setVisibility(View.VISIBLE);
+                } else {
+                    footer3.setVisibility(View.GONE);
+                }
             }else{
+                footer.setVisibility(View.GONE);
                 footer2.setVisibility(View.GONE);
-            }
-            if (AccountTool.getLoginUser(context).getUser_type().equals("2")){
-                footer3.setVisibility(View.VISIBLE);
-            }else{
                 footer3.setVisibility(View.GONE);
             }
         }
-
     }
 
     public void initData(){
