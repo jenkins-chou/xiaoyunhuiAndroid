@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.ColorSpace;
 import android.os.Build;
 import android.os.Environment;
 import android.support.annotation.NonNull;
@@ -28,6 +29,7 @@ import com.jenking.xiaoyunhui.dialog.CommonTipsDialog;
 import com.jenking.xiaoyunhui.models.base.MatchModel;
 import com.jenking.xiaoyunhui.models.base.ResultModel;
 import com.jenking.xiaoyunhui.models.main.scoreForExcel.AllScoreIntegral;
+import com.jenking.xiaoyunhui.models.main.scoreForExcel.AllScoreIntegralSum;
 import com.jenking.xiaoyunhui.models.main.scoreForExcel.ScoreExcelModel;
 import com.jenking.xiaoyunhui.presenters.MatchPresenter;
 import com.jenking.xiaoyunhui.presenters.ScorePresenter;
@@ -42,6 +44,8 @@ import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -71,6 +75,7 @@ public class ScoreManagerActivity extends BaseActivity implements MatchContract,
     @BindView(R.id.smartRefreshLayout)
     SmartRefreshLayout smartRefreshLayout;
 
+    private Map<String,Integer> IntegralMap;
     private static String[] PERMISSIONS_STORAGE = {
             Manifest.permission.READ_EXTERNAL_STORAGE,
             Manifest.permission.WRITE_EXTERNAL_STORAGE};
@@ -102,7 +107,7 @@ public class ScoreManagerActivity extends BaseActivity implements MatchContract,
     public void initData(){
         context = this;
         datas = new ArrayList<>();
-
+        IntegralMap = new HashMap<>();
         baseRecyclerAdapter = new BaseRecyclerAdapter<MatchModel>(context,datas,R.layout.fragment_publish_score2_item) {
             @Override
             protected void convert(BaseViewHolder helper, MatchModel item) {
@@ -352,6 +357,7 @@ public class ScoreManagerActivity extends BaseActivity implements MatchContract,
                 list = resultModel.getData();
                 if (list!=null){
                     saveExcel(list);
+                    saveExcelSum(list);
                 }
             }
         }else {
@@ -372,5 +378,52 @@ public class ScoreManagerActivity extends BaseActivity implements MatchContract,
             ExcelTools.writeObjListToExcel(datas, fileName, this);
             CommonTipsDialog.showTip(this,"温馨提示","导出excel成功\n文件位置：文件根目录/校运会/全部成绩.xls",false);
 //            Toast.makeText(this, "导出Excel成功", Toast.LENGTH_LONG).show();
+    }
+
+    void saveExcelSum(List datas){
+        if (datas==null){
+            return;
+        }
+        for (int i = 0;i<datas.size();i++){
+            AllScoreIntegral allScoreIntegral = (AllScoreIntegral)datas.get(i);
+            String integralStr = allScoreIntegral.getScore_integral();
+            if (IntegralMap.get(allScoreIntegral.getTeam_name())!=null){
+                Integer oldInteger = IntegralMap.get(allScoreIntegral.getTeam_name());
+                if (StringUtil.isNotEmpty(integralStr)&&StringUtil.isNumber(integralStr)){
+                    oldInteger += Integer.parseInt(integralStr);
+                    IntegralMap.put(allScoreIntegral.getTeam_name(),oldInteger);
+                }
+            }else{
+                if (StringUtil.isNotEmpty(integralStr)&&StringUtil.isNumber(integralStr)){
+                    Integer newInteger = Integer.parseInt(integralStr);
+                    IntegralMap.put(allScoreIntegral.getTeam_name(),newInteger);
+                }
+            }
+        }
+
+        Log.e("map",IntegralMap.toString());
+
+        List<AllScoreIntegralSum> allScoreIntegralSums = new ArrayList<>();
+        if (IntegralMap.size()>0){
+            Iterator iterator = IntegralMap.keySet().iterator();
+            while (iterator.hasNext()) {
+                Object key = iterator.next();
+                allScoreIntegralSums.add(new AllScoreIntegralSum(key.toString(),IntegralMap.get(key)+""));
+            }
+
+            Log.e("allScoreIntegralSums",allScoreIntegralSums.toString());
+
+            String path = Environment.getExternalStorageDirectory().getPath()+"/校运会";
+            File file = new File(path);
+            //文件夹是否已经存在
+            if (!file.exists()) {
+                file.mkdirs();
+            }
+            String[] title = {"团队名称", "总分"};
+            String fileName = file.toString() + "/" + "各团队总分.xls";
+            ExcelTools.initExcel(fileName, title);
+            ExcelTools.writeObjListToExcel(allScoreIntegralSums, fileName, this);
+            CommonTipsDialog.showTip(this,"温馨提示","导出excel成功\n文件位置：文件根目录/校运会/各团队总分.xls",false);
+        }
     }
 }

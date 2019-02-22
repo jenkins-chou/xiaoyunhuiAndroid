@@ -7,6 +7,7 @@ import android.widget.Toast;
 
 import com.jenking.xiaoyunhui.models.base.ProjectBean;
 import com.jenking.xiaoyunhui.models.main.scoreForExcel.AllScoreIntegral;
+import com.jenking.xiaoyunhui.models.main.scoreForExcel.AllScoreIntegralSum;
 import com.jenking.xiaoyunhui.models.main.scoreForExcel.ScoreExcelModel;
 
 import java.io.File;
@@ -148,6 +149,10 @@ public class ExcelTools {
                         list.add(allScoreIntegral.getScore_value());
                         list.add(allScoreIntegral.getScore_unit());
                         list.add(allScoreIntegral.getScore_integral());
+                    }else if(objList.get(j) instanceof AllScoreIntegralSum){
+                        AllScoreIntegralSum allScoreIntegralSum = (AllScoreIntegralSum) objList.get(j);
+                        list.add(allScoreIntegralSum.getTeamName());
+                        list.add(allScoreIntegralSum.getIntegralSum());
                     }
 
                     for (int i = 0; i < list.size(); i++) {
@@ -175,7 +180,6 @@ public class ExcelTools {
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
-
                 }
                 if (in != null) {
                     try {
