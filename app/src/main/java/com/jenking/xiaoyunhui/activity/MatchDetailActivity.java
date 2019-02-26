@@ -146,23 +146,28 @@ public class MatchDetailActivity extends BaseActivity implements MatchContract {
                                 }).show();
                     }else{
                         if (matchDetailModel.getMatch_status().equals("1")){
-                            CommonTipsDialog.create(context,"温馨提示","确定要报名该比赛吗",false)
-                                    .setOnClickListener(new CommonTipsDialog.OnClickListener() {
-                                        @Override
-                                        public void cancel() {
+                            if(AccountTool.isCompleteUserInfo(this)){
+                                CommonTipsDialog.create(context,"温馨提示","确定要报名该比赛吗",false)
+                                        .setOnClickListener(new CommonTipsDialog.OnClickListener() {
+                                            @Override
+                                            public void cancel() {
 
-                                        }
+                                            }
 
-                                        @Override
-                                        public void confirm() {
-                                            Map<String,String> params = RequestService.getBaseParams(context);
-                                            params.put("match_id",match_id);
-                                            params.put("user_id",AccountTool.getLoginUser(context).getUser_id());
-                                            params.put("user_match_status","1");//报名中,跟随match_status
-                                            matchPresenter.addUserMatch(params);
-                                            setLoadingEnable(true);
-                                        }
-                                    }).show();
+                                            @Override
+                                            public void confirm() {
+                                                Map<String,String> params = RequestService.getBaseParams(context);
+                                                params.put("match_id",match_id);
+                                                params.put("user_id",AccountTool.getLoginUser(context).getUser_id());
+                                                params.put("user_match_status","1");//报名中,跟随match_status
+                                                matchPresenter.addUserMatch(params);
+                                                setLoadingEnable(true);
+                                            }
+                                        }).show();
+                            }else{
+                                CommonTipsDialog.showTip(this,"温馨提示","请完善学校和班级才能进行报名",false);
+                            }
+
                         }else{
                             CommonTipsDialog.showTip(this,"温馨提示","当前比赛已经过了报名时间",false);
                         }

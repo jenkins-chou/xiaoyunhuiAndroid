@@ -1,6 +1,7 @@
 package com.jenking.xiaoyunhui.tools;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.google.gson.Gson;
 import com.jenking.xiaoyunhui.models.base.UserModel;
@@ -50,6 +51,7 @@ public class AccountTool {
             if (StringUtil.isNotEmpty(userModel.getUser_realname())
                     &&StringUtil.isNotEmpty(userModel.getUser_class())
                     &&StringUtil.isNotEmpty(userModel.getUser_school())){
+                Log.e("userModel",userModel.toString());
                 result = true;
             }
         }
